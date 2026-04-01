@@ -15,14 +15,13 @@ On this website, you will find my teaching philosophy, professional experience, 
 
 I believe that mathematics should be rigorous, engaging, and accessible to every student. In my classroom, I aim to create an environment where students think deeply, communicate clearly, and apply mathematics with confidence. I value structured instruction, inquiry, and purposeful challenge, and I work to help students become independent learners who are willing to reflect, revise, and improve.
 
-## What You Will Find Here
+## Portfolio Sections
 
-- Teaching philosophy
-- Professional experience and qualifications
-- Curriculum and course experience
-- Sample lessons and classroom resources
-- Evidence of student-centered teaching
-- Contact information
+- [Teaching Philosophy](./philosophy.md)
+- [About Me](./about.md)
+- [Resume](./resume.md)
+- [Teaching Resources](./resources.md)
+- [Contact](./contact.md)
 
 ## Contact
 
