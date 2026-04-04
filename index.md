@@ -4,6 +4,7 @@ title: Home
 ---
 
 # Harish Kumar
+![Harish Kumar](./profile.JPEG)
 
 Mathematics Teacher | IB DP, High School, and Middle School Educator | Hong Kong Registered Teacher
 
