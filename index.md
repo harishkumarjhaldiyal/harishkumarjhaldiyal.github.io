@@ -6,7 +6,6 @@ title: Home
 <div class="hero">
   <h1>Harish Kumar</h1>
 
-  <img src="profile.JPEG" alt="Harish Kumar" class="round-photo">
 
   <div class="hero-tagline">
     Mathematics Teacher | IB DP, High School, and Middle School Educator | Hong Kong Registered Teacher
