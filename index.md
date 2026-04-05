@@ -3,30 +3,28 @@ layout: default
 title: Home
 ---
 
-# Harish Kumar
-<p align="center">
-  <img src="profile.JPEG" alt="Harish Kumar" width="250">
-</p>
+<div class="hero">
+  <h1>Harish Kumar</h1>
 
-Mathematics Teacher | IB DP, High School, and Middle School Educator | Hong Kong Registered Teacher
+  <img src="profile.JPEG" alt="Harish Kumar" class="round-photo">
 
-Welcome to my teaching portfolio. I am a mathematics teacher based in Hong Kong with experience teaching middle school, high school, and IB mathematics. My teaching focuses on clear explanations, strong conceptual understanding, meaningful challenge, and supportive classroom relationships so that students can grow in both confidence and achievement.
+  <div class="hero-tagline">
+    Mathematics Teacher | IB DP, High School, and Middle School Educator | Hong Kong Registered Teacher
+  </div>
 
-On this website, you will find my teaching philosophy, professional experience, sample teaching resources, and information about my work with students across different year levels and curricula.
+  <div class="hero-intro">
+    Welcome to my teaching portfolio. I am a mathematics teacher based in Hong Kong with experience teaching middle school, high school, and IB mathematics. My teaching focuses on clarity, conceptual understanding, meaningful challenge, and supportive classroom relationships so that students can grow in both confidence and achievement.
+  </div>
+</div>
 
-## What I Believe
+<section>
+  <h2>Portfolio Sections</h2>
 
-I believe that mathematics should be rigorous, engaging, and accessible to every student. In my classroom, I aim to create an environment where students think deeply, communicate clearly, and apply mathematics with confidence. I value structured instruction, inquiry, and purposeful challenge, and I work to help students become independent learners who are willing to reflect, revise, and improve.
-
-## Portfolio Sections
-
-- [Teaching Philosophy](./philosophy.md)
-- [About Me](./about.md)
-- [Resume](./resume.md)
-- [Teaching Resources](./resources.md)
-- [Contact](./contact.md)
-
-## Contact
-
-Email: email@abc.com
-LinkedIn: link
+  <ul class="card-links">
+    <li><a href="./philosophy.md">Teaching Philosophy</a></li>
+    <li><a href="./about.md">About Me</a></li>
+    <li><a href="./resume.md">Resume</a></li>
+    <li><a href="./resources.md">Teaching Resources</a></li>
+    <li><a href="./contact.md">Contact</a></li>
+  </ul>
+</section>
