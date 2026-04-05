@@ -3,91 +3,75 @@
 
 @import "{{ site.theme }}";
 
-/* Page width and spacing */
-.wrapper {
-  max-width: 1200px;
+.page-header {
+  padding: 3rem 1rem 2rem 1rem;
 }
 
-/* Left panel photo */
-header img.logo {
-  width: 220px !important;
-  height: 220px !important;
-  border-radius: 50% !important;
-  object-fit: cover !important;
+.project-name {
+  font-size: 3.2rem;
+  font-weight: 700;
+}
+
+.project-tagline {
+  font-size: 1.25rem;
+  opacity: 0.95;
+}
+
+.main-content {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem 1.5rem;
+}
+
+.hero-photo {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
   display: block;
-  margin: 18px auto 24px auto;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  margin: 0 auto 1.5rem auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
-/* Left panel title */
-header h1 {
-  font-size: 2.2rem;
-  line-height: 1.05;
-  margin-bottom: 18px;
-}
-
-/* Left panel text */
-header p {
-  font-size: 1.05rem;
-  color: #374151;
-  text-align: center;
-}
-
-/* Right content area */
-section {
+.intro-card {
   background: #ffffff;
-  padding: 32px 36px;
   border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  margin-top: 24px;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
 }
 
-/* Right side headings */
-section h1 {
-  font-size: 2.2rem;
-  margin-top: 0;
-  margin-bottom: 14px;
-  color: #0f172a;
+.links-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
-section h2 {
-  font-size: 1.6rem;
-  margin-top: 26px;
-  margin-bottom: 14px;
-  color: #0f172a;
-  border-bottom: 2px solid #e5e7eb;
-  padding-bottom: 6px;
+.links-card ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
 }
 
-section h3 {
-  font-size: 1.2rem;
-  color: #111827;
+.links-card li {
+  margin-bottom: 1rem;
 }
 
-/* Right side body text */
-section p,
-section li {
-  font-size: 1.08rem;
-  line-height: 1.75;
-  color: #374151;
+.links-card a {
+  display: block;
+  padding: 0.95rem 1.1rem;
+  background: #f8fafc;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
 }
 
-/* Links */
-a {
-  color: #2563eb;
+.links-card a:hover {
+  background: #eef4ff;
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
-/* Portfolio links on homepage */
-section ul {
-  padding-left: 24px;
-  margin-top: 10px;
-}
-
-section li {
-  margin-bottom: 10px;
+h2 {
+  margin-top: 0;
 }
