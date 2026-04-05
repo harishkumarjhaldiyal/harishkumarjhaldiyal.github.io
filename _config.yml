@@ -3,5 +3,4 @@ title: Harish Kumar
 description: Mathematics Teacher Portfolio
 logo: /profile.JPEG
 show_downloads: false
-github:
-  is_project_page: false
+github: false
