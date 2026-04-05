@@ -11,7 +11,7 @@ Thank you for visiting my teaching portfolio. If you would like to get in touch 
 
 **Name:** Harish Kumar  
 **Location:** Hong Kong  
-**Email:** [[email redacted]](mailto:[email redacted])  
+**Email:** xxx  
 **LinkedIn:** [linkedin.com/in/harishjhaldiyal](https://linkedin.com/in/harishjhaldiyal)
 
 ## Professional Interests
