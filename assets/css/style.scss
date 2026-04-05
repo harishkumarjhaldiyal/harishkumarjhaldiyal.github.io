@@ -3,6 +3,12 @@
 
 @import "{{ site.theme }}";
 
+/* Page width and spacing */
+.wrapper {
+  max-width: 1200px;
+}
+
+/* Left panel photo */
 header img.logo {
   width: 220px !important;
   height: 220px !important;
@@ -10,21 +16,78 @@ header img.logo {
   object-fit: cover !important;
   display: block;
   margin: 18px auto 24px auto;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
 }
 
+/* Left panel title */
 header h1 {
-  font-size: 2.4rem;
+  font-size: 2.2rem;
   line-height: 1.05;
-  text-align: left;
+  margin-bottom: 18px;
 }
 
-body {
-  color: #1f2937;
+/* Left panel text */
+header p {
+  font-size: 1.05rem;
+  color: #374151;
+  text-align: center;
 }
 
-section h1,
-section h2,
-section h3 {
+/* Right content area */
+section {
+  background: #ffffff;
+  padding: 32px 36px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  margin-top: 24px;
+}
+
+/* Right side headings */
+section h1 {
+  font-size: 2.2rem;
+  margin-top: 0;
+  margin-bottom: 14px;
   color: #0f172a;
+}
+
+section h2 {
+  font-size: 1.6rem;
+  margin-top: 26px;
+  margin-bottom: 14px;
+  color: #0f172a;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 6px;
+}
+
+section h3 {
+  font-size: 1.2rem;
+  color: #111827;
+}
+
+/* Right side body text */
+section p,
+section li {
+  font-size: 1.08rem;
+  line-height: 1.75;
+  color: #374151;
+}
+
+/* Links */
+a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Portfolio links on homepage */
+section ul {
+  padding-left: 24px;
+  margin-top: 10px;
+}
+
+section li {
+  margin-bottom: 10px;
 }
