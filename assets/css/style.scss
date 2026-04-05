@@ -3,25 +3,28 @@
 
 @import "{{ site.theme }}";
 
-header img {
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  object-fit: cover;
+header img.logo {
+  width: 220px !important;
+  height: 220px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
   display: block;
-  margin: 18px auto;
+  margin: 18px auto 24px auto;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
 header h1 {
   font-size: 2.4rem;
   line-height: 1.05;
+  text-align: left;
 }
 
 body {
   color: #1f2937;
 }
 
-section h1, section h2, section h3 {
+section h1,
+section h2,
+section h3 {
   color: #0f172a;
 }
