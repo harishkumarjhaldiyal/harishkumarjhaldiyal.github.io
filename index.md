@@ -6,15 +6,16 @@ title: Home
 <img src="profile.JPEG" alt="Harish Kumar" class="hero-photo">
 
 <div class="intro-card">
-  Welcome to my teaching portfolio. I am a mathematics teacher based in Hong Kong with experience teaching middle school, high school, and IB mathematics. My teaching focuses on clarity, conceptual understanding, meaningful challenge, and supportive classroom relationships so that students can grow in both confidence and achievement.
+  <p>Welcome to my teaching portfolio. I am a mathematics teacher based in Hong Kong with experience teaching middle school, high school, and IB mathematics. My teaching focuses on clarity, conceptual understanding, meaningful challenge, and supportive classroom relationships so that students can grow in both confidence and achievement.</p>
 </div>
 
 <div class="links-card">
-  ## Portfolio Sections
-
-  - [Teaching Philosophy](./philosophy.md)
-  - [About Me](./about.md)
-  - [Resume](./resume.md)
-  - [Teaching Resources](./resources.md)
-  - [Contact](./contact.md)
+  <h2>Portfolio Sections</h2>
+  <ul>
+    <li><a href="./philosophy.html">Teaching Philosophy</a></li>
+    <li><a href="./about.html">About Me</a></li>
+    <li><a href="./resume.html">Resume</a></li>
+    <li><a href="./resources.html">Teaching Resources</a></li>
+    <li><a href="./contact.html">Contact</a></li>
+  </ul>
 </div>
