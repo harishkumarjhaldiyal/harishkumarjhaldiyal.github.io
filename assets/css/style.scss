@@ -34,6 +34,27 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
+.hero-text {
+  text-align: center;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero-text h1 {
+  margin: 0;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.hero-tagline {
+  margin-top: 0.6rem;
+  margin-bottom: 0;
+  font-size: 1.2rem;
+  color: #475569;
+  font-weight: 500;
+}
+
 .intro-card {
   background: #ffffff;
   border-radius: 18px;
