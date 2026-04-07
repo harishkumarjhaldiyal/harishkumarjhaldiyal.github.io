@@ -94,6 +94,23 @@
   text-decoration: none;
 }
 
+.page-header {
+  padding: 1.5rem 1rem 1.2rem 1rem;
+}
+
+.project-name {
+  font-size: 2rem;
+}
+
+.project-tagline {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
 h2 {
   margin-top: 0;
+}
+
+.links-card h2 {
+  color: #0f172a;
 }
