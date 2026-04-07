@@ -12,8 +12,8 @@ title: Harish Kumar
 
 <div class="intro-card">
   <p>
-    Welcome to my teaching portfolio. I am a mathematics teacher based in Hong Kong with experience teaching across IB Diploma Programme, high school, and middle school settings. My teaching focuses on clarity, conceptual understanding, meaningful challenge, and supportive classroom relationships so that students can grow in both confidence and achievement.
-  </p>
+  Welcome to my teaching portfolio. I am a mathematics teacher based in Hong Kong with experience across the IB Diploma Programme, high school, and middle school. My teaching emphasizes clarity, conceptual understanding, challenge, and strong classroom relationships so that students can grow in both confidence and achievement.
+</p>
 </div>
 
 <div class="links-card">
