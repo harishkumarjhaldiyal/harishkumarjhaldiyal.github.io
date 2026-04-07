@@ -1,12 +1,19 @@
 ---
 layout: default
-title: Home
+title: Harish Kumar
 ---
 
 <img src="profile.JPEG" alt="Harish Kumar" class="hero-photo">
 
+<div class="hero-text">
+  <h1>Harish Kumar</h1>
+  <p class="hero-tagline">IB DP, High School, and Middle School Mathematics Teacher</p>
+</div>
+
 <div class="intro-card">
-  <p>Welcome to my teaching portfolio. I am a mathematics teacher based in Hong Kong with experience teaching middle school, high school, and IB mathematics. My teaching focuses on clarity, conceptual understanding, meaningful challenge, and supportive classroom relationships so that students can grow in both confidence and achievement.</p>
+  <p>
+    Welcome to my teaching portfolio. I am a mathematics teacher based in Hong Kong with experience teaching across IB Diploma Programme, high school, and middle school settings. My teaching focuses on clarity, conceptual understanding, meaningful challenge, and supportive classroom relationships so that students can grow in both confidence and achievement.
+  </p>
 </div>
 
 <div class="links-card">
