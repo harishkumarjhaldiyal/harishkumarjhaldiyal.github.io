@@ -7,7 +7,7 @@ title: Harish Kumar
 
 <div class="hero-text">
   <h1>Harish Kumar</h1>
-  <p class="hero-tagline">IB DP, High School, and Middle School Mathematics Teacher</p>
+  <p class="hero-tagline">International School Mathematics Teacher | IB DP, High School, and Middle School</p>
 </div>
 
 <div class="intro-card">
