@@ -3,26 +3,29 @@
 
 @import "{{ site.theme }}";
 
+/* Top theme banner: keep it subtle */
 .page-header {
-  padding: 3rem 1rem 2rem 1rem;
+  padding: 0.8rem 1rem 0.7rem 1rem;
 }
 
 .project-name {
-  font-size: 3.2rem;
+  font-size: 1.4rem;
   font-weight: 700;
+  margin: 0;
 }
 
 .project-tagline {
-  font-size: 1.25rem;
-  opacity: 0.95;
+  display: none;
 }
 
+/* Main page width and spacing */
 .main-content {
   max-width: 960px;
   margin: 0 auto;
   padding: 2rem 1.5rem 4rem 1.5rem;
 }
 
+/* Hero photo */
 .hero-photo {
   width: 220px;
   height: 220px;
@@ -34,6 +37,7 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
+/* Hero text */
 .hero-text {
   text-align: center;
   margin-top: 0.5rem;
@@ -55,6 +59,7 @@
   font-weight: 500;
 }
 
+/* Content cards */
 .intro-card {
   background: #ffffff;
   border-radius: 18px;
@@ -70,6 +75,12 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
+.links-card h2 {
+  margin-top: 0;
+  color: #0f172a;
+}
+
+/* Homepage links */
 .links-card ul {
   list-style: none;
   padding-left: 0;
@@ -94,23 +105,7 @@
   text-decoration: none;
 }
 
-.page-header {
-  padding: 1.5rem 1rem 1.2rem 1rem;
-}
-
-.project-name {
-  font-size: 2rem;
-}
-
-.project-tagline {
-  font-size: 1rem;
-  opacity: 0.9;
-}
-
+/* General heading spacing */
 h2 {
   margin-top: 0;
-}
-
-.links-card h2 {
-  color: #0f172a;
 }
