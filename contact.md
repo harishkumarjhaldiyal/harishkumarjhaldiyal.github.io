@@ -3,22 +3,31 @@ layout: default
 title: Contact
 ---
 
-# Contact
+<div class="page-card">
+  <h1>Contact</h1>
 
-Thank you for visiting my teaching portfolio. If you would like to get in touch regarding teaching opportunities, curriculum work, or professional collaboration, please feel free to contact me by email.
+  <p>
+    Thank you for visiting my teaching portfolio. If you would like to get in touch regarding teaching opportunities, curriculum work, or professional collaboration, please feel free to contact me by email.
+  </p>
 
-## Contact Information
+  <h2>Contact Information</h2>
+  <p>
+    <strong>Name:</strong> Harish Kumar<br>
+    <strong>Location:</strong> Hong Kong<br>
+    <strong>Email:</strong> <a href="mailto:harishkjhaldiyal@gmail.com">harishkjhaldiyal@gmail.com</a><br>
+    <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/harishjhaldiyal">linkedin.com/in/harishjhaldiyal</a>
+  </p>
 
-**Name:** Harish Kumar  
-**Location:** Hong Kong  
-**Email:** xxx  
-**LinkedIn:** [linkedin.com/in/harishjhaldiyal](https://linkedin.com/in/harishjhaldiyal)
+  <h2>Professional Interests</h2>
+  <ul>
+    <li>Mathematics teaching opportunities</li>
+    <li>IB, high school, and middle school mathematics</li>
+    <li>Curriculum design and assessment</li>
+    <li>Student support and mentoring</li>
+    <li>STEM and interdisciplinary learning</li>
+  </ul>
 
-## Professional Interests
-
-I would be happy to connect regarding:
-- Mathematics teaching opportunities
-- IB, high school, and middle school mathematics
-- Curriculum design and assessment
-- Student support and mentoring
-- STEM and interdisciplinary learning
+  <p>
+    I would be happy to connect regarding teaching, curriculum, and educational collaboration.
+  </p>
+</div>
