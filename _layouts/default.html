@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% seo %}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <header class="page-header" role="banner">
+      <nav class="site-nav">
+        <a href="{{ '/' | relative_url }}" class="{% if page.url == '/' %}active{% endif %}">Home</a>
+        <a href="{{ '/philosophy.html' | relative_url }}" class="{% if page.url == '/philosophy.html' %}active{% endif %}">Teaching Philosophy</a>
+        <a href="{{ '/about.html' | relative_url }}" class="{% if page.url == '/about.html' %}active{% endif %}">About Me</a>
+        <a href="{{ '/resume.html' | relative_url }}" class="{% if page.url == '/resume.html' %}active{% endif %}">Resume</a>
+        <a href="{{ '/resources.html' | relative_url }}" class="{% if page.url == '/resources.html' %}active{% endif %}">Teaching Resources</a>
+        <a href="{{ '/contact.html' | relative_url }}" class="{% if page.url == '/contact.html' %}active{% endif %}">Contact</a>
+      </nav>
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      {{ content }}
+    </main>
+  </body>
+</html>
