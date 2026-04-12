@@ -5,7 +5,11 @@
 
 /* Top green bar */
 .page-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   padding: 0.65rem 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
 .project-name {
@@ -86,7 +90,7 @@
   text-align: center;
 }
 
-/* Content cards */
+/* Homepage intro card */
 .intro-card {
   background: #ffffff;
   border-radius: 18px;
@@ -96,6 +100,7 @@
   margin: 0 auto 2rem auto;
 }
 
+/* Optional homepage link card, if ever used again */
 .links-card {
   background: #ffffff;
   border-radius: 18px;
@@ -108,7 +113,6 @@
   color: #0f172a;
 }
 
-/* Homepage links */
 .links-card ul {
   list-style: none;
   padding-left: 0;
@@ -138,7 +142,9 @@ body {
   color: #334155;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   color: #0f172a;
 }
 
@@ -150,7 +156,8 @@ h2 {
   margin-top: 0;
 }
 
-p, li {
+p,
+li {
   line-height: 1.75;
   font-size: 1.06rem;
 }
