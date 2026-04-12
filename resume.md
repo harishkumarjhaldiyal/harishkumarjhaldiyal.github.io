@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Resume
+title: Resume/CV
 ---
 
 <div class="page-card">
-  <h1>Resume</h1>
+  <h1>Resume/CV</h1>
 
   <h2>Professional Profile</h2>
   <p>
@@ -27,13 +27,13 @@ title: Resume
 
   <h2>Professional Experience</h2>
 
-  <p><strong>Dragonprep</strong><br>
+  <p><strong>DragonPrep</strong><br>
   Hong Kong<br>
   <strong>Mathematics Instructor (IB DP / MYP / IGCSE / A-Level)</strong><br>
   <strong>Jul 2021 – Feb 2022</strong></p>
 
   <p>
-    At Dragonprep, I delivered personalised Mathematics instruction in small-group and one-to-one settings for students across IB and UK curriculum pathways. I built targeted support plans based on diagnostic evidence to address misconceptions, strengthen fluency, and improve confidence in challenging content areas. I also guided students in developing stronger examination technique through focused review, structured practice, and clear academic feedback.
+    At DragonPrep, I delivered personalised Mathematics instruction in small-group and one-to-one settings for students across IB and UK curriculum pathways. I built targeted support plans based on diagnostic evidence to address misconceptions, strengthen fluency, and improve confidence in challenging content areas. I also guided students in developing stronger examination technique through focused review, structured practice, and clear academic feedback.
   </p>
 
   <p><strong>HKExcel Education</strong><br>
