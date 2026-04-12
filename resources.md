@@ -7,62 +7,50 @@ title: Teaching Resources
   <h1>Teaching Resources</h1>
 
   <p>
-    This section includes selected teaching materials that reflect my approach to mathematics instruction across middle school, high school, and IB contexts. I design learning experiences that aim to build conceptual understanding, support clear mathematical communication, and provide students with structured opportunities to think deeply, apply ideas, and grow in confidence.
+    This section highlights the kinds of teaching materials I design to support rigorous, student-centered mathematics learning across middle school, high school, and IB contexts. My resources are created to build conceptual understanding, strengthen mathematical communication, and provide students with structured opportunities to think deeply, apply ideas, and grow in confidence.
   </p>
 
   <p>
-    The resources shared here are intended to represent the kinds of lessons, assessments, and classroom materials I use to support rigorous and student-centered learning. Over time, this section will continue to grow with additional examples drawn from different courses and year levels.
+    Rather than serving as a public file repository, this section offers an overview of the types of instructional materials I use and develop as part of my teaching practice. These materials reflect my approach to lesson design, assessment, differentiation, and purposeful mathematical challenge.
   </p>
 
-  <h2>What This Section Includes</h2>
+  <h2>Resource Categories</h2>
   <ul>
-    <li>Sample lesson plans</li>
-    <li>Classroom presentations and instructional materials</li>
-    <li>Assessments and review materials</li>
-    <li>Rubrics and feedback tools</li>
-    <li>Selected anonymized student work samples</li>
-    <li>Examples of inquiry-based and problem-solving tasks</li>
+    <li>Lesson plans and lesson sequences</li>
+    <li>Instructional slides and guided learning materials</li>
+    <li>Assessments and review tasks</li>
+    <li>Rubrics and feedback structures</li>
+    <li>Problem-solving and inquiry-based tasks</li>
+    <li>Curriculum planning and learning design materials</li>
   </ul>
 
-  <h2>Sample Resource Categories</h2>
-
-  <h3>Lesson Plans</h3>
+  <h2>Lesson Planning</h2>
   <p>
-    Lesson plans that show learning objectives, lesson structure, questioning strategies, differentiation, and assessment opportunities.
+    My lesson planning is focused on clarity, progression, and purposeful challenge. I design lessons that help students connect concepts, develop fluency, and explain their reasoning with increasing confidence and independence.
   </p>
 
-  <h3>Presentation Slides and Guided Notes</h3>
+  <h2>Instructional Materials</h2>
   <p>
-    Examples of classroom teaching materials used to introduce concepts, model problem-solving, and guide student thinking.
+    I create presentations, guided notes, practice tasks, and structured classroom materials that support direct instruction, discussion, modelling, and independent thinking. These resources are designed to make mathematical ideas accessible while maintaining high expectations.
   </p>
 
-  <h3>Assessments and Review Tasks</h3>
+  <h2>Assessment Design</h2>
   <p>
-    Selected quizzes, tests, revision materials, and practice sets that reflect both conceptual understanding and procedural fluency.
+    My assessments are designed to evaluate both conceptual understanding and procedural skill. I aim to create tasks that require interpretation, reasoning, communication, and application, rather than focusing only on answer-getting.
   </p>
 
-  <h3>Rubrics and Feedback</h3>
+  <h2>Feedback and Support</h2>
   <p>
-    Examples of assessment criteria, feedback structures, and tools used to help students understand expectations and improve their work.
-  </p>
-
-  <h3>Student Work Samples</h3>
-  <p>
-    Anonymized examples of student responses or projects that demonstrate progress, understanding, reflection, or application of learning.
+    I use rubrics, success criteria, and feedback structures to help students understand expectations and identify clear next steps in their learning. I value feedback that is specific, actionable, and supportive of growth.
   </p>
 
   <h2>Teaching Approach Reflected in These Materials</h2>
   <p>
-    Across these resources, my aim is to create learning that is clear, challenging, and purposeful. I value instruction that develops understanding rather than memorization, encourages students to explain their reasoning, and gives them opportunities to apply mathematics in meaningful ways. I also aim to design materials that are accessible to diverse learners while still maintaining high expectations.
+    Across all resources, my goal is to create learning experiences that are clear, challenging, and meaningful. I value instruction that develops understanding rather than memorization, encourages students to explain their reasoning, and supports them in applying mathematics with confidence in a range of contexts.
   </p>
 
-  <h2>Note on Student Privacy</h2>
+  <h2>Available Upon Request</h2>
   <p>
-    Any student work shared in this portfolio will be fully anonymized and included only when appropriate.
-  </p>
-
-  <h2>Resources Coming Soon</h2>
-  <p>
-    This section is currently being developed and will be updated with selected materials from my teaching practice.
+    Selected sample materials are available upon request for professional review. These may include lesson plans, assessments, instructional resources, and examples of curriculum design that reflect my teaching approach across different year levels and contexts.
   </p>
 </div>
