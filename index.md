@@ -21,7 +21,7 @@ title: Harish Kumar
   <ul>
     <li><a href="./philosophy.html">Teaching Philosophy</a></li>
     <li><a href="./about.html">About Me</a></li>
-    <li><a href="./resume.html">Resume</a></li>
+    <li><a href="./resume.html">Resume/CV</a></li>
     <li><a href="./resources.html">Teaching Resources</a></li>
     <li><a href="./contact.html">Contact</a></li>
   </ul>
