@@ -6,6 +6,15 @@ title: Resume/CV
 <div class="page-card">
   <h1>Resume/CV</h1>
 
+  <p>
+    A PDF version of my resume/CV is available below.
+  </p>
+
+  <p>
+    <a href="./Resume:CV%20(Redacted).pdf" target="_blank">View PDF</a> |
+    <a href="./Resume:CV%20(Redacted).pdf" download>Download PDF</a>
+  </p>
+
   <h2>Professional Profile</h2>
   <p>
     I am an international-school Mathematics teacher with experience across the IB Diploma Programme, high school, middle school, and STEM education. My teaching focuses on designing rigorous, inquiry-driven learning that strengthens conceptual understanding through mathematical modelling, graphing technology, structured problem-solving, and real-world application. I bring strong expertise in curriculum planning, differentiation, assessment design, and interdisciplinary teaching within diverse, multilingual learning environments.
