@@ -49,6 +49,14 @@ title: Teaching Resources
     Across all resources, my goal is to create learning experiences that are clear, challenging, and meaningful. I value instruction that develops understanding rather than memorization, encourages students to explain their reasoning, and supports them in applying mathematics with confidence in a range of contexts.
   </p>
 
+  <h2>Leadership Systems &mdash; Prototype</h2>
+  <p>
+    In addition to classroom resources, I have designed <strong>Leadership Compass OS</strong>, a working offline prototype of a school leadership operating system. It brings curriculum alignment, Extended Essay coordination, pastoral follow-up, communication, and accountability into one weekly review cycle. The prototype demonstrates how I think about the operational side of teaching leadership: making ownership, deadlines, blockers, and support visible early enough to act.
+  </p>
+  <p>
+    <a href="{{ '/leadership-compass/' | relative_url }}" target="_blank" rel="noopener"><strong>Open the Leadership Compass OS prototype &rarr;</strong></a>
+  </p>
+
   <h2>Available Upon Request</h2>
   <p>
     Selected sample materials are available upon request for professional review. These may include lesson plans, assessments, instructional resources, and examples of curriculum design that reflect my teaching approach across different year levels and contexts.
