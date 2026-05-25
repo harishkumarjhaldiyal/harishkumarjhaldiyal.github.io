@@ -358,6 +358,12 @@ a:hover { color: #1d4ed8; text-decoration: none; }
   transform: translateY(-1px);
 }
 
+/* ── Feature card — IA Compass (teal) variant ── */
+.feature-card.feature-ia { border-top-color: #0d9488; }
+.feature-card.feature-ia .fc-eyebrow { color: #0d9488; }
+.feature-card.feature-ia .fc-cta { background: #0f766e; }
+.feature-card.feature-ia .fc-cta:hover { background: #0d9488; }
+
 /* ── Three-column highlight cards ── */
 .highlight-grid {
   display: grid;
@@ -615,6 +621,110 @@ a:hover { color: #1d4ed8; text-decoration: none; }
   margin-bottom: 0.4rem;
 }
 
+/* ── Contact form ── */
+.contact-form {
+  margin: 1.2rem 0 0.4rem;
+}
+.contact-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.contact-form .form-field {
+  margin-bottom: 1rem;
+}
+.contact-form label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.72rem 0.9rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--text);
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--text-faint);
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+.contact-form textarea {
+  resize: vertical;
+  min-height: 150px;
+  line-height: 1.6;
+}
+.contact-form .cf-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.3rem;
+}
+.contact-form button.btn-primary {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.contact-form button.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: progress;
+  transform: none;
+}
+.cf-note {
+  font-size: 0.82rem;
+  color: var(--text-faint);
+}
+/* Honeypot — hidden from people, visible to spam bots */
+.cf-hp {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+}
+/* Status message (success / error) */
+.cf-status {
+  display: none;
+  margin: 1rem 0 0.4rem;
+  padding: 0.95rem 1.15rem;
+  border-radius: var(--radius-md);
+  font-size: 0.93rem;
+  line-height: 1.55;
+}
+.cf-status.cf-ok,
+.cf-status.cf-err {
+  display: block;
+}
+.cf-status.cf-ok {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+}
+.cf-status.cf-err {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .main-content { padding: 1.6rem 1rem 3rem; }
@@ -628,4 +738,5 @@ a:hover { color: #1d4ed8; text-decoration: none; }
   .site-nav { gap: 0.2rem; }
   .site-nav a { font-size: 0.82rem; padding: 0.4rem 0.7rem; }
   .feature-card { flex-direction: column; align-items: flex-start; }
+  .contact-form .form-row { grid-template-columns: 1fr; gap: 0; }
 }
