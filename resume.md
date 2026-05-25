@@ -122,12 +122,12 @@ title: Resume / CV
       <div class="ct-value">Hong Kong</div>
     </div>
     <div class="contact-tile">
-      <div class="ct-label">Email</div>
-      <div class="ct-value"><a href="mailto:harishkjhaldiyal@gmail.com">harishkjhaldiyal@gmail.com</a></div>
-    </div>
-    <div class="contact-tile">
       <div class="ct-label">LinkedIn</div>
       <div class="ct-value"><a href="https://linkedin.com/in/harishjhaldiyal" target="_blank" rel="noopener">linkedin.com/in/harishjhaldiyal</a></div>
+    </div>
+    <div class="contact-tile">
+      <div class="ct-label">Get in touch</div>
+      <div class="ct-value"><a href="{{ '/contact.html' | relative_url }}">Send a message →</a></div>
     </div>
   </div>
 </div>
