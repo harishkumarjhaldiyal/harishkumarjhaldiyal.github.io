@@ -68,6 +68,20 @@ title: Teaching Resources
     Across all resources, my goal is to create learning experiences that are clear, challenging, and meaningful. I value instruction that develops understanding rather than memorisation, encourages students to explain their reasoning, and supports them in applying mathematics with confidence in a range of contexts.
   </p>
 
+  <h2>Interactive student tool</h2>
+  <p>
+    Alongside classroom materials, I design interactive tools that students can use independently. The IB Math IA Compass is a web app I built to guide students through the Internal Assessment from first idea to final self-check.
+  </p>
+
+  <div class="feature-card feature-ia" style="margin: 1rem 0 1.5rem;">
+    <div class="fc-body">
+      <span class="fc-eyebrow">For Students</span>
+      <h3>IB Math IA Compass</h3>
+      <p>An interactive guide that walks IB Mathematics students through every stage of the Internal Assessment — discovering a topic suited to their course, forging and refining a focused research question, self-checking a draft against the official assessment criteria, and learning from worked examples. It supports all four IB Mathematics pathways: Analysis &amp; Approaches and Applications &amp; Interpretation, at Standard and Higher Level.</p>
+      <a href="{{ '/ia-compass/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open IA Compass →</a>
+    </div>
+  </div>
+
   <h2>Leadership systems — prototype</h2>
 
   <div class="feature-card" style="margin: 1rem 0 1.5rem;">
