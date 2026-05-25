@@ -725,6 +725,132 @@ a:hover { color: #1d4ed8; text-decoration: none; }
   color: #991b1b;
 }
 
+/* ── Protected page — Resume lock screen ── */
+.lock-card {
+  text-align: center;
+}
+.lock-shield {
+  width: 70px;
+  height: 70px;
+  margin: 0.4rem auto 1.2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.28);
+}
+.lock-shield svg {
+  width: 32px;
+  height: 32px;
+  stroke: #ffffff;
+}
+.lock-card h1 {
+  font-size: 1.7rem;
+}
+.lock-intro {
+  max-width: 540px;
+  margin: 0.7rem auto 0;
+  color: var(--text-muted);
+}
+.lock-form {
+  max-width: 430px;
+  margin: 1.7rem auto 0;
+  text-align: left;
+}
+.lock-form label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+.lock-input-row {
+  display: flex;
+  gap: 0.6rem;
+}
+.lock-input-row input {
+  flex: 1;
+  min-width: 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.72rem 0.9rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--text);
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+.lock-input-row input:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+.lock-input-row button {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+.lock-input-row button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.lock-msg {
+  min-height: 1.1rem;
+  margin-top: 0.7rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.lock-msg.lock-err {
+  color: #991b1b;
+}
+.lock-help {
+  max-width: 470px;
+  margin: 1.7rem auto 0;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+}
+
+/* Revealed resume */
+.resume-reveal {
+  animation: resumeFade 0.5s ease both;
+}
+@keyframes resumeFade {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+.resume-private-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: var(--blue-soft);
+  border: 1px solid #c7d2fe;
+  border-radius: var(--radius-md);
+  padding: 0.55rem 1rem;
+  margin-bottom: 1.5rem;
+}
+.resume-private-bar .rpb-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: #1d4ed8;
+}
+.resume-private-bar .rpb-lock {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--blue);
+}
+.resume-private-bar .rpb-lock:hover {
+  text-decoration: underline;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .main-content { padding: 1.6rem 1rem 3rem; }
@@ -739,4 +865,6 @@ a:hover { color: #1d4ed8; text-decoration: none; }
   .site-nav a { font-size: 0.82rem; padding: 0.4rem 0.7rem; }
   .feature-card { flex-direction: column; align-items: flex-start; }
   .contact-form .form-row { grid-template-columns: 1fr; gap: 0; }
+  .lock-input-row { flex-direction: column; }
+  .lock-input-row button { width: 100%; }
 }
