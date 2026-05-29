@@ -662,6 +662,13 @@ input[type=range]::-moz-range-thumb{
   padding:16px;border-radius:13px;font-size:.88rem;color:var(--ink-dim);
   background:var(--glass-2);border:1px solid var(--stroke);
 }
+.input-eye{position:relative}
+.input-eye button{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  color:var(--ink-faint);width:26px;height:26px;display:flex;align-items:center;justify-content:center;
+}
+.input-eye button:hover{color:var(--accent)}
+
 /* toast */
 #toast{
   position:fixed;left:50%;bottom:34px;transform:translate(-50%,140%);
@@ -827,19 +834,26 @@ footer{
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"></path></svg>
     </button>
   </div>
-  <p style="color:var(--ink-dim);font-size:.88rem">App information and quick controls.</p>
+  <p style="color:var(--ink-dim);font-size:.88rem">Set up the AI assistant once. Your key is stored only in this browser.</p>
+
+  <div class="drawer-sec">
+    <h5>AI API Key</h5>
+    <div class="input-eye">
+      <input type="password" class="field" id="apiKeyInput" placeholder="Paste your AI API key…" autocomplete="off">
+      <button id="eyeBtn" title="Show / hide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+      </button>
+    </div>
+    <div class="key-status" id="keyStatus"><span class="dot dot-no"></span><span>No key saved — AI features disabled</span></div>
+    <button class="btn" id="saveKeyBtn" style="margin-top:14px;width:100%">Save API Key</button>
+    <p style="color:var(--ink-faint);font-size:.78rem;margin-top:10px;line-height:1.5">
+      Get a free key at aistudio.google.com/apikey. Your key is stored only in this browser’s localStorage — clearing browser data removes it.
+    </p>
+  </div>
 
   <div class="drawer-sec">
     <h5>Active Course</h5>
     <div class="about-box" id="activeCourseBox">Analysis &amp; Approaches — Standard Level</div>
-  </div>
-
-  <div class="drawer-sec">
-    <h5>AI Assistant</h5>
-    <div class="key-status" id="keyStatus"><span class="dot dot-ok"></span><span>AI features ready</span></div>
-    <p style="color:var(--ink-faint);font-size:.78rem;margin-top:8px;line-height:1.5">
-      The AI guidance features are pre-configured — students and teachers can use the app straight away with no setup.
-    </p>
   </div>
 
   <div class="drawer-sec">
@@ -871,16 +885,10 @@ footer{
    IB MATH IA COMPASS  —  application logic
    ============================================================ */
 
-/* ================================================================
-   ║  BUILT-IN AI API KEY                                           ║
-   ║  Paste the AI key between the quotes below to keep the app      ║
-   ║  pre-configured — students and teachers then need no setup.     ║
-   ║                                                                ║
-   ║  NOTE: anyone who opens this file can read this key. Use a key  ║
-   ║  restricted to the AI text service with a quota cap, and keep   ║
-   ║  it on the free tier (no billing) so misuse cannot cost money.  ║
-   ================================================================ */
-const BUILT_IN_KEY = "AIzaSyBZEeYp28Jgf64q8CUzcHkBPHk_D5Gbp4M";
+/* The user enters their AI key in Settings; it is stored in localStorage.
+   Leave BUILT_IN_KEY empty for security — embedding a key in this file
+   would expose it to anyone who views the page source. */
+const BUILT_IN_KEY = "";
 
 /* ---------- COURSE DATA ---------- */
 const COURSES = {
@@ -1237,6 +1245,7 @@ async function aiSweep(body){
     if(!res.ok){
       let j=null,detail='';
       try{j=await res.json();detail=(j.error&&j.error.message)||'';}catch(e){}
+      try{console.warn('[IA Compass] AI request failed — status',res.status,'model',model,'detail:',detail||'(no detail)');}catch(e){}
       const dl=detail.toLowerCase();
       if(res.status===403||/api[ _]?key|permission|forbidden|caller does not have/.test(dl))
         return {ok:false,err:'BAD_KEY'};
@@ -1287,7 +1296,7 @@ async function callAI(systemPrompt,userOrContents){
 
 function friendlyError(err){
   const m=(err&&err.message)||'';
-  if(m==='NO_KEY')   return {t:'AI features unavailable',d:'The AI assistant is not configured in this copy of the app. Please contact the teacher who shared this file.'};
+  if(m==='NO_KEY')   return {t:'API key required',d:'Open Settings (the gear icon, top right) and paste your AI API key to enable this feature. A free key is available at aistudio.google.com/apikey.'};
   if(m==='NETWORK')  return {t:'Connection problem',d:'Could not reach the AI service. Check your internet connection and try again.'};
   if(m==='BAD_KEY')  return {t:'AI assistant unavailable',d:'The app’s AI access was not accepted. Please contact the teacher who shared this file.'};
   if(m==='RATE')     return {t:'Rate limit reached',d:'The AI assistant allows only a few requests per minute. The app already waited and retried once — please pause for about a minute, then try again.'};
@@ -1398,6 +1407,9 @@ function openApp(){
   renderAllTabs();
   switchTab('overview');
   window.scrollTo(0,0);
+  if(!state.apiKey){
+    setTimeout(()=>{openDrawer();toast('Add your AI API key in Settings to unlock the AI features','ok');},1000);
+  }
 }
 
 /* ============================================================
@@ -1682,7 +1694,7 @@ async function sendCoach(critId){
   const inp=$('#coach-in-'+critId);
   const q=(inp.value||'').trim();
   if(!q)return;
-  if(!state.apiKey){toast('AI features are currently unavailable','err');return;}
+  if(!state.apiKey){toast('Add your API key in Settings to use this feature','err');openDrawer();return;}
   const hist=state.coachHistory[critId]||(state.coachHistory[critId]=[]);
   hist.push({role:'user',text:q});
   inp.value='';
@@ -1970,7 +1982,7 @@ async function forgeGenerate(){
   const inp=$('#forgeInput'),stage=$('#forgeStage');
   const kw=(inp.value||'').trim();
   if(!kw){toast('Type a keyword or idea first','err');inp.focus();return;}
-  if(!state.apiKey){stage.innerHTML=errBoxHtml(new Error('NO_KEY'));return;}
+  if(!state.apiKey){stage.innerHTML=errBoxHtml(new Error('NO_KEY'));openDrawer();return;}
   const adv=advLabel(+$('#advSlider').value);
   const btn=$('#forgeBtn');btn.disabled=true;
   const cyc=startCycler(stage,[
@@ -2029,7 +2041,7 @@ async function valValidate(){
   const ctx=($('#valContext').value||'').trim();
   const stage=$('#valStage');
   if(!topic){toast('Paste your topic or research question first','err');$('#valTopic').focus();return;}
-  if(!state.apiKey){stage.innerHTML=errBoxHtml(new Error('NO_KEY'));return;}
+  if(!state.apiKey){stage.innerHTML=errBoxHtml(new Error('NO_KEY'));openDrawer();return;}
   const btn=$('#valBtn');btn.disabled=true;
   const cyc=startCycler(stage,[
     'Opening the examiner’s rubric…',
@@ -2257,7 +2269,7 @@ function mentorContents(){
 async function sendMentor(text){
   text=(text||'').trim();
   if(!text)return;
-  if(!state.apiKey){toast('AI features are currently unavailable','err');return;}
+  if(!state.apiKey){toast('Add your API key in Settings to use this feature','err');openDrawer();return;}
   state.mentorHistory.push({role:'user',text:text});
   const inp=$('#mentorInput');
   if(inp){inp.value='';inp.style.height='auto';}
@@ -2319,6 +2331,8 @@ function copyText(t){
 function openDrawer(){
   $('#drawer').classList.add('show');
   $('#scrim').classList.add('show');
+  let cur='';try{cur=localStorage.getItem(LS.key)||'';}catch(e){}
+  const ak=$('#apiKeyInput');if(ak)ak.value=cur;
   updateKeyStatus();
 }
 function closeDrawer(){
@@ -2328,12 +2342,26 @@ function closeDrawer(){
 function updateKeyStatus(){
   const s=$('#keyStatus');if(!s)return;
   const ready=!!(state.apiKey&&state.apiKey.trim());
-  const msg=ready?('AI features ready'+(activeModel?' · '+activeModel:'')):'AI features unavailable';
+  const msg=ready?('Key saved — AI features ready'+(activeModel?' · '+activeModel:'')):'No key saved — AI features disabled';
   s.innerHTML='<span class="dot '+(ready?'dot-ok':'dot-no')+'"></span><span>'+esc(msg)+'</span>';
 }
+function saveKey(){
+  const v=($('#apiKeyInput').value||'').trim();
+  if(!v){toast('Please paste a key first','err');return;}
+  try{localStorage.setItem(LS.key,v);}catch(e){}
+  state.apiKey=v;
+  activeModel=null;try{localStorage.removeItem(LS.model);}catch(e){}
+  updateKeyStatus();
+  toast('API key saved — AI features unlocked','ok');
+  setTimeout(closeDrawer,900);
+}
+function toggleEye(){
+  const i=$('#apiKeyInput');if(!i)return;
+  i.type=i.type==='password'?'text':'password';
+}
 function resetApp(){
-  if(!confirm('Reset IB Math IA Compass?\n\nThis clears your chosen course and all progress, then reloads the app.'))return;
-  try{localStorage.removeItem(LS.course);localStorage.removeItem(LS.model);}catch(e){}
+  if(!confirm('Reset IB Math IA Compass?\n\nThis clears your saved key, chosen course and all progress, then reloads the app.'))return;
+  try{localStorage.removeItem(LS.key);localStorage.removeItem(LS.course);localStorage.removeItem(LS.model);}catch(e){}
   location.reload();
 }
 function shareApp(){
@@ -2345,7 +2373,8 @@ function shareApp(){
    INIT
    ============================================================ */
 function init(){
-  state.apiKey=BUILT_IN_KEY?String(BUILT_IN_KEY).trim():'';
+  try{state.apiKey=localStorage.getItem(LS.key)||'';}catch(e){state.apiKey='';}
+  if(!state.apiKey&&BUILT_IN_KEY) state.apiKey=String(BUILT_IN_KEY).trim();
   try{const mm=localStorage.getItem(LS.model);if(mm)activeModel=mm;}catch(e){}
   try{const sc=localStorage.getItem(LS.course);if(sc&&COURSES[sc])state.course=sc;}catch(e){}
   if(!state.course)state.course='aasl';
@@ -2359,8 +2388,12 @@ function init(){
   $('#drawerClose').onclick=closeDrawer;
   $('#scrim').onclick=closeDrawer;
   $('#coursePill').onclick=function(e){e.stopPropagation();toggleCourseMenu();};
+  $('#saveKeyBtn').onclick=saveKey;
+  $('#eyeBtn').onclick=toggleEye;
   $('#resetBtn').onclick=resetApp;
   $('#shareBtn').onclick=shareApp;
+  const ak=$('#apiKeyInput');
+  if(ak){ak.value=state.apiKey;ak.addEventListener('keydown',e=>{if(e.key==='Enter')saveKey();});}
   updateKeyStatus();
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
   window.addEventListener('resize',()=>{const m=$('#courseMenu');if(m)m.remove();});
