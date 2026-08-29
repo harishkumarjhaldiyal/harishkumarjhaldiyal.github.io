@@ -58,41 +58,15 @@ title: Harish Kumar — Mathematics Teacher
   <div class="highlight leadership">
     <span class="h-eyebrow">Leadership</span>
     <h4>Systems &amp; coordination</h4>
-    <p>Designing leadership systems for curriculum alignment, supervisor follow-up, and pastoral accountability — see the Leadership Compass OS prototype below.</p>
+    <p>Designing leadership systems for curriculum alignment, supervisor follow-up, and pastoral accountability — see Digital Innovation Projects below.</p>
   </div>
 </div>
 
 <div class="intro-card" style="margin-bottom: 1rem;">
   <span class="section-eyebrow">Interactive Tools</span>
-  <h2 style="margin-top: 0.4rem;">Tools I have built</h2>
-  <p style="margin-bottom: 0;">Three working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, one a real tool I built and run for the whole high school, and one for leadership systems.</p>
-</div>
-
-<div class="feature-card feature-ia">
-  <div class="fc-body">
-    <span class="fc-eyebrow">For Students</span>
-    <h3>IB Math IA Compass</h3>
-    <p>An intelligent, interactive guide that walks IB Mathematics students through the Internal Assessment — discovering a topic, forging a sharp research question, self-checking against the assessment criteria, and learning from worked examples. Built to support all four IB Mathematics pathways: Analysis &amp; Approaches and Applications &amp; Interpretation, at both Standard and Higher Level.</p>
-    <a href="{{ '/ia-compass/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open IA Compass →</a>
-  </div>
-</div>
-
-<div class="feature-card feature-integrity">
-  <div class="fc-body">
-    <span class="fc-eyebrow">Production Tool · For All Teachers</span>
-    <h3>Integrity Tracker</h3>
-    <p>A live-monitoring tool I built and run for the whole high school — three mechanical, deliberately non-AI integrity checks (real per-revision word-count diffing, external-collaborator detection, late-night editing patterns) running on an always-on five-minute cycle. This is an interactive prototype seeded entirely with fictional students and documents so the real interface can be explored safely.</p>
-    <a href="{{ '/ia-integrity-tracker/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open Integrity Tracker →</a>
-  </div>
-</div>
-
-<div class="feature-card">
-  <div class="fc-body">
-    <span class="fc-eyebrow">Leadership Prototype</span>
-    <h3>Leadership Compass OS</h3>
-    <p>A working offline prototype of a school leadership operating system. Brings curriculum coordination, Extended Essay oversight, pastoral follow-up, communication, and accountability into one visible weekly review cycle. Designed to make invisible leadership work visible.</p>
-    <a href="{{ '/leadership-compass/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open Leadership Compass →</a>
-  </div>
+  <h2 style="margin-top: 0.4rem;">Digital Innovation Projects</h2>
+  <p style="margin-bottom: 1.2rem;">Four working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, two real tools I built and run for my own IB coordination work, and one for leadership systems.</p>
+  <a href="{{ '/projects.html' | relative_url }}" class="btn-primary">See Digital Innovation Projects →</a>
 </div>
 
 <div class="intro-card">
@@ -102,8 +76,7 @@ title: Harish Kumar — Mathematics Teacher
   <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
     <a href="{{ '/philosophy.html' | relative_url }}" class="btn-primary">Teaching Philosophy</a>
     <a href="{{ '/resources.html' | relative_url }}" class="btn-outline">Teaching Resources</a>
-    <a href="{{ '/ia-compass/' | relative_url }}" target="_blank" rel="noopener" class="btn-outline">IB Math IA Compass</a>
-    <a href="{{ '/ia-integrity-tracker/' | relative_url }}" target="_blank" rel="noopener" class="btn-outline">Integrity Tracker</a>
+    <a href="{{ '/projects.html' | relative_url }}" class="btn-outline">Digital Innovation Projects</a>
     <a href="{{ '/contact.html' | relative_url }}" class="btn-outline">Get in Touch</a>
   </div>
 </div>
