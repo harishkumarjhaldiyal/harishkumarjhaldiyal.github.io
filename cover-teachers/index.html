@@ -535,7 +535,7 @@ footer #finalize-btn { min-width: 240px; padding: 13px 20px; font-size: 15px; }
 <div class="hero">
   <span class="eyebrow">For School Leadership</span>
   <h2>Automatic Substitute-Cover Matching</h2>
-  <p>When a teacher calls in sick, this reads the school's master timetable, works out exactly which periods need covering, and suggests a substitute for each one — subject-matched first, then balanced so the same few people don't get picked every time. Currently being piloted with my school's assistant principals. Everything below — every teacher, timetable, and email — is entirely fictional.</p>
+  <p>When a teacher calls in sick, this reads the school's master timetable, works out exactly which periods need covering, and suggests a substitute for each one — subject-matched first, then balanced so the same few people don't get picked every time. Everything below — every teacher, timetable, and email — is entirely fictional.</p>
 </div>
 
 <div class="how">
@@ -709,7 +709,7 @@ const TEACHER_DEFS = [
   { code: "IOSS", name: "Igor Ossa",      subject: "Computer Science",classes: ["11.C.01", "12.B.01"],                     room: "RM_207", load: 3 },
 ];
 
-const FICTIONAL_DOMAIN = "northbridge-is.edu";
+const FICTIONAL_DOMAIN = "dummyemail.edu";
 function emailFor(name) {
   const parts = name.toLowerCase().split(" ");
   return `${parts[0]}.${parts[parts.length - 1]}@${FICTIONAL_DOMAIN}`;
