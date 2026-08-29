@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cover Teachers — Interactive Prototype</title>
+<meta name="description" content="Automatic substitute-teacher cover matching — subject-matching, fairness balancing, busy-teacher warnings, and one consolidated email draft. Interactive prototype, entirely fictional data.">
+<style>
+:root {
+  color-scheme: light dark;
+  --navy: #14142b;
+  --bg: #f6f6fb;
+  --bg-elevated: #ffffff;
+  --card: #ffffff;
+  --card-soft: #fbfbfe;
+  --border: #e6e6ef;
+  --border-soft: #eeeef4;
+  --text: #17171a;
+  --text-faint: #8a8a96;
+  --muted: #6c6c76;
+  --muted-soft: #9494a0;
+
+  --accent: #4f46e5;
+  --accent-dark: #4038c7;
+  --accent-soft: #eef0fd;
+  --accent-soft-border: #d9dcfa;
+
+  --success: #059669;
+  --success-soft: #e7f7f1;
+  --success-soft-border: #bfe8d8;
+
+  --warning: #b45309;
+  --warning-soft: #fef3e2;
+  --warning-soft-border: #f6d9a8;
+
+  --danger: #dc2626;
+  --danger-soft: #fdecec;
+  --danger-soft-border: #f6c9c9;
+
+  --shadow-sm: 0 1px 2px rgba(20, 20, 40, 0.05);
+  --shadow-md: 0 2px 6px rgba(20, 20, 40, 0.06), 0 10px 24px rgba(20, 20, 40, 0.07);
+  --shadow-lg: 0 12px 32px rgba(20, 20, 40, 0.14), 0 4px 12px rgba(20, 20, 40, 0.08);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --navy: #0c0c1a;
+    --bg: #18181b;
+    --bg-elevated: #1f1f23;
+    --card: #222226;
+    --card-soft: #26262b;
+    --border: #313136;
+    --border-soft: #2a2a2f;
+    --text: #f4f4f6;
+    --text-faint: #7c7c88;
+    --muted: #a3a3ad;
+    --muted-soft: #79798a;
+
+    --accent: #6366f1;
+    --accent-dark: #7c7ff5;
+    --accent-soft: #292a4a;
+    --accent-soft-border: #3c3d6b;
+
+    --success: #34d399;
+    --success-soft: #123329;
+    --success-soft-border: #1f5943;
+
+    --warning: #fbbf24;
+    --warning-soft: #3a2a0d;
+    --warning-soft-border: #6b4a12;
+
+    --danger: #f87171;
+    --danger-soft: #3a1a1a;
+    --danger-soft-border: #6b2a2a;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.35), 0 12px 28px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+}
+
+* { box-sizing: border-box; }
+::selection { background: var(--accent-soft-border); }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.55;
+  padding-bottom: 60px;
+}
+a { color: inherit; }
+button { font-family: inherit; }
+.hidden { display: none !important; }
+
+/* ── Topbar ── */
+#topbar {
+  background: var(--navy);
+  color: #fff;
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+#topbar .brand { display: flex; align-items: baseline; gap: 10px; }
+#topbar .brand h1 { font-size: 17px; font-weight: 700; margin: 0; letter-spacing: -0.2px; }
+#topbar .brand .badge {
+  background: var(--accent);
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+#topbar a.back { color: #cbd5e1; font-size: 13px; font-weight: 600; text-decoration: none; }
+#topbar a.back:hover { color: #fff; }
+
+/* ── Hero / how-it-works ── */
+.hero { max-width: 1080px; margin: 0 auto; padding: 40px 28px 8px; }
+.hero .eyebrow {
+  display: inline-block;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.hero h2 { margin: 0 0 10px; font-size: 26px; letter-spacing: -0.02em; }
+.hero p { margin: 0; max-width: 760px; color: var(--muted); font-size: 15px; }
+
+.how {
+  max-width: 1080px;
+  margin: 26px auto 0;
+  padding: 0 28px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+}
+.how-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+}
+.how-card .ic { font-size: 20px; margin-bottom: 8px; }
+.how-card h3 { margin: 0 0 6px; font-size: 14px; font-weight: 700; }
+.how-card p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+.note-strip {
+  max-width: 1080px;
+  margin: 18px auto 0;
+  padding: 12px 20px;
+  margin-left: 28px;
+  margin-right: 28px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft-border);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  color: var(--accent-dark);
+}
+@media (min-width: 1136px) {
+  .note-strip { margin-left: auto; margin-right: auto; }
+}
+
+.demo-toolbar {
+  max-width: 1080px;
+  margin: 26px auto 0;
+  padding: 0 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.demo-toolbar h3 { margin: 0; font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.demo-toolbar .toolbar-actions { display: flex; align-items: center; gap: 10px; }
+
+.day-select-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.day-select-label select {
+  padding: 8px 30px 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236c6c76' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 12px center;
+  appearance: none;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+.day-select-label select:hover { border-color: var(--muted-soft); }
+
+.panel {
+  max-width: 1080px;
+  margin: 20px auto;
+  padding: 24px 28px;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.panel h2 {
+  margin: 0 0 18px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.absence-input { display: flex; gap: 10px; }
+.absence-input input {
+  flex: 1;
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--card-soft);
+  font-size: 14px;
+  color: var(--text);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.absence-input input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  background: var(--card);
+}
+
+button {
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--accent);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.1s ease, box-shadow 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+}
+button:hover { background: var(--accent-dark); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+button:active { transform: translateY(0); box-shadow: var(--shadow-sm); }
+button:disabled { background: var(--border); color: var(--muted-soft); cursor: not-allowed; box-shadow: none; transform: none; }
+button.secondary { background: var(--card); color: var(--text); border: 1px solid var(--border); box-shadow: none; }
+button.secondary:hover { background: var(--card-soft); border-color: var(--muted-soft); box-shadow: var(--shadow-sm); }
+button.secondary.danger { color: var(--danger); border-color: var(--danger-soft-border); }
+button.secondary.danger:hover { background: var(--danger-soft); border-color: var(--danger); }
+
+.chip-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px 7px 14px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-soft-border);
+  color: var(--text);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.chip button.remove { background: none; color: var(--muted); padding: 2px 6px; font-size: 14px; line-height: 1; box-shadow: none; }
+.chip button.remove:hover { color: var(--danger); background: none; transform: none; box-shadow: none; }
+.chip button.chip-edit { background: none; color: var(--accent); padding: 2px 4px; font-size: 11px; font-weight: 600; text-decoration: underline; box-shadow: none; }
+.chip button.chip-edit:hover { background: none; color: var(--accent-dark); transform: none; box-shadow: none; }
+.absence-item { display: flex; flex-direction: column; gap: 8px; }
+
+.periods-editor {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  box-shadow: var(--shadow-sm);
+  max-width: 420px;
+}
+.periods-editor-label { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 8px; }
+.periods-editor-options { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-bottom: 12px; }
+.period-checkbox { display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; }
+.period-checkbox input { accent-color: var(--accent); cursor: pointer; }
+.periods-editor-actions { display: flex; gap: 8px; }
+.periods-editor-actions button { padding: 6px 14px; font-size: 12px; }
+
+.slot-list { display: flex; flex-direction: column; gap: 14px; }
+.slot-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  background: var(--card-soft);
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.slot-card:hover { box-shadow: var(--shadow-sm); border-color: var(--muted-soft); }
+.slot-card .slot-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; gap: 12px; }
+.slot-card .slot-title { font-weight: 700; font-size: 15px; letter-spacing: -0.005em; }
+.slot-card .slot-sub { color: var(--muted); font-size: 13px; margin-top: 2px; }
+
+.candidate-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.candidate-row td { padding: 10px 6px; border-bottom: 1px solid var(--border-soft); }
+.candidate-row:last-child td { border-bottom: none; }
+.candidate-row.recommended { background: var(--accent-soft); }
+.candidate-row.recommended td:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+.candidate-row.recommended td:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+.candidate-row td:first-child { font-weight: 600; padding-left: 10px; }
+.candidate-badge-cell { color: var(--accent); font-size: 12px; display: flex; flex-direction: column; gap: 3px; font-weight: 500; }
+.candidate-badge.busy { color: var(--warning); }
+.candidate-row .secondary { padding: 6px 14px; font-size: 12px; }
+.candidate-row td:last-child { text-align: right; width: 1%; white-space: nowrap; padding-right: 10px; }
+.candidate-toggle-row td { padding: 10px 4px 2px; border-bottom: none; }
+.link-btn { background: none; color: var(--accent); padding: 0; font-size: 12px; font-weight: 600; text-decoration: none; box-shadow: none; }
+.link-btn:hover { background: none; color: var(--accent-dark); text-decoration: underline; transform: none; box-shadow: none; }
+
+.confirmed-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: var(--success-soft);
+  border: 1px solid var(--success-soft-border);
+  border-radius: var(--radius-sm);
+  color: var(--success);
+  font-size: 13px;
+  font-weight: 600;
+}
+.confirmed-banner button { padding: 5px 12px; font-size: 12px; }
+
+.next-best-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 10px; padding: 0 2px; }
+.next-best-label { color: var(--muted); font-size: 12px; font-weight: 600; }
+.next-best-chip { background: var(--card); color: var(--text); border: 1px solid var(--border); border-radius: 999px; padding: 5px 13px; font-size: 12px; font-weight: 600; box-shadow: none; }
+.next-best-chip:hover { background: var(--accent-soft); border-color: var(--accent-soft-border); box-shadow: none; transform: none; }
+.next-best-chip.busy { border-color: var(--warning-soft-border); }
+
+.busy-note {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: var(--warning-soft);
+  border: 1px solid var(--warning-soft-border);
+  border-radius: var(--radius-sm);
+  color: var(--warning);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.empty-candidates { color: var(--danger); font-size: 13px; font-weight: 500; }
+.hint { color: var(--muted); font-size: 13px; margin: 8px 0 0; line-height: 1.5; }
+
+footer { max-width: 1080px; margin: 8px auto 40px; padding: 0 32px; text-align: center; }
+footer #finalize-btn { min-width: 240px; padding: 13px 20px; font-size: 15px; }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 15, 25, 0.45);
+  backdrop-filter: blur(6px) saturate(140%);
+  -webkit-backdrop-filter: blur(6px) saturate(140%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 20px;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.modal-box {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 28px 30px;
+  max-width: 520px;
+  width: 90%;
+  max-height: 82vh;
+  overflow-y: auto;
+  animation: modalIn 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.modal-box h2 { margin-top: 0; font-size: 20px; letter-spacing: -0.01em; }
+.modal-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.modal-header h2 { margin-bottom: 0; }
+.modal-close-btn { background: none; color: var(--muted); padding: 6px 10px; font-size: 15px; line-height: 1; flex-shrink: 0; box-shadow: none; border-radius: 999px; }
+.modal-close-btn:hover { background: var(--card-soft); color: var(--text); box-shadow: none; transform: none; }
+.modal-box.wide { max-width: 720px; }
+.result-line { font-size: 13px; margin: 6px 0; font-weight: 500; }
+.result-line.ok { color: var(--success); }
+.result-line.fail { color: var(--danger); }
+.result-line.warn { color: var(--warning); }
+
+.manual-draft { margin-top: 16px; padding: 14px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--card-soft); }
+.manual-draft .result-line { margin-top: 0; }
+.manual-draft iframe {
+  width: 100%;
+  height: 360px;
+  margin: 10px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: #fff;
+}
+
+.settings-section { margin-bottom: 26px; }
+.settings-section h3 { margin: 0 0 6px; font-size: 14px; font-weight: 700; }
+.settings-section textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--card-soft);
+  color: var(--text);
+  font-size: 13px;
+  font-family: ui-monospace, "SF Mono", monospace;
+  resize: vertical;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.settings-section input[type="text"] {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--card-soft);
+  color: var(--text);
+  font-size: 13px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.settings-section textarea:focus, .settings-section input[type="text"]:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  background: var(--card);
+}
+.settings-actions { display: flex; align-items: center; gap: 14px; margin-top: 12px; }
+.settings-actions .hint { margin: 0; }
+#staff-search-input { margin-bottom: 12px; }
+
+.staff-grid { width: 100%; border-collapse: collapse; font-size: 13px; }
+.staff-grid th { text-align: left; color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; padding: 8px; border-bottom: 1px solid var(--border); }
+.staff-grid td { padding: 7px 8px; border-bottom: 1px solid var(--border-soft); }
+.staff-grid input[type="email"], .staff-grid input[type="text"] {
+  width: 100%;
+  padding: 7px 9px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  background: var(--card-soft);
+  color: var(--text);
+  font-size: 13px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.staff-grid input[type="email"]:focus, .staff-grid input[type="text"]:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  background: var(--card);
+}
+#close-settings-btn { margin-top: 10px; }
+
+.analytics-section { margin-bottom: 26px; }
+.analytics-section h3 { margin: 0 0 12px; font-size: 14px; font-weight: 700; }
+#close-analytics-btn { margin-top: 10px; }
+
+.bar-chart { display: flex; flex-direction: column; gap: 10px; }
+.bar-row { display: grid; grid-template-columns: 150px 1fr 34px; align-items: center; gap: 10px; font-size: 13px; }
+.bar-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+.bar-track { background: var(--border-soft); border-radius: 6px; height: 14px; overflow: hidden; }
+.bar-fill { background: linear-gradient(90deg, var(--accent), var(--accent-dark)); height: 100%; border-radius: 6px; min-width: 3px; }
+.bar-count { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; font-weight: 600; }
+
+.heatmap-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.heatmap-table th { text-align: center; color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; padding: 8px 4px; border-bottom: 1px solid var(--border); }
+.heatmap-table th:first-child { text-align: left; }
+.heatmap-table td { text-align: center; padding: 8px 4px; border-bottom: 1px solid var(--border-soft); font-variant-numeric: tabular-nums; }
+.heatmap-table td:first-child { text-align: left; font-weight: 500; }
+.heatmap-total { color: var(--muted); font-weight: 600; }
+.flag-badge { display: inline-block; margin-left: 6px; padding: 3px 9px; border-radius: 999px; background: var(--warning-soft); border: 1px solid var(--warning-soft-border); color: var(--warning); font-size: 11px; font-weight: 600; }
+
+#toast {
+  position: fixed;
+  left: 50%;
+  bottom: 78px;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--navy);
+  color: #fff;
+  padding: 13px 20px;
+  border-radius: var(--radius-md);
+  font-size: 13.5px;
+  max-width: 480px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 1000;
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.tech-footer { max-width: 1080px; margin: 36px auto 0; padding: 20px 28px; color: var(--text-faint); font-size: 12px; }
+.tech-footer .k { color: var(--muted); font-weight: 700; }
+
+#disclaimer {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 999;
+  background: var(--navy);
+  color: #e2e8f0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  padding: 10px 16px;
+  text-align: center;
+  border-top: 2px solid var(--accent);
+}
+#disclaimer strong { color: #c7d2fe; }
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="brand">
+    <h1>Cover Teachers</h1>
+    <span class="badge">Prototype</span>
+  </div>
+  <a class="back" href="../">← Back to portfolio</a>
+</div>
+
+<div class="hero">
+  <span class="eyebrow">For School Leadership</span>
+  <h2>Automatic Substitute-Cover Matching</h2>
+  <p>When a teacher calls in sick, this reads the school's master timetable, works out exactly which periods need covering, and suggests a substitute for each one — subject-matched first, then balanced so the same few people don't get picked every time. Currently being piloted with my school's assistant principals. Everything below — every teacher, timetable, and email — is entirely fictional.</p>
+</div>
+
+<div class="how">
+  <div class="how-card">
+    <div class="ic">🎯</div>
+    <h3>Subject-match first</h3>
+    <p>Free teachers are ranked by whether they already teach that subject, then by how many recent covers they've done, then alphabetically. Subject match always wins — fairness only breaks ties.</p>
+  </div>
+  <div class="how-card">
+    <div class="ic">⚠️</div>
+    <h3>Busy-teacher warning</h3>
+    <p>Flagged if a teacher is already teaching 3+ full periods that day, or 2+ periods plus a Flex duty. Informational only — it never changes who gets auto-picked, just warns before you confirm.</p>
+  </div>
+  <div class="how-card">
+    <div class="ic">✉️</div>
+    <h3>One consolidated draft</h3>
+    <p>Every arrangement for the day — however many teachers are out — gets grouped into a single styled email, not one message per period.</p>
+  </div>
+</div>
+
+<div class="note-strip">
+  Every slot also shows the 2nd and 3rd-ranked alternatives as one-click "Next best" chips — useful when you don't want one person covering three periods in a row. Try marking a teacher absent below.
+</div>
+
+<div class="demo-toolbar">
+  <h3>Try it — mark someone absent</h3>
+  <div class="toolbar-actions">
+    <label class="day-select-label">
+      Viewing schedule for
+      <select id="day-select">
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+        <option value="Friday">Friday</option>
+      </select>
+    </label>
+    <button id="analytics-btn" class="secondary">Analytics</button>
+    <button id="settings-btn" class="secondary">Settings</button>
+  </div>
+</div>
+
+<section class="panel">
+  <h2>Who's absent today?</h2>
+  <div class="absence-input">
+    <input id="teacher-search" list="teacher-options" placeholder="Type a teacher's name…" />
+    <datalist id="teacher-options"></datalist>
+    <button id="add-absence-btn">Add</button>
+  </div>
+  <div id="absence-list" class="chip-list"></div>
+</section>
+
+<section class="panel">
+  <h2>Periods needing cover</h2>
+  <div id="slot-list" class="slot-list"></div>
+  <p id="no-slots-message" class="hint hidden">Mark someone absent above to see which periods need covering.</p>
+</section>
+
+<footer>
+  <button id="finalize-btn" disabled>Generate email drafts</button>
+  <p id="finalize-hint" class="hint">Confirm a cover for every period to enable this.</p>
+</footer>
+
+<div class="tech-footer">
+  <p><span class="k">Real implementation:</span> Python + PyWebView (native macOS app) · Google Sheets &amp; Drive API for a live two-tab backup and shareable log · per-user OAuth2, not a shared service account · AppleScript-driven Microsoft Outlook draft creation, never auto-sent · 136 automated tests. This page reimplements the same matching algorithm and interface in plain JavaScript against fictional data — no backend, nothing saved anywhere.</p>
+</div>
+
+<div id="settings-modal" class="modal hidden">
+  <div class="modal-box wide">
+    <div class="modal-header">
+      <h2>Settings</h2>
+      <button id="close-settings-btn-top" class="modal-close-btn" aria-label="Close">✕</button>
+    </div>
+
+    <div class="settings-section">
+      <h3>Timetable source</h3>
+      <p class="hint">Paste one sheet link per line. In this prototype, links are cosmetic — the fictional schedule below doesn't change.</p>
+      <textarea id="sheet-urls-input" rows="4" placeholder="https://docs.google.com/spreadsheets/d/..."></textarea>
+      <div class="settings-actions">
+        <button id="save-sync-btn">Save &amp; Sync</button>
+        <span id="sync-status" class="hint"></span>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Cover files folder link</h3>
+      <p class="hint">Optional. If set, this link is included in every generated cover email.</p>
+      <input id="cover-folder-url-input" type="text" placeholder="https://drive.google.com/drive/folders/..." />
+    </div>
+
+    <div class="settings-section">
+      <h3>Cover log spreadsheet folder</h3>
+      <p class="hint">Optional. In the real app, pasting a Drive folder link here creates a live two-tab spreadsheet — one tab mirrors today's in-progress work as a backup, the other keeps a permanent, shareable record of every cover arrangement ever made.</p>
+      <input id="session-log-folder-url-input" type="text" placeholder="https://drive.google.com/drive/folders/..." />
+      <p id="session-log-spreadsheet-link" class="hint hidden"></p>
+    </div>
+
+    <div class="settings-section">
+      <h3>Staff email addresses</h3>
+      <p class="hint">The timetable only has short codes, not full names or emails, so these are filled in once and saved. Try editing one below — it's live, just not persisted.</p>
+      <input id="staff-search-input" type="text" placeholder="Search by name or code…" />
+      <div id="staff-table"></div>
+    </div>
+
+    <button id="close-settings-btn" class="secondary">Close</button>
+  </div>
+</div>
+
+<div id="analytics-modal" class="modal hidden">
+  <div class="modal-box wide">
+    <h2>Analytics</h2>
+    <p id="analytics-summary" class="hint"></p>
+
+    <div id="analytics-empty" class="hint hidden">No cover history yet — this fills in as you generate email drafts.</div>
+
+    <div id="analytics-content" class="hidden">
+      <div class="analytics-section">
+        <h3>Who's covering the most</h3>
+        <div id="cover-chart" class="bar-chart"></div>
+      </div>
+      <div class="analytics-section">
+        <h3>Who's been absent the most</h3>
+        <div id="absence-chart" class="bar-chart"></div>
+      </div>
+      <div class="analytics-section">
+        <h3>Absences by day of week</h3>
+        <p class="hint">Highlighted rows show a teacher whose absences are notably concentrated on one day.</p>
+        <div id="day-heatmap"></div>
+      </div>
+    </div>
+
+    <button id="clear-analytics-btn" class="secondary danger">Clear Analytics</button>
+    <button id="close-analytics-btn" class="secondary">Close</button>
+  </div>
+</div>
+
+<div id="result-modal" class="modal hidden">
+  <div class="modal-box wide">
+    <h2>Drafts created</h2>
+    <div id="result-body"></div>
+    <button id="close-result-btn">Done</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<div id="disclaimer">
+  <strong>Interactive prototype</strong> — built by Harish Kumar · every teacher, timetable, and email shown here is entirely fictional · not connected to any live spreadsheet, Google account, or Outlook.
+</div>
+
+<script>
+/* ============================== Fictional dataset ============================== */
+
+const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+const PERIOD_ORDER = [1, 2, 3, "Fl", 4];
+
+const TEACHER_DEFS = [
+  { code: "JCHE", name: "Jordan Chen",    subject: "Math AA",         classes: ["9.A.01", "10.B.02", "11.C.03"],           room: "RM_101", load: 3 },
+  { code: "PANA", name: "Priya Anand",    subject: "Math AA",         classes: ["9.B.02", "10.A.01", "12.D.02"],           room: "RM_102", load: 3 },
+  { code: "APAT", name: "Amara Patel",    subject: "Math AI",         classes: ["9.C.01", "10.D.02", "11.A.03"],           room: "RM_103", load: 3 },
+  { code: "MSVN", name: "Marcus Sven",    subject: "Chemistry",       classes: ["10.C.01", "11.A.02", "12.B.03"],          room: "LAB_1",  load: 4 },
+  { code: "LOKF", name: "Leila Okafor",   subject: "Biology",         classes: ["9.D.01", "10.B.03"],                      room: "LAB_2",  load: 2 },
+  { code: "DRYE", name: "Daniel Reyes",   subject: "Physics",         classes: ["11.B.01", "12.C.02"],                     room: "LAB_3",  load: 3 },
+  { code: "HWAT", name: "Hannah Watt",    subject: "English A",       classes: ["9.A.02", "10.B.01", "11.C.02", "12.D.01"],room: "RM_201", load: 4 },
+  { code: "TBRK", name: "Tomas Brik",     subject: "English B",       classes: ["9.D.02", "10.A.02"],                      room: "RM_202", load: 2 },
+  { code: "SGUP", name: "Sara Gupta",     subject: "History",         classes: ["9.B.01", "10.C.02", "11.D.01"],           room: "RM_203", load: 3 },
+  { code: "NKIM", name: "Noah Kim",       subject: "Economics",       classes: ["11.B.02", "12.A.01"],                     room: "RM_204", load: 2 },
+  { code: "EFOX", name: "Ella Fox",       subject: "Visual Arts",     classes: ["9.C.02", "10.D.01", "11.A.01"],           room: "ART_1",  load: 3 },
+  { code: "CMOR", name: "Caleb Moore",    subject: "PE",              classes: ["9.PE.1", "10.PE.1", "11.PE.1"],           room: "GYM",    load: 3 },
+  { code: "WBEN", name: "Wendy Benn",     subject: "French",          classes: ["9.D.03", "10.B.04"],                      room: "RM_206", load: 2 },
+  { code: "IOSS", name: "Igor Ossa",      subject: "Computer Science",classes: ["11.C.01", "12.B.01"],                     room: "RM_207", load: 3 },
+];
+
+const FICTIONAL_DOMAIN = "northbridge-is.edu";
+function emailFor(name) {
+  const parts = name.toLowerCase().split(" ");
+  return `${parts[0]}.${parts[parts.length - 1]}@${FICTIONAL_DOMAIN}`;
+}
+
+function buildRoster() {
+  const roster = TEACHER_DEFS.map((t) => ({ code: t.code, full_name: t.name, email: emailFor(t.name) }));
+  roster.push({ code: "RVAL", full_name: "Rosa Valdez", email: emailFor("Rosa Valdez") });
+  return roster;
+}
+
+function buildTimetable() {
+  const entries = [];
+  TEACHER_DEFS.forEach((t, ti) => {
+    DAYS.forEach((day, di) => {
+      const rotation = (ti + di * 2) % PERIOD_ORDER.length;
+      const periodsToday = [];
+      for (let k = 0; k < t.load; k++) {
+        periodsToday.push(PERIOD_ORDER[(rotation + k) % PERIOD_ORDER.length]);
+      }
+      periodsToday.forEach((p, pi) => {
+        entries.push({
+          teacher_code: t.code,
+          day,
+          period: p,
+          subject: t.subject,
+          class_name: t.classes[(ti + di + pi) % t.classes.length],
+          room: t.room,
+        });
+      });
+    });
+  });
+
+  // Rosa Valdez coordinates TOK/EE — guaranteed Flex coverage every day.
+  const rosaClasses = ["11.TOK", "12.TOK"];
+  DAYS.forEach((day, di) => {
+    const periods = di % 2 === 0 ? [1, "Fl", 3] : [2, "Fl", 4];
+    periods.forEach((p, pi) => {
+      entries.push({
+        teacher_code: "RVAL",
+        day,
+        period: p,
+        subject: "TOK",
+        class_name: rosaClasses[(di + pi) % rosaClasses.length],
+        room: "RM_205",
+      });
+    });
+  });
+
+  return entries;
+}
+
+const ROSTER = buildRoster();
+const TIMETABLE = buildTimetable();
+
+// Seed a few weeks of fictional cover history so Analytics isn't empty on first look.
+function buildSeedHistory() {
+  const seed = [
+    ["2026-08-04", "Tuesday", 2, "LOKF", "APAT"],
+    ["2026-08-04", "Tuesday", 3, "LOKF", "DRYE"],
+    ["2026-08-05", "Wednesday", 1, "TBRK", "HWAT"],
+    ["2026-08-06", "Thursday", "Fl", "WBEN", "RVAL"],
+    ["2026-08-07", "Friday", 4, "NKIM", "SGUP"],
+    ["2026-08-10", "Monday", 1, "CMOR", "IOSS"],
+    ["2026-08-10", "Monday", 2, "CMOR", "EFOX"],
+    ["2026-08-11", "Tuesday", 3, "APAT", "JCHE"],
+    ["2026-08-12", "Wednesday", 2, "LOKF", "PANA"],
+    ["2026-08-13", "Thursday", 4, "WBEN", "TBRK"],
+    ["2026-08-14", "Friday", 1, "NKIM", "SGUP"],
+    ["2026-08-17", "Monday", "Fl", "TBRK", "RVAL"],
+    ["2026-08-18", "Tuesday", 2, "LOKF", "APAT"],
+    ["2026-08-19", "Wednesday", 3, "CMOR", "EFOX"],
+    ["2026-08-20", "Thursday", 1, "NKIM", "JCHE"],
+    ["2026-08-21", "Friday", 4, "WBEN", "DRYE"],
+  ];
+  return seed.map(([date, day, period, absent, covering]) => ({
+    date, day, period, absent_teacher: absent, covering_teacher: covering,
+  }));
+}
+let HISTORY = buildSeedHistory();
+
+/* ============================== config helpers ============================== */
+
+function periodSortIndex(period) {
+  const idx = PERIOD_ORDER.indexOf(period);
+  return idx === -1 ? PERIOD_ORDER.length : idx;
+}
+function periodLabelFor(period) {
+  return period === "Fl" ? "Flex" : `P${period}`;
+}
+
+/* ============================== matcher.js (ported from matcher.py) ============================== */
+
+const FLEX_PERIOD = "Fl";
+const BUSY_FULL_PERIODS_ALONE = 3;
+const BUSY_FULL_PERIODS_WITH_FLEX = 2;
+
+function periodsNeedingCover(absences, timetable, day) {
+  const slots = [];
+  absences.forEach((absence) => {
+    let entries = timetable.filter((e) => e.teacher_code === absence.teacher_code && e.day === day);
+    if (absence.periods !== null && absence.periods !== undefined) {
+      const wanted = new Set(absence.periods);
+      entries = entries.filter((e) => wanted.has(e.period));
+    }
+    entries.forEach((e) => {
+      slots.push({
+        day, period: e.period, subject: e.subject, class_name: e.class_name, room: e.room,
+        absent_teacher_code: absence.teacher_code,
+      });
+    });
+  });
+  return slots.sort((a, b) => periodSortIndex(a.period) - periodSortIndex(b.period));
+}
+
+function freeTeachersForPeriod(day, period, roster, timetable, absentCodes, alreadyAssignedThisPeriod) {
+  const busy = new Set(timetable.filter((e) => e.day === day && e.period === period).map((e) => e.teacher_code));
+  return roster.filter((t) => !absentCodes.has(t.code) && !busy.has(t.code) && !alreadyAssignedThisPeriod.has(t.code));
+}
+
+function subjectsTaught(teacherCode, timetable) {
+  return new Set(timetable.filter((e) => e.teacher_code === teacherCode).map((e) => e.subject));
+}
+
+function periodsTaught(teacherCode, day, timetable) {
+  return new Set(timetable.filter((e) => e.teacher_code === teacherCode && e.day === day).map((e) => e.period));
+}
+
+function fullPeriodsTaughtCount(teacherCode, day, timetable) {
+  return [...periodsTaught(teacherCode, day, timetable)].filter((p) => p !== FLEX_PERIOD).length;
+}
+
+function teachesFlexPeriod(teacherCode, day, timetable) {
+  return periodsTaught(teacherCode, day, timetable).has(FLEX_PERIOD);
+}
+
+function isBusyTeacher(teacherCode, day, timetable) {
+  const full = fullPeriodsTaughtCount(teacherCode, day, timetable);
+  const hasFlex = teachesFlexPeriod(teacherCode, day, timetable);
+  return full >= BUSY_FULL_PERIODS_ALONE || (hasFlex && full >= BUSY_FULL_PERIODS_WITH_FLEX);
+}
+
+function rankCandidates(slot, freeTeachers, timetable, fairnessCounts) {
+  fairnessCounts = fairnessCounts || {};
+  const scored = freeTeachers.map((t) => {
+    const taught = subjectsTaught(t.code, timetable);
+    const subjectMatch = taught.has(slot.subject) ? 0 : 1;
+    const recentCovers = fairnessCounts[t.code] || 0;
+    return { t, key: [subjectMatch, recentCovers, t.full_name] };
+  });
+  scored.sort((a, b) => {
+    if (a.key[0] !== b.key[0]) return a.key[0] - b.key[0];
+    if (a.key[1] !== b.key[1]) return a.key[1] - b.key[1];
+    return a.key[2] < b.key[2] ? -1 : a.key[2] > b.key[2] ? 1 : 0;
+  });
+  return scored.map((s) => s.t);
+}
+
+/* ============================== analytics.js (ported from analytics.py) ============================== */
+
+function nameFor(code, teachersByCode) {
+  const t = teachersByCode[code];
+  return t ? t.full_name : code;
+}
+
+function buildAnalytics(history, roster) {
+  const teachersByCode = {};
+  roster.forEach((t) => { teachersByCode[t.code] = t; });
+
+  const coverCounts = {};
+  const absenceDates = {};
+  const dayMatrix = {};
+
+  history.forEach((entry) => {
+    if (entry.covering_teacher) {
+      coverCounts[entry.covering_teacher] = (coverCounts[entry.covering_teacher] || 0) + 1;
+    }
+    if (entry.absent_teacher && entry.date) {
+      if (!absenceDates[entry.absent_teacher]) absenceDates[entry.absent_teacher] = new Set();
+      absenceDates[entry.absent_teacher].add(entry.date);
+    }
+    if (entry.absent_teacher && entry.day) {
+      if (!dayMatrix[entry.absent_teacher]) dayMatrix[entry.absent_teacher] = {};
+      const perDay = dayMatrix[entry.absent_teacher];
+      perDay[entry.day] = (perDay[entry.day] || 0) + 1;
+    }
+  });
+
+  const coverRows = Object.entries(coverCounts)
+    .map(([code, count]) => ({ code, full_name: nameFor(code, teachersByCode), count }))
+    .sort((a, b) => b.count - a.count || a.full_name.localeCompare(b.full_name));
+
+  const absenceRows = Object.entries(absenceDates)
+    .map(([code, dates]) => ({ code, full_name: nameFor(code, teachersByCode), count: dates.size }))
+    .sort((a, b) => b.count - a.count || a.full_name.localeCompare(b.full_name));
+
+  const matrixRows = Object.entries(dayMatrix).map(([code, dayCounts]) => {
+    const total = Object.values(dayCounts).reduce((s, v) => s + v, 0);
+    const [topDay, topCount] = Object.entries(dayCounts).sort((a, b) => b[1] - a[1])[0];
+    const flaggedDay = topCount >= 3 && topCount / total >= 0.5 ? topDay : null;
+    const row = { code, full_name: nameFor(code, teachersByCode), total, flagged_day: flaggedDay };
+    DAYS.forEach((d) => { row[d] = dayCounts[d] || 0; });
+    return row;
+  }).sort((a, b) => b.total - a.total || a.full_name.localeCompare(b.full_name));
+
+  return {
+    total_absence_days: Object.values(absenceDates).reduce((s, dates) => s + dates.size, 0),
+    total_covers: Object.values(coverCounts).reduce((s, c) => s + c, 0),
+    cover_counts: coverRows,
+    absence_counts: absenceRows,
+    day_of_week_matrix: matrixRows,
+  };
+}
+
+/* ============================== email_drafts.js (ported from email_drafts.py) ============================== */
+
+const BRAND = "#4f46e5";
+const BRAND_TINT = "#eef0fc";
+const INK = "#1f2330";
+const MUTED_C = "#6b7280";
+const BORDER_C = "#e5e7f0";
+const CARD_HEAD = "#f5f5fb";
+
+function escHtml(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function formatDateForDisplay(dateLabel) {
+  const d = new Date(dateLabel + "T00:00:00");
+  if (isNaN(d.getTime())) return dateLabel;
+  const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function htmlSectionFor(teacherName, entries, nameForCode) {
+  let rows = "";
+  if (entries.length === 0) {
+    rows = `<div style="color:${MUTED_C};font-size:13px;font-style:italic;">No cover required</div>`;
+  } else {
+    entries.forEach((a) => {
+      const details = [a.slot.class_name, a.slot.subject, a.slot.room].filter(Boolean).map(escHtml).join(", ");
+      rows += `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;"><tr>` +
+        `<td style="width:56px;vertical-align:top;padding-top:1px;">` +
+        `<span style="display:inline-block;background-color:${BRAND};color:#ffffff;font-size:12px;font-weight:700;padding:3px 9px;border-radius:6px;white-space:nowrap;">${escHtml(periodLabelFor(a.slot.period))}</span></td>` +
+        `<td style="vertical-align:top;font-size:14px;color:${INK};line-height:1.5;">` +
+        `<strong>${escHtml(nameForCode(a.covering_teacher_code))}</strong>` +
+        `<br><span style="color:${MUTED_C};font-size:13px;">${details}</span></td></tr></table>`;
+    });
+  }
+  return `<div style="border:1px solid ${BORDER_C};border-radius:10px;margin-bottom:14px;overflow:hidden;">` +
+    `<div style="background-color:${CARD_HEAD};border-left:4px solid ${BRAND};padding:10px 16px;font-weight:700;font-size:14px;color:${INK};">${escHtml(teacherName)}</div>` +
+    `<div style="padding:14px 16px 4px 16px;">${rows}</div></div>`;
+}
+
+function buildHtmlBody(orderedAbsences, assignmentsByAbsent, nameForCode, dayLabel, dateLabel, coverFolderUrl) {
+  let sectionsHtml = "";
+  orderedAbsences.forEach((absence) => {
+    const entries = (assignmentsByAbsent[absence.teacher_code] || []).slice()
+      .sort((a, b) => periodSortIndex(a.slot.period) - periodSortIndex(b.slot.period));
+    sectionsHtml += htmlSectionFor(nameForCode(absence.teacher_code), entries, nameForCode);
+  });
+
+  let folderBlock = "";
+  if (coverFolderUrl) {
+    folderBlock = `<tr><td style="padding:0 24px 12px 24px;">` +
+      `<a href="${escHtml(coverFolderUrl)}" style="display:inline-block;background-color:${BRAND_TINT};color:${BRAND};font-size:13px;font-weight:600;padding:8px 14px;border-radius:8px;text-decoration:none;">Cover files folder</a></td></tr>`;
+  }
+
+  const displayDate = formatDateForDisplay(dateLabel);
+  return `<div style="margin:0;padding:0;background-color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">` +
+    `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;">` +
+    `<tr><td style="background-color:${BRAND};padding:18px 24px;">` +
+    `<div style="color:#ffffff;font-size:20px;font-weight:700;">Cover Arrangements</div>` +
+    `<div style="color:#dcdaf8;font-size:13px;margin-top:2px;">${escHtml(dayLabel)}, ${escHtml(displayDate)}</div></td></tr>` +
+    `<tr><td style="padding:20px 24px 4px 24px;color:${INK};font-size:14px;line-height:1.6;">` +
+    `<p style="margin:0 0 12px 0;">Hi everyone,</p>` +
+    `<p style="margin:0 0 12px 0;">I hope you're all well.</p>` +
+    `<p style="margin:0;">Please read the email carefully and let me know promptly if you see any issues.</p></td></tr>` +
+    folderBlock +
+    `<tr><td style="padding:16px 24px 4px 24px;">${sectionsHtml}</td></tr>` +
+    `<tr><td style="padding:8px 24px 24px 24px;color:${INK};font-size:14px;">Many thanks and have a good day, everyone.</td></tr>` +
+    `</table></div>`;
+}
+
+/* ============================== Fake Api (mirrors app/api.py) ============================== */
+
+const FakeApi = (function () {
+  let roster = ROSTER.map((t) => ({ ...t }));
+  let teachersByCode = {};
+  roster.forEach((t) => { teachersByCode[t.code] = t; });
+
+  let day = null;
+  let dateLabel = null;
+  let absences = [];
+  let assignments = {}; // key: `${period}|${absentCode}` -> coveringCode
+  let alreadyAssignedByPeriod = {}; // period -> Set(coveringCode)
+  let sessionCoverCounts = {};
+
+  let coverFolderUrl = "";
+  let sessionLogFolderUrl = "";
+  let sessionLogSpreadsheetUrl = null;
+  let sheetUrls = ["https://docs.google.com/spreadsheets/d/FICTIONAL-MASTER-TIMETABLE/edit"];
+
+  function keyOf(period, absentCode) { return `${period}|${absentCode}`; }
+
+  function combinedFairnessCounts() {
+    const counts = {};
+    HISTORY.forEach((h) => {
+      const d = new Date(h.date);
+      const cutoff = new Date();
+      cutoff.setDate(cutoff.getDate() - 30);
+      if (d >= cutoff && h.covering_teacher) counts[h.covering_teacher] = (counts[h.covering_teacher] || 0) + 1;
+    });
+    Object.entries(sessionCoverCounts).forEach(([code, c]) => { counts[code] = (counts[code] || 0) + c; });
+    return counts;
+  }
+
+  function setAssignment(period, absentCode, coveringCode) {
+    const key = keyOf(period, absentCode);
+    const previous = assignments[key];
+    if (previous) {
+      alreadyAssignedByPeriod[period] && alreadyAssignedByPeriod[period].delete(previous);
+      sessionCoverCounts[previous] = Math.max(0, (sessionCoverCounts[previous] || 0) - 1);
+    }
+    assignments[key] = coveringCode;
+    if (!alreadyAssignedByPeriod[period]) alreadyAssignedByPeriod[period] = new Set();
+    alreadyAssignedByPeriod[period].add(coveringCode);
+    sessionCoverCounts[coveringCode] = (sessionCoverCounts[coveringCode] || 0) + 1;
+  }
+
+  function clearAssignment(period, absentCode) {
+    const key = keyOf(period, absentCode);
+    const coveringCode = assignments[key];
+    if (coveringCode) {
+      delete assignments[key];
+      alreadyAssignedByPeriod[period] && alreadyAssignedByPeriod[period].delete(coveringCode);
+      sessionCoverCounts[coveringCode] = Math.max(0, (sessionCoverCounts[coveringCode] || 0) - 1);
+    }
+  }
+
+  function invalidateAssignmentsCoveredBy(teacherCode) {
+    Object.entries(assignments).forEach(([key, coveringCode]) => {
+      if (coveringCode === teacherCode) {
+        const [period, absentCode] = key.split("|");
+        clearAssignment(isNaN(Number(period)) ? period : Number(period), absentCode);
+      }
+    });
+  }
+
+  function clearAssignmentsNoLongerNeededFor(absentCode, periods) {
+    if (periods === null || periods === undefined) return;
+    const wanted = new Set(periods);
+    Object.keys(assignments).forEach((key) => {
+      const [periodRaw, code] = key.split("|");
+      const period = isNaN(Number(periodRaw)) ? periodRaw : Number(periodRaw);
+      if (code === absentCode && !wanted.has(period)) clearAssignment(period, code);
+    });
+  }
+
+  function autoAssignUnconfirmedSlots() {
+    const slots = periodsNeedingCover(absences, TIMETABLE, day);
+    const absentCodes = new Set(absences.map((a) => a.teacher_code));
+    slots.forEach((slot) => {
+      const key = keyOf(slot.period, slot.absent_teacher_code);
+      if (assignments[key]) return;
+      const exclude = alreadyAssignedByPeriod[slot.period] || new Set();
+      const free = freeTeachersForPeriod(day, slot.period, roster, TIMETABLE, absentCodes, exclude);
+      if (free.length === 0) return;
+      const fairness = combinedFairnessCounts();
+      const ranked = rankCandidates(slot, free, TIMETABLE, fairness);
+      setAssignment(slot.period, slot.absent_teacher_code, ranked[0].code);
+    });
+  }
+
+  function todayIsoWeekday() {
+    const idx = new Date().getDay(); // 0 Sun .. 6 Sat
+    const map = { 1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday" };
+    return map[idx] || "Monday";
+  }
+
+  function resetSession() {
+    day = todayIsoWeekday();
+    dateLabel = new Date().toISOString().slice(0, 10);
+    absences = [];
+    assignments = {};
+    alreadyAssignedByPeriod = {};
+    sessionCoverCounts = {};
+    return getSessionState();
+  }
+
+  function teacherDict(t) { return { code: t.code, full_name: t.full_name, email: t.email }; }
+
+  function getSessionState() {
+    if (day === null) resetSession();
+    const slots = periodsNeedingCover(absences, TIMETABLE, day);
+    const absentCodes = new Set(absences.map((a) => a.teacher_code));
+    const fairness = combinedFairnessCounts();
+
+    let allConfirmed = true;
+    const slotViews = slots.map((slot) => {
+      const key = keyOf(slot.period, slot.absent_teacher_code);
+      const confirmedCode = assignments[key] || null;
+      const exclude = new Set(alreadyAssignedByPeriod[slot.period] || []);
+      if (confirmedCode) exclude.delete(confirmedCode);
+      const free = freeTeachersForPeriod(day, slot.period, roster, TIMETABLE, absentCodes, exclude);
+      const ranked = rankCandidates(slot, free, TIMETABLE, fairness);
+      if (!confirmedCode) allConfirmed = false;
+
+      const absentTeacher = teachersByCode[slot.absent_teacher_code];
+      const confirmedTeacher = confirmedCode ? teachersByCode[confirmedCode] : null;
+
+      const candidateViews = ranked.map((t) => {
+        const d = teacherDict(t);
+        d.matches_subject = subjectsTaught(t.code, TIMETABLE).has(slot.subject);
+        d.is_busy = isBusyTeacher(t.code, day, TIMETABLE);
+        d.full_periods_taught_today = fullPeriodsTaughtCount(t.code, day, TIMETABLE);
+        d.teaches_flex_today = teachesFlexPeriod(t.code, day, TIMETABLE);
+        return d;
+      });
+
+      return {
+        period: slot.period, subject: slot.subject, class_name: slot.class_name, room: slot.room,
+        absent_teacher_code: slot.absent_teacher_code,
+        absent_teacher_name: absentTeacher ? absentTeacher.full_name : slot.absent_teacher_code,
+        confirmed_covering_code: confirmedCode,
+        confirmed_covering_name: confirmedTeacher ? confirmedTeacher.full_name : null,
+        candidates: candidateViews,
+      };
+    });
+
+    const absenceViews = absences.map((a) => {
+      const t = teachersByCode[a.teacher_code];
+      return { teacher_code: a.teacher_code, teacher_name: t ? t.full_name : a.teacher_code, periods: a.periods };
+    });
+
+    return { day, date_label: dateLabel, absences: absenceViews, slots: slotViews, all_confirmed: allConfirmed && absences.length > 0 };
+  }
+
+  function showToast(msg) {
+    const el = document.getElementById("toast");
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add("show");
+    clearTimeout(el._t);
+    el._t = setTimeout(() => el.classList.remove("show"), 3600);
+  }
+
+  return {
+    async get_status() {
+      return { ready: true, needs_setup: false, sync_error: null, sync_warning: null, last_synced: "24 Aug 2026, 07:12", teacher_count: roster.length, entry_count: TIMETABLE.length };
+    },
+    async sync_now() { return this.get_status(); },
+    async get_settings() {
+      return {
+        sheet_urls: sheetUrls, cover_folder_url: coverFolderUrl, session_log_folder_url: sessionLogFolderUrl,
+        session_log_spreadsheet_url: sessionLogSpreadsheetUrl, last_synced: "24 Aug 2026, 07:12",
+        sync_error: null, sync_warning: null, teacher_count: roster.length, entry_count: TIMETABLE.length,
+      };
+    },
+    async save_settings(urls) {
+      sheetUrls = urls;
+      showToast("Prototype only — the fictional timetable below doesn't actually change.");
+      return this.get_settings();
+    },
+    async save_cover_folder_url(url) { coverFolderUrl = url; return this.get_settings(); },
+    async save_session_log_folder_url(url) {
+      sessionLogFolderUrl = url;
+      sessionLogSpreadsheetUrl = url ? "https://docs.google.com/spreadsheets/d/FICTIONAL-BACKUP-LOG/edit" : null;
+      const result = await this.get_settings();
+      result.session_log_error = null;
+      return result;
+    },
+    async open_external_url() {
+      showToast("In the real app this opens the actual Google Sheet in your browser — nothing to open here, it's fictional.");
+    },
+    async check_unfinished_session() { return { has_unfinished_session: false }; },
+    async get_staff() { return roster.map(teacherDict).sort((a, b) => a.full_name.localeCompare(b.full_name)); },
+    async save_staff_name(code, fullName) {
+      const t = teachersByCode[code];
+      if (t) t.full_name = fullName || code;
+      return this.get_staff();
+    },
+    async save_staff_email(code, email) {
+      const t = teachersByCode[code];
+      if (t) t.email = email;
+      return this.get_staff();
+    },
+    async get_teacher_roster() { return roster.map(teacherDict); },
+    async reset_session() { return resetSession(); },
+    async set_day(dayName) {
+      if (!DAYS.includes(dayName)) return getSessionState();
+      day = dayName; absences = []; assignments = {}; alreadyAssignedByPeriod = {}; sessionCoverCounts = {};
+      return getSessionState();
+    },
+    async get_teacher_schedule(teacherCode) {
+      if (day === null) resetSession();
+      return TIMETABLE.filter((e) => e.teacher_code === teacherCode && e.day === day)
+        .sort((a, b) => periodSortIndex(a.period) - periodSortIndex(b.period))
+        .map((e) => ({ period: e.period, subject: e.subject, class_name: e.class_name, room: e.room }));
+    },
+    async mark_absence(teacherCode, periods) {
+      if (day === null) resetSession();
+      absences = absences.filter((a) => a.teacher_code !== teacherCode);
+      absences.push({ teacher_code: teacherCode, day, periods: periods || null });
+      invalidateAssignmentsCoveredBy(teacherCode);
+      clearAssignmentsNoLongerNeededFor(teacherCode, periods || null);
+      autoAssignUnconfirmedSlots();
+      return getSessionState();
+    },
+    async remove_absence(teacherCode) {
+      absences = absences.filter((a) => a.teacher_code !== teacherCode);
+      Object.keys(assignments).forEach((key) => {
+        const [periodRaw, code] = key.split("|");
+        if (code === teacherCode) clearAssignment(isNaN(Number(periodRaw)) ? periodRaw : Number(periodRaw), code);
+      });
+      autoAssignUnconfirmedSlots();
+      return getSessionState();
+    },
+    async confirm_assignment(period, absentCode, coveringCode) {
+      setAssignment(period, absentCode, coveringCode);
+      return getSessionState();
+    },
+    async get_session_state() { return getSessionState(); },
+    async finalize_and_generate_drafts() {
+      const state = getSessionState();
+      if (!state.all_confirmed) return { error: "Every period needs a confirmed cover before generating emails." };
+
+      const slots = periodsNeedingCover(absences, TIMETABLE, day);
+      const assignmentObjs = slots.map((slot) => ({
+        slot, covering_teacher_code: assignments[keyOf(slot.period, slot.absent_teacher_code)],
+      }));
+
+      const nameForCode = (code) => (teachersByCode[code] ? teachersByCode[code].full_name : code);
+      const assignmentsByAbsent = {};
+      assignmentObjs.forEach((a) => {
+        (assignmentsByAbsent[a.slot.absent_teacher_code] = assignmentsByAbsent[a.slot.absent_teacher_code] || []).push(a);
+      });
+      const orderedAbsences = absences.slice().sort((a, b) => nameForCode(a.teacher_code).localeCompare(nameForCode(b.teacher_code)));
+
+      const displayDate = formatDateForDisplay(dateLabel);
+      const subject = `Cover arrangements — ${displayDate}`;
+      const htmlBody = buildHtmlBody(orderedAbsences, assignmentsByAbsent, nameForCode, day, dateLabel, coverFolderUrl);
+
+      const toNames = [];
+      const toEmails = [];
+      orderedAbsences.concat(assignmentObjs.map((a) => ({ teacher_code: a.covering_teacher_code })))
+        .forEach((entry) => {
+          const t = teachersByCode[entry.teacher_code];
+          if (t && t.email && !toEmails.includes(t.email)) { toNames.push(t.full_name); toEmails.push(t.email); }
+        });
+
+      assignmentObjs.forEach((a) => {
+        HISTORY.push({ date: dateLabel, day, period: a.slot.period, absent_teacher: a.slot.absent_teacher_code, covering_teacher: a.covering_teacher_code });
+      });
+
+      return {
+        mail_created: true, mail_recipients: toNames, mail_error: null,
+        missing_email_names: [], manual_draft: null,
+        assignments_recorded: assignmentObjs.length,
+        prototype_subject: subject, prototype_html: htmlBody,
+      };
+    },
+    async get_analytics() { return buildAnalytics(HISTORY, roster); },
+    async clear_analytics() { HISTORY = []; return buildAnalytics(HISTORY, roster); },
+  };
+})();
+
+/* ============================== Adapted frontend (from frontend/app.js) ============================== */
+
+let state = null;
+let roster = [];
+let teacherByName = {};
+let editingSlots = new Set();
+let expandedSlots = new Set();
+let editingAbsencePeriods = new Set();
+let teacherScheduleCache = {};
+let appWasVisibleBeforeSettings = true;
+
+function $(id) { return document.getElementById(id); }
+function show(id) { $(id).classList.remove("hidden"); }
+function hide(id) { $(id).classList.add("hidden"); }
+
+async function boot() {
+  await loadRoster();
+  state = await FakeApi.reset_session();
+  await FakeApi.mark_absence("LOKF", null);
+  await FakeApi.mark_absence("HWAT", null);
+  state = await FakeApi.get_session_state();
+  render();
+}
+
+async function loadRoster() {
+  roster = await FakeApi.get_teacher_roster();
+  teacherByName = {};
+  const options = $("teacher-options");
+  options.innerHTML = "";
+  roster.forEach((t) => {
+    teacherByName[t.full_name.toLowerCase()] = t;
+    const opt = document.createElement("option");
+    opt.value = t.full_name;
+    options.appendChild(opt);
+  });
+}
+
+function render() {
+  $("day-select").value = state.day;
+  renderAbsences();
+  renderSlots();
+  $("finalize-btn").disabled = !state.all_confirmed;
+  $("finalize-hint").textContent = state.all_confirmed
+    ? "Every period has a confirmed cover — ready to generate drafts."
+    : "Confirm a cover for every period to enable this.";
+}
+
+function renderAbsences() {
+  const list = $("absence-list");
+  list.innerHTML = "";
+  state.absences.forEach((a) => {
+    const wrap = document.createElement("div");
+    wrap.className = "absence-item";
+
+    const chip = document.createElement("div");
+    chip.className = "chip";
+    const periodsSuffix = a.periods
+      ? ` (${a.periods.slice().sort((x, y) => periodSortIndex(x) - periodSortIndex(y)).map(periodLabelFor).join(", ")})`
+      : "";
+    const nameSpan = document.createElement("span");
+    nameSpan.textContent = `${a.teacher_name}${periodsSuffix}`;
+    chip.appendChild(nameSpan);
+
+    const editBtn = document.createElement("button");
+    editBtn.className = "chip-edit";
+    editBtn.textContent = "periods";
+    editBtn.title = "Choose which periods they're absent for";
+    editBtn.onclick = () => toggleAbsencePeriodsEditor(a.teacher_code);
+    chip.appendChild(editBtn);
+
+    const removeBtn = document.createElement("button");
+    removeBtn.className = "remove";
+    removeBtn.textContent = "✕";
+    removeBtn.onclick = async () => { state = await FakeApi.remove_absence(a.teacher_code); render(); };
+    chip.appendChild(removeBtn);
+    wrap.appendChild(chip);
+
+    if (editingAbsencePeriods.has(a.teacher_code)) wrap.appendChild(buildAbsencePeriodsEditor(a));
+    list.appendChild(wrap);
+  });
+}
+
+async function toggleAbsencePeriodsEditor(teacherCode) {
+  if (editingAbsencePeriods.has(teacherCode)) { editingAbsencePeriods.delete(teacherCode); render(); return; }
+  if (!teacherScheduleCache[teacherCode]) teacherScheduleCache[teacherCode] = await FakeApi.get_teacher_schedule(teacherCode);
+  editingAbsencePeriods.add(teacherCode);
+  render();
+}
+
+function buildAbsencePeriodsEditor(absence) {
+  const schedule = teacherScheduleCache[absence.teacher_code] || [];
+  const box = document.createElement("div");
+  box.className = "periods-editor";
+  if (schedule.length === 0) { box.textContent = "No periods scheduled today."; return box; }
+
+  const selected = new Set(absence.periods ? absence.periods : schedule.map((s) => s.period));
+  const label = document.createElement("div");
+  label.className = "periods-editor-label";
+  label.textContent = `Which periods is ${absence.teacher_name} absent for?`;
+  box.appendChild(label);
+
+  const optionsRow = document.createElement("div");
+  optionsRow.className = "periods-editor-options";
+  schedule.forEach((entry) => {
+    const optLabel = document.createElement("label");
+    optLabel.className = "period-checkbox";
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = selected.has(entry.period);
+    checkbox.addEventListener("change", () => { if (checkbox.checked) selected.add(entry.period); else selected.delete(entry.period); });
+    optLabel.appendChild(checkbox);
+    optLabel.appendChild(document.createTextNode(` ${periodLabelFor(entry.period)} (${entry.subject})`));
+    optionsRow.appendChild(optLabel);
+  });
+  box.appendChild(optionsRow);
+
+  const actions = document.createElement("div");
+  actions.className = "periods-editor-actions";
+  const saveBtn = document.createElement("button");
+  saveBtn.className = "secondary";
+  saveBtn.textContent = "Save";
+  saveBtn.addEventListener("click", async () => {
+    const allPeriods = schedule.map((s) => s.period);
+    const chosen = allPeriods.filter((p) => selected.has(p));
+    const periodsArg = chosen.length === allPeriods.length ? null : chosen;
+    state = await FakeApi.mark_absence(absence.teacher_code, periodsArg);
+    editingAbsencePeriods.delete(absence.teacher_code);
+    render();
+  });
+  actions.appendChild(saveBtn);
+  const cancelBtn = document.createElement("button");
+  cancelBtn.className = "secondary";
+  cancelBtn.textContent = "Cancel";
+  cancelBtn.addEventListener("click", () => { editingAbsencePeriods.delete(absence.teacher_code); render(); });
+  actions.appendChild(cancelBtn);
+  box.appendChild(actions);
+  return box;
+}
+
+function renderSlots() {
+  const list = $("slot-list");
+  list.innerHTML = "";
+  if (state.slots.length === 0) { show("no-slots-message"); return; }
+  hide("no-slots-message");
+
+  state.slots.forEach((slot) => {
+    const key = `${slot.period}|${slot.absent_teacher_code}`;
+    const card = document.createElement("div");
+    card.className = "slot-card";
+
+    const periodLabel = slot.period === "Fl" ? "Flex Period" : `Period ${slot.period}`;
+    const header = document.createElement("div");
+    header.className = "slot-header";
+    header.innerHTML = `<div><div class="slot-title">${periodLabel} — ${slot.class_name || slot.subject} (${slot.subject})</div>` +
+      `<div class="slot-sub">${slot.absent_teacher_name} is out${slot.room ? " · " + slot.room : ""}</div></div>`;
+    card.appendChild(header);
+
+    if (slot.confirmed_covering_code && !editingSlots.has(key)) {
+      const banner = document.createElement("div");
+      banner.className = "confirmed-banner";
+      banner.innerHTML = `<span>✓ ${slot.confirmed_covering_name} is covering</span>`;
+      const changeBtn = document.createElement("button");
+      changeBtn.className = "secondary";
+      changeBtn.textContent = "Change";
+      changeBtn.onclick = () => { editingSlots.add(key); render(); };
+      banner.appendChild(changeBtn);
+      card.appendChild(banner);
+
+      const confirmedCandidate = slot.candidates.find((c) => c.code === slot.confirmed_covering_code);
+      const busyNote = buildBusyNote(confirmedCandidate);
+      if (busyNote) card.appendChild(busyNote);
+      const nextBest = buildNextBestRow(slot, key);
+      if (nextBest) card.appendChild(nextBest);
+    } else if (slot.candidates.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "empty-candidates";
+      empty.textContent = "No one is free this period — arrange this one manually.";
+      card.appendChild(empty);
+    } else {
+      card.appendChild(buildCandidateTable(slot, key));
+    }
+    list.appendChild(card);
+  });
+}
+
+function busyLoadSummary(c) {
+  const parts = [`${c.full_periods_taught_today} of 4 full periods`];
+  if (c.teaches_flex_today) parts.push("a Flex duty");
+  return parts.join(" + ");
+}
+
+function buildBusyNote(candidate) {
+  if (!candidate || !candidate.is_busy) return null;
+  const note = document.createElement("div");
+  note.className = "busy-note";
+  note.textContent = `⚠ ${candidate.full_name} is already teaching ${busyLoadSummary(candidate)} today — consider a Next Best option below.`;
+  return note;
+}
+
+function candidateLabel(c) {
+  let label = c.full_name;
+  if (c.matches_subject) label += " ★";
+  if (c.is_busy) label += " ⚠";
+  return label;
+}
+function candidateTitle(c) {
+  const parts = [c.matches_subject ? "Teaches this subject" : "Free this period"];
+  if (c.is_busy) parts.push(`packed day (${busyLoadSummary(c)})`);
+  return parts.join(", ") + " — click to assign instead";
+}
+
+function buildNextBestRow(slot, key) {
+  const alternates = slot.candidates.filter((c) => c.code !== slot.confirmed_covering_code).slice(0, 2);
+  if (alternates.length === 0) return null;
+  const row = document.createElement("div");
+  row.className = "next-best-row";
+  const label = document.createElement("span");
+  label.className = "next-best-label";
+  label.textContent = "Next best:";
+  row.appendChild(label);
+  alternates.forEach((c) => {
+    const chip = document.createElement("button");
+    chip.className = "next-best-chip" + (c.is_busy ? " busy" : "");
+    chip.textContent = candidateLabel(c);
+    chip.title = candidateTitle(c);
+    chip.addEventListener("click", async () => {
+      state = await FakeApi.confirm_assignment(slot.period, slot.absent_teacher_code, c.code);
+      editingSlots.delete(key);
+      render();
+    });
+    row.appendChild(chip);
+  });
+  return row;
+}
+
+function buildCandidateTable(slot, key) {
+  const recommended = slot.candidates.filter((c) => c.matches_subject);
+  const others = slot.candidates.filter((c) => !c.matches_subject);
+  const expanded = expandedSlots.has(key) || recommended.length === 0;
+
+  const table = document.createElement("table");
+  table.className = "candidate-table";
+  const tbody = document.createElement("tbody");
+
+  const makeRow = (c, isRecommended) => {
+    const row = document.createElement("tr");
+    row.className = "candidate-row" + (isRecommended ? " recommended" : "");
+    const nameCell = document.createElement("td");
+    nameCell.textContent = c.full_name;
+    const badgeCell = document.createElement("td");
+    badgeCell.className = "candidate-badge-cell";
+    if (isRecommended) {
+      const badge = document.createElement("span");
+      badge.className = "candidate-badge";
+      badge.textContent = "★ Teaches this subject";
+      badgeCell.appendChild(badge);
+    }
+    if (c.is_busy) {
+      const busyBadge = document.createElement("span");
+      busyBadge.className = "candidate-badge busy";
+      busyBadge.textContent = `⚠ Packed day (${busyLoadSummary(c)})`;
+      badgeCell.appendChild(busyBadge);
+    }
+    const actionCell = document.createElement("td");
+    const btn = document.createElement("button");
+    btn.className = "secondary";
+    btn.textContent = "Cover";
+    btn.addEventListener("click", async () => {
+      state = await FakeApi.confirm_assignment(slot.period, slot.absent_teacher_code, c.code);
+      editingSlots.delete(key);
+      render();
+    });
+    actionCell.appendChild(btn);
+    row.appendChild(nameCell);
+    row.appendChild(badgeCell);
+    row.appendChild(actionCell);
+    return row;
+  };
+
+  recommended.forEach((c) => tbody.appendChild(makeRow(c, true)));
+  if (others.length > 0) {
+    if (expanded) others.forEach((c) => tbody.appendChild(makeRow(c, false)));
+    if (recommended.length > 0) {
+      const toggleRow = document.createElement("tr");
+      toggleRow.className = "candidate-toggle-row";
+      const toggleCell = document.createElement("td");
+      toggleCell.colSpan = 3;
+      const toggleBtn = document.createElement("button");
+      toggleBtn.className = "link-btn";
+      toggleBtn.textContent = expanded ? "Hide other free teachers" : `Show ${others.length} other free teacher${others.length === 1 ? "" : "s"}`;
+      toggleBtn.addEventListener("click", () => {
+        if (expandedSlots.has(key)) expandedSlots.delete(key); else expandedSlots.add(key);
+        render();
+      });
+      toggleCell.appendChild(toggleBtn);
+      toggleRow.appendChild(toggleCell);
+      tbody.appendChild(toggleRow);
+    }
+  }
+  table.appendChild(tbody);
+  return table;
+}
+
+async function addAbsence() {
+  const input = $("teacher-search");
+  const name = input.value.trim();
+  if (!name) return;
+  const teacher = teacherByName[name.toLowerCase()];
+  if (!teacher) { alert(`No teacher found named "${name}". Pick one from the list.`); return; }
+  state = await FakeApi.mark_absence(teacher.code, null);
+  input.value = "";
+  render();
+}
+
+async function copyText(text, button) {
+  const original = button.textContent;
+  try { await navigator.clipboard.writeText(text); }
+  catch (err) {
+    const fallback = document.createElement("textarea");
+    fallback.value = text; fallback.style.position = "fixed"; fallback.style.opacity = "0";
+    document.body.appendChild(fallback); fallback.select(); document.execCommand("copy");
+    document.body.removeChild(fallback);
+  }
+  button.textContent = "Copied!";
+  setTimeout(() => { button.textContent = original; }, 1500);
+}
+
+function renderResult(result) {
+  const body = $("result-body");
+  body.innerHTML = "";
+  if (result.error) {
+    body.innerHTML = `<p class="result-line fail">${result.error}</p>`;
+    show("result-modal");
+    return;
+  }
+
+  const lines = [];
+  lines.push(`<p class="result-line ok">✓ In the real app, one draft is created in Outlook, addressed to ${result.mail_recipients.join(", ")}.</p>`);
+  lines.push(`<p class="hint">Nothing is sent here — below is exactly what that email would look like.</p>`);
+  const summary = document.createElement("div");
+  summary.innerHTML = lines.join("");
+  body.appendChild(summary);
+
+  const box = document.createElement("div");
+  box.className = "manual-draft";
+  const subj = document.createElement("p");
+  subj.className = "result-line";
+  subj.innerHTML = `<strong>Subject:</strong> ${result.prototype_subject}`;
+  box.appendChild(subj);
+  const frame = document.createElement("iframe");
+  frame.srcdoc = result.prototype_html;
+  box.appendChild(frame);
+  body.appendChild(box);
+
+  show("result-modal");
+}
+
+function renderBarChart(containerId, rows) {
+  const container = $(containerId);
+  container.innerHTML = "";
+  if (rows.length === 0) { container.innerHTML = '<p class="hint">No data yet.</p>'; return; }
+  const max = Math.max(...rows.map((r) => r.count));
+  rows.forEach((r) => {
+    const row = document.createElement("div");
+    row.className = "bar-row";
+    const label = document.createElement("div");
+    label.className = "bar-label";
+    label.textContent = r.full_name;
+    const track = document.createElement("div");
+    track.className = "bar-track";
+    const fill = document.createElement("div");
+    fill.className = "bar-fill";
+    fill.style.width = `${(r.count / max) * 100}%`;
+    track.appendChild(fill);
+    const count = document.createElement("div");
+    count.className = "bar-count";
+    count.textContent = r.count;
+    row.appendChild(label); row.appendChild(track); row.appendChild(count);
+    container.appendChild(row);
+  });
+}
+
+function renderHeatmap(containerId, rows) {
+  const container = $(containerId);
+  container.innerHTML = "";
+  if (rows.length === 0) { container.innerHTML = '<p class="hint">No data yet.</p>'; return; }
+  const maxCell = Math.max(...rows.flatMap((r) => DAYS.map((d) => r[d])));
+
+  const table = document.createElement("table");
+  table.className = "heatmap-table";
+  const headerRow = document.createElement("tr");
+  headerRow.innerHTML = "<th>Teacher</th>" + DAYS.map((d) => `<th>${d.slice(0, 3)}</th>`).join("") + "<th>Total</th>";
+  table.appendChild(headerRow);
+
+  rows.forEach((r) => {
+    const tr = document.createElement("tr");
+    const nameCell = document.createElement("td");
+    if (r.flagged_day) nameCell.innerHTML = `${r.full_name} <span class="flag-badge">mostly ${r.flagged_day}</span>`;
+    else nameCell.textContent = r.full_name;
+    tr.appendChild(nameCell);
+    DAYS.forEach((d) => {
+      const cell = document.createElement("td");
+      const val = r[d];
+      cell.textContent = val || "";
+      if (val > 0 && maxCell > 0) cell.style.background = `rgba(79, 70, 229, ${0.15 + 0.65 * (val / maxCell)})`;
+      tr.appendChild(cell);
+    });
+    const totalCell = document.createElement("td");
+    totalCell.textContent = r.total;
+    totalCell.className = "heatmap-total";
+    tr.appendChild(totalCell);
+    table.appendChild(tr);
+  });
+  container.appendChild(table);
+}
+
+function renderAnalytics(result) {
+  if (result.total_absence_days === 0 && result.total_covers === 0) {
+    $("analytics-summary").textContent = "";
+    show("analytics-empty"); hide("analytics-content");
+  } else {
+    hide("analytics-empty"); show("analytics-content");
+    $("analytics-summary").textContent = `${result.total_absence_days} absence day${result.total_absence_days === 1 ? "" : "s"} recorded — ${result.total_covers} period${result.total_covers === 1 ? "" : "s"} covered, all time.`;
+    renderBarChart("cover-chart", result.cover_counts);
+    renderBarChart("absence-chart", result.absence_counts);
+    renderHeatmap("day-heatmap", result.day_of_week_matrix);
+  }
+}
+
+async function openAnalytics() {
+  const result = await FakeApi.get_analytics();
+  renderAnalytics(result);
+  show("analytics-modal");
+}
+
+async function clearAnalytics() {
+  if (!confirm("This will permanently delete all recorded cover-assignment history (used for Analytics). This cannot be undone. Continue?")) return;
+  if (!confirm("Are you absolutely sure? This is your last chance to back out.")) return;
+  const result = await FakeApi.clear_analytics();
+  renderAnalytics(result);
+}
+
+async function openSettings() {
+  const settings = await FakeApi.get_settings();
+  $("sheet-urls-input").value = settings.sheet_urls.join("\n");
+  $("cover-folder-url-input").value = settings.cover_folder_url || "";
+  $("session-log-folder-url-input").value = settings.session_log_folder_url || "";
+  renderSessionLogSpreadsheetLink(settings.session_log_spreadsheet_url);
+  $("staff-search-input").value = "";
+  renderSyncStatus(settings);
+  await renderStaffTable();
+  show("settings-modal");
+}
+
+function renderSessionLogSpreadsheetLink(url) {
+  const el = $("session-log-spreadsheet-link");
+  if (!url) { hide("session-log-spreadsheet-link"); return; }
+  el.innerHTML = "";
+  const link = document.createElement("button");
+  link.className = "link-btn";
+  link.textContent = "Open the cover log spreadsheet";
+  link.addEventListener("click", () => FakeApi.open_external_url(url));
+  el.appendChild(link);
+  show("session-log-spreadsheet-link");
+}
+
+async function saveCoverFolderUrl() { await FakeApi.save_cover_folder_url($("cover-folder-url-input").value.trim()); }
+
+async function saveSessionLogFolderUrl() {
+  const input = $("session-log-folder-url-input");
+  const original = input.value;
+  input.disabled = true;
+  const settings = await FakeApi.save_session_log_folder_url(original.trim());
+  input.disabled = false;
+  renderSessionLogSpreadsheetLink(settings.session_log_spreadsheet_url);
+}
+
+function renderSyncStatus(settings) {
+  const parts = [];
+  parts.push(`Last synced ${settings.last_synced} — ${settings.teacher_count} teachers, ${settings.entry_count} schedule entries.`);
+  $("sync-status").textContent = parts.join(" ");
+}
+
+let staffCache = [];
+
+async function renderStaffTable() {
+  staffCache = await FakeApi.get_staff();
+  renderStaffRows($("staff-search-input").value);
+}
+
+function renderStaffRows(filterTerm) {
+  const container = $("staff-table");
+  container.innerHTML = "";
+  const term = (filterTerm || "").trim().toLowerCase();
+  const staff = term ? staffCache.filter((t) => t.code.toLowerCase().includes(term) || (t.full_name || "").toLowerCase().includes(term)) : staffCache;
+  if (staff.length === 0) { container.innerHTML = '<p class="hint">No staff match your search.</p>'; return; }
+
+  const table = document.createElement("table");
+  table.className = "staff-grid";
+  const headerRow = document.createElement("tr");
+  headerRow.innerHTML = "<th>Code</th><th>Name</th><th>Email</th>";
+  table.appendChild(headerRow);
+
+  staff.forEach((t) => {
+    const row = document.createElement("tr");
+    const codeCell = document.createElement("td");
+    codeCell.textContent = t.code;
+    const nameCell = document.createElement("td");
+    const nameInput = document.createElement("input");
+    nameInput.type = "text"; nameInput.value = t.full_name || ""; nameInput.placeholder = t.code;
+    nameInput.addEventListener("change", async () => { await FakeApi.save_staff_name(t.code, nameInput.value.trim()); });
+    nameCell.appendChild(nameInput);
+    const emailCell = document.createElement("td");
+    const emailInput = document.createElement("input");
+    emailInput.type = "email"; emailInput.value = t.email || ""; emailInput.placeholder = "email@school.edu";
+    emailInput.addEventListener("change", async () => { await FakeApi.save_staff_email(t.code, emailInput.value.trim()); });
+    emailCell.appendChild(emailInput);
+    row.appendChild(codeCell); row.appendChild(nameCell); row.appendChild(emailCell);
+    table.appendChild(row);
+  });
+  container.appendChild(table);
+}
+
+async function saveAndSync() {
+  const raw = $("sheet-urls-input").value;
+  const urls = raw.split("\n").map((u) => u.trim()).filter((u) => u.length > 0);
+  $("sync-status").textContent = "Syncing…";
+  const settings = await FakeApi.save_settings(urls);
+  renderSyncStatus(settings);
+  await renderStaffTable();
+}
+
+async function closeSettingsAndRefresh() {
+  hide("settings-modal");
+  await loadRoster();
+  state = await FakeApi.get_session_state();
+  render();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  boot();
+
+  $("add-absence-btn").addEventListener("click", addAbsence);
+  $("teacher-search").addEventListener("keydown", (e) => { if (e.key === "Enter") addAbsence(); });
+  $("day-select").addEventListener("change", async (e) => {
+    editingSlots = new Set(); expandedSlots = new Set(); editingAbsencePeriods = new Set(); teacherScheduleCache = {};
+    state = await FakeApi.set_day(e.target.value);
+    render();
+  });
+  $("finalize-btn").addEventListener("click", async () => {
+    const result = await FakeApi.finalize_and_generate_drafts();
+    renderResult(result);
+  });
+  $("close-result-btn").addEventListener("click", () => {
+    hide("result-modal");
+    editingSlots = new Set(); expandedSlots = new Set(); editingAbsencePeriods = new Set(); teacherScheduleCache = {};
+    render();
+  });
+
+  $("analytics-btn").addEventListener("click", openAnalytics);
+  $("clear-analytics-btn").addEventListener("click", clearAnalytics);
+  $("close-analytics-btn").addEventListener("click", () => hide("analytics-modal"));
+  $("settings-btn").addEventListener("click", openSettings);
+  $("save-sync-btn").addEventListener("click", saveAndSync);
+  $("close-settings-btn").addEventListener("click", closeSettingsAndRefresh);
+  $("close-settings-btn-top").addEventListener("click", closeSettingsAndRefresh);
+  $("cover-folder-url-input").addEventListener("change", saveCoverFolderUrl);
+  $("session-log-folder-url-input").addEventListener("change", saveSessionLogFolderUrl);
+  $("staff-search-input").addEventListener("input", (e) => renderStaffRows(e.target.value));
+});
+</script>
+</body>
+</html>
