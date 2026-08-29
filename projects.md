@@ -7,7 +7,7 @@ title: Digital Innovation Projects
   <span class="section-eyebrow">Digital Innovation Projects</span>
   <h1>Tools I have built</h1>
   <p>
-    Five working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, two real tools I built and run for my own IB coordination work, one being piloted with my school's assistant principals, and one for leadership systems.
+    Five working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, two real tools I built and run for my own IB coordination work, one for automatic substitute-cover matching, and one for leadership systems.
   </p>
 </div>
 
@@ -40,9 +40,9 @@ title: Digital Innovation Projects
 
 <div class="feature-card">
   <div class="fc-body">
-    <span class="fc-eyebrow">Piloting · For School Leadership</span>
+    <span class="fc-eyebrow">For School Leadership</span>
     <h3>Cover Teachers</h3>
-    <p>When a teacher calls in sick, this reads the school's master timetable and automatically works out who should cover each period — subject-matched first, then balanced by recent cover load, with busy-teacher warnings and one-click "next best" alternatives, all rolled into one consolidated email draft. Currently being piloted with my school's assistant principals. This is an interactive prototype seeded entirely with fictional teachers and timetables so the real interface can be explored safely.</p>
+    <p>When a teacher calls in sick, this reads the school's master timetable and automatically works out who should cover each period — subject-matched first, then balanced by recent cover load, with busy-teacher warnings and one-click "next best" alternatives, all rolled into one consolidated email draft. This is an interactive prototype seeded entirely with fictional teachers and timetables so the real interface can be explored safely.</p>
     <a href="{{ '/cover-teachers/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open Cover Teachers →</a>
   </div>
 </div>
