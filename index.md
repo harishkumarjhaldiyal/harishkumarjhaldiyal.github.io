@@ -65,7 +65,7 @@ title: Harish Kumar — Mathematics Teacher
 <div class="intro-card" style="margin-bottom: 1rem;">
   <span class="section-eyebrow">Interactive Tools</span>
   <h2 style="margin-top: 0.4rem;">Tools I have built</h2>
-  <p style="margin-bottom: 0;">Two working applications that put my thinking about teaching and school leadership into practice — one for students, one for leadership systems.</p>
+  <p style="margin-bottom: 0;">Three working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, one a real tool I built and use for my own IB Extended Essay coordination, and one for leadership systems.</p>
 </div>
 
 <div class="feature-card feature-ia">
@@ -74,6 +74,15 @@ title: Harish Kumar — Mathematics Teacher
     <h3>IB Math IA Compass</h3>
     <p>An intelligent, interactive guide that walks IB Mathematics students through the Internal Assessment — discovering a topic, forging a sharp research question, self-checking against the assessment criteria, and learning from worked examples. Built to support all four IB Mathematics pathways: Analysis &amp; Approaches and Applications &amp; Interpretation, at both Standard and Higher Level.</p>
     <a href="{{ '/ia-compass/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open IA Compass →</a>
+  </div>
+</div>
+
+<div class="feature-card">
+  <div class="fc-body">
+    <span class="fc-eyebrow">Production Tool · For Coordinators</span>
+    <h3>IBDP Extended Essay Coordination Platform</h3>
+    <p>A production system I built and run for my own IB Diploma Extended Essay coordination — Gemini-powered integrity detection with exact per-revision document diffing, a five-tier chase-escalation workflow, IB Criterion A–E marking, and cohort-wide analytics, backed by 1,900+ automated tests. This is an interactive prototype seeded entirely with fictional students and supervisors so the real interface can be explored safely.</p>
+    <a href="{{ '/ee-platform/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open EE Coordination Platform →</a>
   </div>
 </div>
 
@@ -94,6 +103,7 @@ title: Harish Kumar — Mathematics Teacher
     <a href="{{ '/philosophy.html' | relative_url }}" class="btn-primary">Teaching Philosophy</a>
     <a href="{{ '/resources.html' | relative_url }}" class="btn-outline">Teaching Resources</a>
     <a href="{{ '/ia-compass/' | relative_url }}" target="_blank" rel="noopener" class="btn-outline">IB Math IA Compass</a>
+    <a href="{{ '/ee-platform/' | relative_url }}" target="_blank" rel="noopener" class="btn-outline">EE Coordination Platform</a>
     <a href="{{ '/contact.html' | relative_url }}" class="btn-outline">Get in Touch</a>
   </div>
 </div>
