@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Integrity Tracker — Interactive Prototype</title>
+<meta name="description" content="An automated, mechanical integrity-monitoring tool for IB Math Internal Assessments — interactive prototype, entirely fictional data.">
+<style>
+:root {
+  --navy: #0f172a;
+  --navy-soft: #1e293b;
+  --accent: #6d28d9;
+  --accent-soft: #f3f0ff;
+  --accent-dark: #5b21b6;
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --border: #e5e9f0;
+  --text: #1e293b;
+  --text-muted: #64748b;
+  --text-faint: #94a3b8;
+  --green: #15803d;
+  --green-bg: #dcfce7;
+  --amber: #b45309;
+  --amber-bg: #fef3c7;
+  --red: #b91c1c;
+  --red-bg: #fee2e2;
+  --slate-bg: #f1f5f9;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+}
+* , *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  padding-bottom: 64px; /* room for fixed disclaimer bar */
+}
+a { color: inherit; }
+button { font-family: inherit; }
+
+/* ── Top bar ── */
+#topbar {
+  background: var(--navy);
+  color: #fff;
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+#topbar .brand { display: flex; align-items: baseline; gap: 10px; }
+#topbar .brand h1 { font-size: 17px; font-weight: 700; margin: 0; letter-spacing: -0.2px; }
+#topbar .brand .badge {
+  background: var(--accent);
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+#topbar a.back {
+  color: #cbd5e1;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+#topbar a.back:hover { color: #fff; }
+
+/* ── Hero ── */
+.hero {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 40px 28px 8px;
+}
+.hero .eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.hero h2 { font-size: 30px; margin: 0 0 12px; color: var(--navy); letter-spacing: -0.4px; }
+.hero p { font-size: 15.5px; color: var(--text-muted); max-width: 720px; margin: 0; }
+
+/* ── How it works ── */
+.how {
+  max-width: 1080px;
+  margin: 28px auto 0;
+  padding: 0 28px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+}
+.how-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+}
+.how-card .ic { font-size: 20px; margin-bottom: 8px; }
+.how-card h3 { font-size: 14px; margin: 0 0 6px; color: var(--navy); }
+.how-card p { font-size: 13px; color: var(--text-muted); margin: 0; }
+
+.note-strip {
+  max-width: 1080px;
+  margin: 18px auto 0;
+  padding: 12px 20px;
+  margin-left: 28px;
+  margin-right: 28px;
+  background: var(--accent-soft);
+  border: 1px solid #ddd6fe;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  color: var(--accent-dark);
+}
+
+/* ── Table section ── */
+.table-section {
+  max-width: 1200px;
+  margin: 32px auto 0;
+  padding: 0 28px;
+}
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.table-toolbar h3 { font-size: 15px; margin: 0; color: var(--navy); }
+.table-toolbar .actions { display: flex; gap: 8px; }
+.btn {
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 9px 15px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent-dark); }
+.btn-ghost { background: #fff; color: var(--navy); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--slate-bg); }
+.btn:active { transform: translateY(1px); }
+.btn[disabled] { opacity: 0.6; cursor: not-allowed; }
+
+.table-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+  box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+}
+table { border-collapse: collapse; width: 100%; min-width: 1150px; font-size: 12.5px; }
+thead th {
+  background: var(--navy-soft);
+  color: #fff;
+  text-align: left;
+  padding: 10px 12px;
+  font-weight: 600;
+  font-size: 11.5px;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:nth-child(even) { background: #fafbfd; }
+tbody tr:hover { background: var(--accent-soft); }
+.student-name { font-weight: 700; color: var(--navy); white-space: nowrap; }
+.teacher { color: var(--text-muted); white-space: nowrap; }
+.doc-link {
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font: inherit;
+  padding: 0;
+  white-space: nowrap;
+}
+.doc-link:hover { color: var(--accent-dark); }
+.no-doc { color: var(--text-faint); font-style: italic; }
+
+.flag {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: normal;
+  line-height: 1.45;
+  min-width: 150px;
+  max-width: 240px;
+}
+.flag-clean { background: var(--green-bg); color: var(--green); }
+.flag-review { background: var(--red-bg); color: var(--red); }
+.flag-reviewed { background: var(--slate-bg); color: var(--text-muted); }
+.flag-none { background: var(--slate-bg); color: var(--text-faint); font-style: italic; }
+
+.reviewed-cell { white-space: nowrap; }
+.reviewed-cell label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.reviewed-cell input[type=checkbox] { cursor: pointer; }
+.reviewed-date { color: var(--text-faint); font-size: 11px; }
+
+.last-checked { color: var(--text-faint); font-size: 11.5px; white-space: nowrap; }
+.notes-cell { color: var(--text-muted); max-width: 160px; }
+
+/* ── Toast ── */
+#toast {
+  position: fixed;
+  left: 50%;
+  bottom: 78px;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--navy);
+  color: #fff;
+  padding: 13px 20px;
+  border-radius: var(--radius-md);
+  font-size: 13.5px;
+  max-width: 480px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 1000;
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+#toast strong { color: #c4b5fd; }
+
+/* ── Modal ── */
+#modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(15,23,42,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+  padding: 20px;
+}
+#modal-backdrop.show { display: flex; }
+#modal {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 440px;
+  padding: 24px 26px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+#modal h4 { margin: 0 0 6px; font-size: 16px; color: var(--navy); }
+#modal p.hint { margin: 0 0 16px; font-size: 12.5px; color: var(--text-muted); }
+#modal label { display: block; font-size: 12.5px; font-weight: 600; color: var(--navy); margin: 12px 0 5px; }
+#modal input {
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-family: inherit;
+}
+#modal input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+
+/* ── Tech footer ── */
+.tech-footer {
+  max-width: 1080px;
+  margin: 36px auto 0;
+  padding: 20px 28px;
+  color: var(--text-faint);
+  font-size: 12px;
+}
+.tech-footer span.k { color: var(--text-muted); font-weight: 600; }
+
+/* ── Fixed disclaimer bar ── */
+#disclaimer {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 999;
+  background: var(--navy);
+  color: #e2e8f0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  padding: 10px 16px;
+  text-align: center;
+  border-top: 2px solid var(--accent);
+}
+#disclaimer strong { color: #c4b5fd; }
+
+@media (max-width: 640px) {
+  .hero h2 { font-size: 24px; }
+  .table-toolbar { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="brand">
+    <h1>Integrity Tracker</h1>
+    <span class="badge">Prototype</span>
+  </div>
+  <a class="back" href="../" >← Back to portfolio</a>
+</div>
+
+<div class="hero">
+  <span class="eyebrow">For All Teachers</span>
+  <h2>Automated Integrity Monitoring</h2>
+  <p>A live-monitoring tool I built for the whole high school. For every student, it runs three mechanical checks against their linked Google Docs, using only Drive/Docs API data, and keeps re-checking on a five-minute cycle so nothing goes stale.</p>
+</div>
+
+<div class="how">
+  <div class="how-card">
+    <div class="ic">📈</div>
+    <h3>Copy-paste / word-count jump</h3>
+    <p>Fetches each Drive revision's real historical text and computes an exact word-count delta between consecutive revisions — flagged as a date range to review, not an accusation.</p>
+  </div>
+  <div class="how-card">
+    <div class="ic">🌐</div>
+    <h3>External collaborator</h3>
+    <p>Lists each document's Drive permissions and flags any account outside the school's own domain.</p>
+  </div>
+  <div class="how-card">
+    <div class="ic">🌙</div>
+    <h3>Late-night editing pattern</h3>
+    <p>Converts each revision's timestamp to local time and flags anything landing in the 11pm–6am window.</p>
+  </div>
+</div>
+
+<div class="note-strip">
+  Ticking a <strong>Reviewed</strong> box doesn't silence a flag forever — it just means only <em>new</em> evidence after that date re-triggers it. Try it below.
+</div>
+
+<div class="table-section">
+  <div class="table-toolbar">
+    <h3>IA Tracker</h3>
+    <div class="actions">
+      <button class="btn btn-ghost" id="run-check-btn">↻ Run Check</button>
+      <button class="btn btn-primary" id="add-student-btn">+ Add Student / Link a Document</button>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Student</th>
+          <th>Supervising Teacher</th>
+          <th>IA Draft</th>
+          <th>Notes</th>
+          <th>Proposal</th>
+          <th>Copy-Paste Flag</th>
+          <th>Reviewed</th>
+          <th>External Collaborator Flag</th>
+          <th>Reviewed</th>
+          <th>Late-Night Flag</th>
+          <th>Reviewed</th>
+          <th>Last Checked</th>
+          <th>Teacher Notes</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="tech-footer">
+  <p><span class="k">Real implementation:</span> Google Sheets API · Google Drive API · Google Apps Script (5-minute trigger, batched with checkpointing to survive Apps Script's execution-time cap) · Python reference implementation · retry-with-backoff throughout, since individual Drive revision fetches turned out to be flaky enough in practice to need it.</p>
+</div>
+
+<div id="toast"></div>
+
+<div id="modal-backdrop">
+  <div id="modal">
+    <h4>Add a student</h4>
+    <p class="hint">This prototype isn't wired to Google Drive or Sheets — nothing typed here is saved or checked.</p>
+    <label for="m-name">Student name</label>
+    <input id="m-name" type="text" placeholder="e.g. Jordan Lee">
+    <label for="m-doc">IA Draft link</label>
+    <input id="m-doc" type="text" placeholder="Paste a Google Docs link…">
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="modal-cancel">Cancel</button>
+      <button class="btn btn-primary" id="modal-submit">Save</button>
+    </div>
+  </div>
+</div>
+
+<div id="disclaimer">
+  <strong>Interactive prototype</strong> — built and maintained by Harish Kumar · every student, teacher, and document shown here is entirely fictional · not connected to any live spreadsheet, Google account, or Drive/Sheets API.
+</div>
+
+<script>
+const PROTOTYPE_MSG = "This is a prototype for demonstration only. The real Integrity Tracker runs against a live, connected Google Sheet and real Google Docs — this preview isn't connected to anything.";
+
+const students = [
+  {
+    name: "Ethan Wu", teacher: "Ms. Chen",
+    docs: { "IA Draft": "1a9F-demoDocIdEthanWu0000001", "Notes": "1a9F-demoDocIdEthanWu0000002", "Proposal": "1a9F-demoDocIdEthanWu0000003" },
+    cp: { flag: "Clean", reviewed: false, reviewedDate: null },
+    collab: { flag: "Clean", reviewed: false, reviewedDate: null },
+    ln: { flag: "Clean", reviewed: false, reviewedDate: null },
+    lastChecked: "2026-08-24 09:05 HKT",
+    notes: "",
+  },
+  {
+    name: "Priya Nair", teacher: "Ms. Chen",
+    docs: { "IA Draft": "1b7K-demoDocIdPriyaNair000001", "Notes": "1b7K-demoDocIdPriyaNair000002", "Proposal": "" },
+    cp: { flag: "Review — IA Draft: +912 words between 2026-01-14 and 2026-01-15", reviewed: false, reviewedDate: null },
+    collab: { flag: "Clean", reviewed: false, reviewedDate: null },
+    ln: { flag: "2 edit(s) in 11pm–6am HKT — IA Draft: 2026-01-10 23:47, 2026-01-22 00:12", reviewed: false, reviewedDate: null },
+    lastChecked: "2026-08-24 09:06 HKT",
+    notes: "Discussed with student 22 Jan.",
+  },
+  {
+    name: "Marcus Chen", teacher: "Mr. Osei",
+    docs: { "IA Draft": "1c2M-demoDocIdMarcusChen00001", "Notes": "1c2M-demoDocIdMarcusChen00002", "Proposal": "1c2M-demoDocIdMarcusChen00003" },
+    cp: { flag: "Clean since last review", reviewed: true, reviewedDate: "2026-07-30" },
+    collab: { flag: "Outside-domain access — IA Draft: marcus.tutor@gmail.com", reviewed: false, reviewedDate: null },
+    ln: { flag: "Clean", reviewed: false, reviewedDate: null },
+    lastChecked: "2026-08-24 09:06 HKT",
+    notes: "",
+  },
+  {
+    name: "Sofia Alvarez", teacher: "Dr. Patel",
+    docs: { "IA Draft": "1d8P-demoDocIdSofiaAlvarez001", "Notes": "1d8P-demoDocIdSofiaAlvarez002", "Proposal": "1d8P-demoDocIdSofiaAlvarez003" },
+    cp: { flag: "Clean", reviewed: false, reviewedDate: null },
+    collab: { flag: "Clean", reviewed: false, reviewedDate: null },
+    ln: { flag: "1 edit(s) in 11pm–6am HKT — Notes: 2026-02-03 23:58", reviewed: false, reviewedDate: null },
+    lastChecked: "2026-08-24 09:07 HKT",
+    notes: "",
+  },
+  {
+    name: "Daniel Osei", teacher: "Dr. Patel",
+    docs: { "IA Draft": "", "Notes": "", "Proposal": "" },
+    cp: { flag: "No document linked", reviewed: false, reviewedDate: null },
+    collab: { flag: "No document linked", reviewed: false, reviewedDate: null },
+    ln: { flag: "No document linked", reviewed: false, reviewedDate: null },
+    lastChecked: "—",
+    notes: "Waiting on draft link.",
+  },
+];
+
+function flagClass(check, text) {
+  if (text === "No document linked") return "flag flag-none";
+  if (text.startsWith("Clean since last review")) return "flag flag-reviewed";
+  if (text === "Clean") return "flag flag-clean";
+  return "flag flag-review";
+}
+
+function docCell(id) {
+  if (!id) return '<span class="no-doc">— not linked —</span>';
+  return `<button class="doc-link" onclick="showToast()">Open ↗</button>`;
+}
+
+function reviewedCell(rowIdx, key, check) {
+  const id = `rev-${rowIdx}-${key}`;
+  const dateHtml = check.reviewedDate ? `<div class="reviewed-date">${check.reviewedDate}</div>` : "";
+  return `
+    <div class="reviewed-cell">
+      <label for="${id}">
+        <input type="checkbox" id="${id}" ${check.reviewed ? "checked" : ""} onchange="toggleReviewed(${rowIdx}, '${key}', this.checked)">
+        Reviewed
+      </label>
+      ${dateHtml}
+    </div>`;
+}
+
+function render() {
+  const tbody = document.getElementById("table-body");
+  tbody.innerHTML = students.map((s, i) => `
+    <tr>
+      <td class="student-name">${s.name}</td>
+      <td class="teacher">${s.teacher}</td>
+      <td>${docCell(s.docs["IA Draft"])}</td>
+      <td>${docCell(s.docs["Notes"])}</td>
+      <td>${docCell(s.docs["Proposal"])}</td>
+      <td><span class="${flagClass('cp', s.cp.flag)}">${s.cp.flag}</span></td>
+      <td>${reviewedCell(i, 'cp', s.cp)}</td>
+      <td><span class="${flagClass('collab', s.collab.flag)}">${s.collab.flag}</span></td>
+      <td>${reviewedCell(i, 'collab', s.collab)}</td>
+      <td><span class="${flagClass('ln', s.ln.flag)}">${s.ln.flag}</span></td>
+      <td>${reviewedCell(i, 'ln', s.ln)}</td>
+      <td class="last-checked">${s.lastChecked}</td>
+      <td class="notes-cell">${s.notes || ""}</td>
+    </tr>
+  `).join("");
+}
+
+function toggleReviewed(rowIdx, key, checked) {
+  const s = students[rowIdx];
+  const check = s[key];
+  check.reviewed = checked;
+  if (checked) {
+    const today = new Date().toISOString().slice(0, 10);
+    check.reviewedDate = today;
+    if (check.flag !== "No document linked" && !check.flag.startsWith("Clean")) {
+      check.flag = "Clean since last review";
+    } else if (check.flag === "Clean") {
+      check.flag = "Clean since last review";
+    }
+  } else {
+    check.reviewedDate = null;
+    // Unreviewing a demo row just goes back to its clean baseline — this is
+    // a static prototype, not a live re-check.
+    if (key === 'cp') check.flag = "Clean";
+    if (key === 'collab') check.flag = "Clean";
+    if (key === 'ln') check.flag = "Clean";
+  }
+  render();
+}
+
+let toastTimer = null;
+function showToast(msg) {
+  const el = document.getElementById("toast");
+  el.innerHTML = msg || PROTOTYPE_MSG.replace("prototype for demonstration only.", "<strong>prototype</strong> for demonstration only.");
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 4200);
+}
+
+document.getElementById("run-check-btn").addEventListener("click", function () {
+  const btn = this;
+  btn.disabled = true;
+  btn.textContent = "Checking…";
+  setTimeout(() => {
+    btn.disabled = false;
+    btn.textContent = "↻ Run Check";
+    showToast("Checked all 5 students — this replays the same fictional data; a real run hits Drive's revision history live.");
+  }, 1100);
+});
+
+const backdrop = document.getElementById("modal-backdrop");
+document.getElementById("add-student-btn").addEventListener("click", () => {
+  document.getElementById("m-name").value = "";
+  document.getElementById("m-doc").value = "";
+  backdrop.classList.add("show");
+});
+document.getElementById("modal-cancel").addEventListener("click", () => backdrop.classList.remove("show"));
+backdrop.addEventListener("click", (e) => { if (e.target === backdrop) backdrop.classList.remove("show"); });
+document.getElementById("modal-submit").addEventListener("click", () => {
+  backdrop.classList.remove("show");
+  showToast();
+});
+
+render();
+</script>
+
+</body>
+</html>
