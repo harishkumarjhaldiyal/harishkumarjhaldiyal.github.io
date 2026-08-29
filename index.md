@@ -65,7 +65,7 @@ title: Harish Kumar — Mathematics Teacher
 <div class="intro-card" style="margin-bottom: 1rem;">
   <span class="section-eyebrow">Interactive Tools</span>
   <h2 style="margin-top: 0.4rem;">Tools I have built</h2>
-  <p style="margin-bottom: 0;">Three working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, one a real tool I built and use for my own IB Extended Essay coordination, and one for leadership systems.</p>
+  <p style="margin-bottom: 0;">Three working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, one a real tool I built and run for the whole high school, and one for leadership systems.</p>
 </div>
 
 <div class="feature-card feature-ia">
@@ -77,12 +77,12 @@ title: Harish Kumar — Mathematics Teacher
   </div>
 </div>
 
-<div class="feature-card">
+<div class="feature-card feature-integrity">
   <div class="fc-body">
-    <span class="fc-eyebrow">Production Tool · For Coordinators</span>
-    <h3>IBDP Extended Essay Coordination Platform</h3>
-    <p>A production system I built and run for my own IB Diploma Extended Essay coordination — Gemini-powered integrity detection with exact per-revision document diffing, a five-tier chase-escalation workflow, IB Criterion A–E marking, and cohort-wide analytics, backed by 1,900+ automated tests. This is an interactive prototype seeded entirely with fictional students and supervisors so the real interface can be explored safely.</p>
-    <a href="{{ '/ee-platform/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open EE Coordination Platform →</a>
+    <span class="fc-eyebrow">Production Tool · For All Teachers</span>
+    <h3>Integrity Tracker</h3>
+    <p>A live-monitoring tool I built and run for the whole high school — three mechanical, deliberately non-AI integrity checks (real per-revision word-count diffing, external-collaborator detection, late-night editing patterns) running on an always-on five-minute cycle. This is an interactive prototype seeded entirely with fictional students and documents so the real interface can be explored safely.</p>
+    <a href="{{ '/ia-integrity-tracker/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open Integrity Tracker →</a>
   </div>
 </div>
 
@@ -103,7 +103,7 @@ title: Harish Kumar — Mathematics Teacher
     <a href="{{ '/philosophy.html' | relative_url }}" class="btn-primary">Teaching Philosophy</a>
     <a href="{{ '/resources.html' | relative_url }}" class="btn-outline">Teaching Resources</a>
     <a href="{{ '/ia-compass/' | relative_url }}" target="_blank" rel="noopener" class="btn-outline">IB Math IA Compass</a>
-    <a href="{{ '/ee-platform/' | relative_url }}" target="_blank" rel="noopener" class="btn-outline">EE Coordination Platform</a>
+    <a href="{{ '/ia-integrity-tracker/' | relative_url }}" target="_blank" rel="noopener" class="btn-outline">Integrity Tracker</a>
     <a href="{{ '/contact.html' | relative_url }}" class="btn-outline">Get in Touch</a>
   </div>
 </div>

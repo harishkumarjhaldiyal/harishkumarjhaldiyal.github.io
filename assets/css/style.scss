@@ -364,6 +364,12 @@ a:hover { color: #1d4ed8; text-decoration: none; }
 .feature-card.feature-ia .fc-cta { background: #0f766e; }
 .feature-card.feature-ia .fc-cta:hover { background: #0d9488; }
 
+/* ── Feature card — IA Integrity Tracker (violet) variant ── */
+.feature-card.feature-integrity { border-top-color: #6d28d9; }
+.feature-card.feature-integrity .fc-eyebrow { color: #6d28d9; }
+.feature-card.feature-integrity .fc-cta { background: #5b21b6; }
+.feature-card.feature-integrity .fc-cta:hover { background: #6d28d9; }
+
 /* ── Three-column highlight cards ── */
 .highlight-grid {
   display: grid;
