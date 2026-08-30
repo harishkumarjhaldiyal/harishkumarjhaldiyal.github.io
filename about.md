@@ -5,10 +5,10 @@ title: About Me
 
 <div class="page-card">
   <span class="section-eyebrow">About Me</span>
-  <h1>Mathematics teacher, Hong Kong</h1>
+  <h1>IBDP Extended Essay Coordinator &amp; Mathematics Teacher, Hong Kong</h1>
 
   <p>
-    I am Harish Kumar, a mathematics teacher based in Hong Kong with experience teaching middle school, high school, and IB mathematics. My work has included teaching across a range of year levels and supporting students with different learning needs, academic goals, and levels of confidence in mathematics.
+    I am Harish Kumar, an IBDP Extended Essay Coordinator and high school mathematics teacher based in Hong Kong, with eight years' experience in international education and more than four years of continuous high school mathematics teaching. I currently teach Grades 9–12 mathematics, including IBDP Mathematics: Analysis &amp; Approaches and Applications &amp; Interpretation in Grades 11–12, and lead my school's Extended Essay programme. My earlier work included teaching middle school mathematics and interdisciplinary STEM.
   </p>
 
   <div class="pull-quote">
@@ -30,8 +30,13 @@ title: About Me
     Across all classes, I aim to create a classroom culture that is calm, focused, respectful, and supportive. I believe students do their best learning when expectations are high, routines are clear, and they feel safe to ask questions, make mistakes, and improve.
   </p>
 
+  <h2>Extended Essay coordination</h2>
+  <p>
+    Since August 2026, I have led my school's IBDP Extended Essay programme as Extended Essay Coordinator, an additional appointment alongside my teaching role. This means setting a coherent cycle of milestones, reflection points, and submission-readiness checks for around 165 students and 23 supervisors across two Diploma Programme cohorts, and guiding students and supervisors in research, academic writing, referencing, and reflection. I built a system that centralises milestone and deadline tracking and surfaces process-integrity indicators for supervisors' review, so staff time stays focused on student support rather than manual coordination.
+  </p>
+
   <h2>What this portfolio offers</h2>
   <p>
-    This portfolio shares my teaching philosophy, professional experience, and selected resources that reflect my approach to teaching and learning. It also includes a working prototype, <strong>Leadership Compass OS</strong>, that demonstrates how I think about the operational side of school leadership.
+    This portfolio shares my teaching philosophy, professional experience, and selected resources that reflect my approach to teaching and learning. It also includes five working prototypes under Digital Innovation Projects, including <strong>Leadership Compass OS</strong>, that demonstrate how I think about the operational side of school and Extended Essay leadership.
   </p>
 </div>
