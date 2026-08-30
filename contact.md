@@ -27,7 +27,7 @@ title: Contact
        ===================================================================== -->
   <form id="contact-form" class="contact-form" action="https://api.web3forms.com/submit" method="POST">
 
-    <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+    <input type="hidden" name="access_key" value="12bfd560-9659-4683-8a4d-0df0314594d8">
     <input type="hidden" name="from_name" value="Teaching Portfolio — Contact Form">
 
     <!-- Honeypot field: invisible to people, catches spam bots -->
