@@ -93,6 +93,11 @@ title: Teaching Resources
     </div>
   </div>
 
+  <h2>Extended Essay coordination materials</h2>
+  <p>
+    As Extended Essay Coordinator, I also design the materials that keep a diploma-wide research programme coherent — milestone calendars, supervisor briefing templates, reflection-session structures, and criteria-based feedback tools that help around 165 students and 23 supervisors stay aligned across two Diploma Programme cohorts.
+  </p>
+
   <h2>Available upon request</h2>
   <p>
     Selected sample materials are available upon request for professional review. These may include lesson plans, assessments, instructional resources, and examples of curriculum design that reflect my teaching approach across different year levels and contexts.

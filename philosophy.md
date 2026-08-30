@@ -39,6 +39,11 @@ title: Teaching Philosophy
     Students learn best when expectations are high, routines are clear, and they feel safe to ask questions, make mistakes, and improve.
   </div>
 
+  <h2>Extending this into Extended Essay supervision</h2>
+  <p>
+    As IBDP Extended Essay Coordinator, I apply the same principles to supervising independent research: clear milestones, honest feedback, and structured reflection help students move from an initial idea to a focused research question, and from a first draft to a piece of writing they can be proud of. The same balance of challenge and support that shapes my mathematics classroom shapes how I guide students and supervisors through research, academic writing, referencing, and reflection.
+  </p>
+
   <h2>A reflective profession</h2>
   <p>
     Finally, I see teaching as a reflective profession. My philosophy continues to grow through experience, collaboration, and ongoing professional learning. My goal is not only to help students succeed in mathematics, but also to help them become thoughtful, resilient, and confident learners.

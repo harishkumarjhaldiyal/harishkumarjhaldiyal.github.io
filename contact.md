@@ -8,7 +8,7 @@ title: Contact
   <h1>Get in touch</h1>
 
   <p>
-    Thank you for visiting my teaching portfolio. If you would like to get in touch regarding teaching opportunities, curriculum work, leadership roles, or professional collaboration, please send me a message using the form below. Your message is delivered straight to my inbox — there is no need to look up an email address.
+    Thank you for visiting my teaching portfolio. If you would like to get in touch regarding teaching opportunities, Extended Essay or IB coordination, curriculum work, leadership roles, or professional collaboration, please send me a message using the form below. Your message is delivered straight to my inbox — there is no need to look up an email address.
   </p>
 
   <h2>Send a message</h2>
