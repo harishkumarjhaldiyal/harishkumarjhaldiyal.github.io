@@ -8,7 +8,7 @@ title: Contact
   <h1>Get in touch</h1>
 
   <p>
-    Thank you for visiting my teaching portfolio. If you would like to get in touch regarding teaching opportunities, curriculum work, leadership roles, or professional collaboration, please send me a message using the form below. Your message is delivered straight to my inbox — there is no need to look up an email address.
+    Thank you for visiting my teaching portfolio. If you would like to get in touch regarding teaching opportunities, Extended Essay or IB coordination, curriculum work, leadership roles, or professional collaboration, please send me a message using the form below. Your message is delivered straight to my inbox — there is no need to look up an email address.
   </p>
 
   <h2>Send a message</h2>
@@ -27,7 +27,7 @@ title: Contact
        ===================================================================== -->
   <form id="contact-form" class="contact-form" action="https://api.web3forms.com/submit" method="POST">
 
-    <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+    <input type="hidden" name="access_key" value="12bfd560-9659-4683-8a4d-0df0314594d8">
     <input type="hidden" name="from_name" value="Teaching Portfolio — Contact Form">
 
     <!-- Honeypot field: invisible to people, catches spam bots -->
