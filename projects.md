@@ -24,7 +24,7 @@ title: Digital Innovation Projects
   <div class="fc-body">
     <span class="fc-eyebrow">Production Tool · For Coordinators</span>
     <h3>IBDP Extended Essay Coordination Platform</h3>
-    <p>A production system I built and run for my own IB Diploma Extended Essay coordination — Gemini-powered integrity detection with exact per-revision document diffing, a five-tier chase-escalation workflow, IB Criterion A–E marking, and cohort-wide analytics, backed by 1,900+ automated tests. This is an interactive prototype seeded entirely with fictional students and supervisors so the real interface can be explored safely.</p>
+    <p>A production system I built and run for my own IB Diploma Extended Essay coordination — supporting around 165 students across two DP cohorts and 23 supervisors, it centralises milestones and deadlines, surfaces process-integrity indicators for supervisors' review, prioritises interventions, and generates supervisor briefs, backed by cohort-wide analytics and 1,900+ automated tests. This is an interactive prototype seeded entirely with fictional students and supervisors so the real interface can be explored safely.</p>
     <a href="{{ '/ee-platform/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open EE Coordination Platform →</a>
   </div>
 </div>
@@ -33,7 +33,7 @@ title: Digital Innovation Projects
   <div class="fc-body">
     <span class="fc-eyebrow">Production Tool · For All Teachers</span>
     <h3>Integrity Tracker</h3>
-    <p>A live-monitoring tool I built and run for the whole high school — three mechanical, deliberately non-AI integrity checks (real per-revision word-count diffing, external-collaborator detection, late-night editing patterns) running on an always-on five-minute cycle. This is an interactive prototype seeded entirely with fictional students and documents so the real interface can be explored safely.</p>
+    <p>A live-monitoring tool I built and run for the whole high school — three mechanical, deliberately non-AI checks (per-revision word-count changes, outside-domain collaborators, and late-night editing patterns) that flag items for contextual teacher review, running on an always-on five-minute cycle. This is an interactive prototype seeded entirely with fictional students and documents so the real interface can be explored safely.</p>
     <a href="{{ '/ia-integrity-tracker/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open Integrity Tracker →</a>
   </div>
 </div>
@@ -42,7 +42,7 @@ title: Digital Innovation Projects
   <div class="fc-body">
     <span class="fc-eyebrow">For School Leadership</span>
     <h3>Cover Teachers</h3>
-    <p>When a teacher calls in sick, this reads the school's master timetable and automatically works out who should cover each period — subject-matched first, then balanced by recent cover load, with busy-teacher warnings and one-click "next best" alternatives, all rolled into one consolidated email draft. This is an interactive prototype seeded entirely with fictional teachers and timetables so the real interface can be explored safely.</p>
+    <p>Piloted with school leadership on a 51-teacher, 662-entry high-school timetable: when a teacher calls in sick, this reads the master timetable and automatically works out who should cover each period — subject-matched first, then balanced by recent cover load, with busy-teacher warnings and one-click "next best" alternatives, all rolled into one consolidated email draft. This is an interactive prototype seeded entirely with fictional teachers and timetables so the real interface can be explored safely.</p>
     <a href="{{ '/cover-teachers/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open Cover Teachers →</a>
   </div>
 </div>

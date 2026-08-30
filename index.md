@@ -1,15 +1,15 @@
 ---
 layout: default
-title: Harish Kumar — Mathematics Teacher
+title: Harish Kumar — IBDP Extended Essay Coordinator & Mathematics Teacher
 ---
 
 <section class="hero-section">
   <img src="profile.JPEG" alt="Harish Kumar" class="hero-photo">
   <div class="hero-text">
-    <span class="hero-eyebrow">Mathematics Teacher · Hong Kong</span>
+    <span class="hero-eyebrow">IBDP EE Coordinator &amp; Mathematics Teacher · Hong Kong</span>
     <h1>Harish Kumar</h1>
     <p class="hero-tagline">
-      International school mathematics teacher across the IB Diploma Programme, high school, and middle school — building conceptual understanding, mathematical confidence, and a calm, focused classroom.
+      Hong Kong-based IBDP Extended Essay Coordinator and high school mathematics teacher, with eight years in international education — combining diploma-wide Extended Essay leadership with IB Diploma Programme mathematics teaching in Grades 9–12.
     </p>
     <div class="hero-cta-row">
       <a href="{{ '/about.html' | relative_url }}" class="btn-hero">About Me</a>
@@ -28,19 +28,23 @@ title: Harish Kumar — Mathematics Teacher
     <div class="stat-lbl">AI SL / AA SL Curriculum</div>
   </div>
   <div class="stat-tile">
-    <div class="stat-num">G6–12</div>
-    <div class="stat-lbl">Middle &amp; High School Maths</div>
+    <div class="stat-num">G9–12</div>
+    <div class="stat-lbl">High School Mathematics</div>
   </div>
   <div class="stat-tile">
-    <div class="stat-num">M.Ed</div>
+    <div class="stat-num">Master's</div>
     <div class="stat-lbl">International Education · Sunderland</div>
+  </div>
+  <div class="stat-tile">
+    <div class="stat-num">165</div>
+    <div class="stat-lbl">EE Students · 23 Supervisors</div>
   </div>
 </div>
 
 <div class="intro-card">
   <span class="section-eyebrow">Welcome</span>
   <p>
-    Welcome to my teaching portfolio. I am a mathematics teacher based in Hong Kong with experience across the IB Diploma Programme, high school, and middle school. My teaching emphasises clarity, conceptual understanding, challenge, and strong classroom relationships so that students can grow in both confidence and achievement.
+    Welcome to my teaching portfolio. I am an IBDP Extended Essay Coordinator and high school mathematics teacher based in Hong Kong, with eight years' experience in international education. My work combines diploma-wide Extended Essay leadership with IB Diploma Programme mathematics teaching in Grades 9–12, grounded in clarity, conceptual understanding, purposeful challenge, and strong classroom relationships.
   </p>
 </div>
 
@@ -57,15 +61,15 @@ title: Harish Kumar — Mathematics Teacher
   </div>
   <div class="highlight leadership">
     <span class="h-eyebrow">Leadership</span>
-    <h4>Systems &amp; coordination</h4>
-    <p>Designing leadership systems for curriculum alignment, supervisor follow-up, and pastoral accountability — see Digital Innovation Projects below.</p>
+    <h4>IBDP Extended Essay Coordinator</h4>
+    <p>Leading diploma-wide Extended Essay coordination for around 165 students and 23 supervisors across two DP cohorts — milestones, process-integrity indicators, and supervisor communication brought into one coherent system. See Digital Innovation Projects below.</p>
   </div>
 </div>
 
 <div class="intro-card" style="margin-bottom: 1rem;">
   <span class="section-eyebrow">Interactive Tools</span>
   <h2 style="margin-top: 0.4rem;">Digital Innovation Projects</h2>
-  <p style="margin-bottom: 1.2rem;">Four working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, two real tools I built and run for my own IB coordination work, and one for leadership systems.</p>
+  <p style="margin-bottom: 1.2rem;">Five working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, two real tools I built and run for my own IB coordination work, one for automatic substitute-cover matching, and one for leadership systems.</p>
   <a href="{{ '/projects.html' | relative_url }}" class="btn-primary">See Digital Innovation Projects →</a>
 </div>
 
