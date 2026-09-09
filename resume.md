@@ -10,14 +10,12 @@ title: Resume / CV
 
   <div class="contact-grid" style="margin-top:1rem;">
     <div class="contact-tile"><div class="ct-label">Location</div><div class="ct-value">Hong Kong</div></div>
-    <div class="contact-tile"><div class="ct-label">Phone</div><div class="ct-value">[phone redacted]</div></div>
-    <div class="contact-tile"><div class="ct-label">Email</div><div class="ct-value"><a href="mailto:[email redacted]">[email redacted]</a></div></div>
     <div class="contact-tile"><div class="ct-label">LinkedIn</div><div class="ct-value"><a href="https://linkedin.com/in/harishjhaldiyal" target="_blank" rel="noopener">linkedin.com/in/harishjhaldiyal</a></div></div>
+    <div class="contact-tile"><div class="ct-label">Contact</div><div class="ct-value"><a href="{{ '/contact.html' | relative_url }}">Message via contact form</a></div></div>
   </div>
 
-  <p style="margin-top:1.3rem;display:flex;gap:0.7rem;flex-wrap:wrap;">
-    <a href="{{ '/assets/resume/Harish-Kumar-Resume-CV.pdf' | relative_url }}" target="_blank" rel="noopener" class="btn-primary">View PDF →</a>
-    <a href="{{ '/assets/resume/Harish-Kumar-Resume-CV.pdf' | relative_url }}" download="Harish-Kumar-Resume-CV.pdf" class="btn-outline">Download PDF</a>
+  <p style="margin-top:1.3rem;color:var(--text-muted);font-size:0.92rem;">
+    Phone number, email, and a full PDF copy of this CV are shared directly with schools and recruiters on request — please reach out via the <a href="{{ '/contact.html' | relative_url }}">contact form</a> or <a href="https://linkedin.com/in/harishjhaldiyal" target="_blank" rel="noopener">LinkedIn</a>.
   </p>
 
   <p style="margin-top:0.6rem;"><strong>Registered Teacher, Hong Kong · Permanent Resident, Hong Kong</strong></p>
