@@ -520,6 +520,30 @@ footer #finalize-btn { min-width: 240px; padding: 13px 20px; font-size: 15px; }
   border-top: 2px solid var(--accent);
 }
 #disclaimer strong { color: #c7d2fe; }
+
+@media (min-width: 641px) and (max-width: 1135px) {
+  .panel { margin-left: 28px; margin-right: 28px; }
+}
+/* ── Phone layout (≤640px) ── */
+@media (max-width: 640px) {
+  #topbar { padding: 12px 16px; }
+  .hero { padding: 26px 16px 4px; }
+  .hero h2 { font-size: 22px; }
+  .note-strip { margin-left: 16px; margin-right: 16px; }
+  .demo-toolbar { padding: 0 16px; }
+  .demo-toolbar .toolbar-actions { width: 100%; flex-wrap: wrap; gap: 8px; }
+  .day-select-label { flex: 1 1 100%; justify-content: space-between; }
+  .day-select-label select { flex: 1; max-width: 60%; }
+  .demo-toolbar .toolbar-actions > button { flex: 1 1 0; }
+  .panel { margin: 16px 12px; padding: 20px 16px; }
+  .tech-footer { padding: 18px 16px 70px; }
+  footer { padding: 0 16px; }
+  .modal { padding: 10px; }
+  .modal-box { width: 100%; padding: 20px 16px; max-height: 88vh; }
+  .modal-box table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  #toast { max-width: calc(100% - 32px); bottom: 56px; }
+  #disclaimer { font-size: 11px; padding: 7px 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
 </style>
 </head>
 <body>

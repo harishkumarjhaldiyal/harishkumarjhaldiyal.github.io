@@ -2253,6 +2253,53 @@ tbody tr.row-completed td strong { text-decoration: line-through; font-weight: 4
   #filter-bar { padding: 11px 18px; }
   .stat-card .stat-value { font-size: 30px; }
 }
+
+/* ── Phone layout (≤760px): header stacks, sidebar becomes a swipeable tab row, content full width ── */
+@media (max-width: 760px) {
+  #header {
+    position: static; height: auto; flex-wrap: wrap; gap: 10px;
+    padding: 12px 14px 12px !important;
+  }
+  #header .brand h1 { font-size: 17px !important; }
+  #header .brand p { font-size: 10.5px !important; letter-spacing: 0.3px !important; }
+  #header .header-right { width: 100%; gap: 8px !important; }
+  #header .header-right label { display: none; }
+  #role-selector { flex: 1; min-width: 0; }
+  .btn-reset { flex-shrink: 0; white-space: nowrap; }
+
+  #sidebar {
+    position: sticky; top: 0; bottom: auto; width: auto; z-index: 95;
+    display: flex; gap: 6px; overflow-x: auto; overflow-y: hidden;
+    padding: 8px 10px; scrollbar-width: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  }
+  #sidebar::-webkit-scrollbar { display: none; }
+  #sidebar .nav-section-label, #sidebar .nav-divider { display: none; }
+  #sidebar .nav-item {
+    flex-shrink: 0; white-space: nowrap; margin: 0 !important;
+    border-left: none !important; border-radius: 999px !important;
+    padding: 8px 14px !important; font-size: 13px !important;
+  }
+  #sidebar .nav-item .nav-icon { display: none; }
+
+  #main { margin: 0 !important; min-height: 0; }
+  #filter-bar { position: static; padding: 10px 14px !important; }
+  #search-input { min-width: 0; width: 100%; flex-basis: 100%; }
+  #filter-bar .filter-sep, #filter-label { display: none; }
+  .filter-select { flex: 1; min-width: 0; }
+
+  #content { padding: 16px 14px !important; }
+  .section-header h2 { font-size: 20px; }
+  .stats-grid, .action-summary-strip { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+  .grid-2, .grid-3, .grid-4, .comm-layout { grid-template-columns: 1fr !important; }
+  .grid-2 > *, .grid-3 > *, .grid-4 > *, .comm-layout > *, .stats-grid > * { min-width: 0; }
+  .talking-card, .framing-card { flex-direction: column; }
+  .talking-card > *, .framing-card > * { border-left: none !important; border-right: none !important; padding-left: 0 !important; padding-right: 0 !important; }
+  .card { padding: 16px !important; }
+  .card table, .section table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .action-toolbar { flex-wrap: wrap; gap: 8px; }
+  img, svg, canvas { max-width: 100%; }
+}
 </style>
 </head>
 <body>
@@ -5365,6 +5412,18 @@ window.addEventListener('DOMContentLoaded', () => {
   renderInsights();
   renderOverview(); // ensure stat cards reflect live data
 });
+</script>
+<script>
+/* Phone layout: keep the active section's tab visible in the swipeable tab row */
+(function () {
+  var sb = document.getElementById('sidebar');
+  if (!sb) return;
+  function center() {
+    var a = sb.querySelector('.nav-item.active');
+    if (a && sb.scrollWidth > sb.clientWidth) sb.scrollTo({ left: a.offsetLeft - (sb.clientWidth - a.offsetWidth) / 2, behavior: 'smooth' });
+  }
+  document.addEventListener('click', function () { setTimeout(center, 60); });
+})();
 </script>
 </body>
 </html>

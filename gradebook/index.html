@@ -241,6 +241,14 @@ table.gb td.calc { text-align: center; color: var(--muted); font-variant-numeric
   #topbar { padding: 12px 16px; }
   .grid2 { grid-template-columns: 1fr; }
   .hero h2 { font-size: 22px; }
+  .tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-left: -16px; margin-right: -16px; padding: 0 16px; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { flex-shrink: 0; white-space: nowrap; padding: 10px 12px; }
+  .controls .field { flex: 1 1 140px; }
+  .controls select { width: 100%; }
+  .card { padding: 16px 14px; }
+  .kpi .v { font-size: 24px; }
+  table.t th, table.t td { padding: 7px 8px; }
 }
 </style>
 </head>
@@ -1140,6 +1148,8 @@ function setView(v) {
   UI.view = v;
   document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.view === v)));
   render();
+  const tabs = document.querySelector('.tabs'), active = tabs.querySelector('[aria-selected="true"]');
+  if (tabs.scrollWidth > tabs.clientWidth) tabs.scrollTo({ left: active.offsetLeft - (tabs.clientWidth - active.offsetWidth) / 2, behavior: 'smooth' });
 }
 document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => setView(t.dataset.view)));
 courseSel.addEventListener('change', () => { UI.course = courseSel.value; UI.cls = 'all'; UI.alignSum = null; UI.student = null; render(); });

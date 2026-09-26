@@ -87,6 +87,20 @@ a:hover { color: #1d4ed8; text-decoration: none; }
   border-bottom: 1px solid rgba(96, 165, 250, 0.18);
 }
 
+/* Phone-only header bar (name + menu button); hidden on larger screens */
+.header-bar { display: none; align-items: center; justify-content: space-between; gap: 1rem; }
+.site-brand { color: #ffffff; font-weight: 800; font-size: 1.05rem; letter-spacing: -0.3px; }
+.site-brand:hover { color: #ffffff; }
+.nav-toggle {
+  width: 44px; height: 44px; border-radius: 12px; cursor: pointer;
+  background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.14);
+  display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; padding: 0;
+}
+.nav-toggle span { display: block; width: 20px; height: 2px; border-radius: 2px; background: #e2e8f0; transition: transform 0.2s, opacity 0.2s; }
+.page-header.nav-open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.page-header.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+.page-header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
 /* One row always: on narrow screens it scrolls sideways instead of wrapping. */
 .site-nav {
   display: flex;
@@ -1127,13 +1141,20 @@ a:hover { color: #1d4ed8; text-decoration: none; }
   .evidence { padding: 1.05rem 1rem 1rem; }
   .evidence .ev-num { font-size: 2rem; }
   .evidence .ev-lbl { font-size: 0.86rem; }
-  .site-nav {
-    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
-            mask-image: linear-gradient(to right, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
+  /* Phone header: name + menu button; the nav opens as a vertical list (JS only — without JS it stays a scrolling row) */
+  .page-header { padding: 0.6rem 1rem; }
+  .js .header-bar { display: flex; }
+  .js .site-nav {
+    display: none; flex-direction: column; align-items: stretch; gap: 0.15rem;
+    padding: 0.5rem 0 0.4rem; overflow: visible;
   }
+  .js .page-header.nav-open .site-nav { display: flex; }
+  .js .site-nav a { margin: 0 !important; padding: 0.75rem 0.9rem; font-size: 1rem; border-radius: 10px; text-align: left; }
+  .js .site-nav a.active { background: rgba(37, 99, 235, 0.28); }
   .main-content { padding: 1.6rem 1rem 3rem; }
   .hero-section { padding: 2.2rem 1.4rem 2rem; }
   .hero-text h1 { font-size: 2rem; }
+  .hero-eyebrow { font-size: 0.62rem; letter-spacing: 1.3px; padding: 0.32rem 0.8rem; }
   .hero-tagline { font-size: 0.96rem; }
   .hero-photo { width: 140px; height: 140px; }
   .intro-card, .page-card, .feature-card { padding: 1.4rem 1.4rem; }

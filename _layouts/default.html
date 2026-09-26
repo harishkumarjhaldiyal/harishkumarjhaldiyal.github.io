@@ -16,7 +16,11 @@
   </head>
   <body>
     <header class="page-header" role="banner">
-      <nav class="site-nav">
+      <div class="header-bar">
+        <a class="site-brand" href="{{ '/' | relative_url }}">Harish Kumar</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
         <a href="{{ '/' | relative_url }}" class="{% if page.url == '/' %}active{% endif %}">Home</a>
         <a href="{{ '/about.html' | relative_url }}" class="{% if page.url == '/about.html' %}active{% endif %}">About</a>
         <a href="{{ '/philosophy.html' | relative_url }}" class="{% if page.url == '/philosophy.html' %}active{% endif %}">Philosophy</a>
@@ -43,6 +47,19 @@
       </div>
     </footer>
     <script>
+      (function () {
+        var header = document.querySelector('.page-header'), toggle = document.querySelector('.nav-toggle');
+        if (!header || !toggle) return;
+        function setOpen(open) {
+          header.classList.toggle('nav-open', open);
+          toggle.setAttribute('aria-expanded', String(open));
+          toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        }
+        toggle.addEventListener('click', function () { setOpen(!header.classList.contains('nav-open')); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+        document.addEventListener('click', function (e) { if (!header.contains(e.target)) setOpen(false); });
+      })();
+
       (function () {
         var nav = document.querySelector('.site-nav'), a = nav && nav.querySelector('a.active');
         if (a && nav.scrollWidth > nav.clientWidth) nav.scrollLeft = a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2;

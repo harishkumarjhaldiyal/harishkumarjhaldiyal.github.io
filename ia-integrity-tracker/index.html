@@ -308,7 +308,35 @@ tbody tr:hover { background: var(--accent-soft); }
 
 @media (max-width: 640px) {
   .hero h2 { font-size: 24px; }
-  .table-toolbar { flex-direction: column; align-items: flex-start; }
+  .table-toolbar { flex-direction: column; align-items: stretch; }
+  .table-toolbar > * { width: 100%; }
+  #topbar { padding-left: 16px; padding-right: 16px; }
+  .hero { padding-left: 16px; padding-right: 16px; }
+
+  /* Each student becomes a card: every value labelled, nothing hidden off-screen */
+  .table-wrap { overflow: visible; border: none; box-shadow: none; background: transparent; }
+  table { min-width: 0; font-size: 13px; }
+  table, tbody, tr, td { display: block; width: 100%; }
+  thead { display: none; }
+  tbody tr {
+    background: var(--card, #fff); border: 1px solid var(--border, #e5e7eb); border-radius: 14px;
+    margin-bottom: 12px; padding: 6px 14px 10px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+  }
+  tbody td {
+    display: flex; justify-content: space-between; align-items: center; gap: 14px;
+    padding: 7px 0; border-bottom: 1px solid var(--border-soft, #f1f5f9); text-align: right;
+  }
+  tbody td:last-child { border-bottom: none; }
+  tbody td::before {
+    content: attr(data-label); flex-shrink: 0; text-align: left;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted, #64748b);
+  }
+  tbody td.student-name { font-size: 16px; padding: 8px 0 10px; justify-content: flex-start; text-align: left; }
+  tbody td.student-name::before { content: none; }
+  .notes-cell { max-width: none; }
+  tbody td:empty, tbody td.notes-cell:empty { display: none; }
+  #disclaimer { font-size: 11px; padding: 7px 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  body { padding-bottom: 40px; }
 }
 </style>
 </head>
@@ -488,18 +516,18 @@ function render() {
   tbody.innerHTML = students.map((s, i) => `
     <tr>
       <td class="student-name">${s.name}</td>
-      <td class="teacher">${s.teacher}</td>
-      <td>${docCell(s.docs["IA Draft"])}</td>
-      <td>${docCell(s.docs["Notes"])}</td>
-      <td>${docCell(s.docs["Proposal"])}</td>
-      <td><span class="${flagClass('cp', s.cp.flag)}">${s.cp.flag}</span></td>
-      <td>${reviewedCell(i, 'cp', s.cp)}</td>
-      <td><span class="${flagClass('collab', s.collab.flag)}">${s.collab.flag}</span></td>
-      <td>${reviewedCell(i, 'collab', s.collab)}</td>
-      <td><span class="${flagClass('ln', s.ln.flag)}">${s.ln.flag}</span></td>
-      <td>${reviewedCell(i, 'ln', s.ln)}</td>
-      <td class="last-checked">${s.lastChecked}</td>
-      <td class="notes-cell">${s.notes || ""}</td>
+      <td class="teacher" data-label="Supervisor">${s.teacher}</td>
+      <td data-label="IA Draft">${docCell(s.docs["IA Draft"])}</td>
+      <td data-label="Notes">${docCell(s.docs["Notes"])}</td>
+      <td data-label="Proposal">${docCell(s.docs["Proposal"])}</td>
+      <td data-label="Copy-paste"><span class="${flagClass('cp', s.cp.flag)}">${s.cp.flag}</span></td>
+      <td data-label="Reviewed">${reviewedCell(i, 'cp', s.cp)}</td>
+      <td data-label="Collaborator"><span class="${flagClass('collab', s.collab.flag)}">${s.collab.flag}</span></td>
+      <td data-label="Reviewed">${reviewedCell(i, 'collab', s.collab)}</td>
+      <td data-label="Late-night"><span class="${flagClass('ln', s.ln.flag)}">${s.ln.flag}</span></td>
+      <td data-label="Reviewed">${reviewedCell(i, 'ln', s.ln)}</td>
+      <td class="last-checked" data-label="Last checked">${s.lastChecked}</td>
+      <td class="notes-cell" data-label="Teacher notes">${s.notes || ""}</td>
     </tr>
   `).join("");
 }
