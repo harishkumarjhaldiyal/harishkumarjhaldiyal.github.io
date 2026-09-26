@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Leadership Compass OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
   --navy: #1e3a5f;
@@ -2254,6 +2257,123 @@ tbody tr.row-completed td strong { text-decoration: line-through; font-weight: 4
   .stat-card .stat-value { font-size: 30px; }
 }
 
+
+/* ══ Premium skin: navy + gold identity (visual only — no behaviour changes) ══ */
+:root {
+  --lc-display: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --lc-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --lc-gold: #fbbf24;
+  --lc-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.06);
+}
+body { font-family: var(--lc-body); background: #f3f5f9; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, .card-title, .stat-value, .snapshot-card h3, .sv, .ag-num, .agenda-num { font-family: var(--lc-display); }
+
+#header {
+  background:
+    radial-gradient(700px 180px at 88% -60%, rgba(251, 191, 36, 0.35), transparent 60%),
+    linear-gradient(135deg, #0a1326 0%, #12234a 60%, #1a2f5c 100%) !important;
+  border-bottom: 1px solid rgba(251, 191, 36, 0.28) !important;
+  box-shadow: 0 6px 24px rgba(10, 19, 38, 0.35) !important;
+}
+#header .brand h1 { font-weight: 800 !important; letter-spacing: -0.4px !important; }
+#header .brand h1::before {
+  width: 22px !important; height: 22px !important; border-radius: 7px !important; margin-right: 2px;
+  background: conic-gradient(from 200deg, #fde68a, #f59e0b, #fbbf24, #fde68a) !important;
+  box-shadow: 0 0 16px rgba(251, 191, 36, 0.55);
+}
+#header .brand p { color: #c9d4e8 !important; }
+.btn-reset {
+  background: rgba(255,255,255,0.08) !important; border: 1px solid rgba(255,255,255,0.16) !important;
+  color: #e2e8f0 !important; border-radius: 10px !important; font-weight: 600 !important;
+}
+.btn-reset:hover { background: rgba(255,255,255,0.16) !important; }
+#role-selector {
+  background: rgba(255,255,255,0.08) !important; border: 1px solid rgba(251, 191, 36, 0.35) !important;
+  color: #fff !important; border-radius: 10px !important; font-weight: 600;
+}
+
+#sidebar {
+  background: linear-gradient(180deg, #0a1326 0%, #0f1d3a 100%) !important;
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+.nav-section-label { color: #64748b !important; letter-spacing: 1.2px !important; }
+.nav-item { color: #aab6cb !important; border-radius: 0 12px 12px 0 !important; transition: background 0.15s, color 0.15s; }
+.nav-item:hover { background: rgba(255,255,255,0.06) !important; color: #fff !important; }
+.nav-item.active {
+  color: #fff !important; border-left-color: var(--lc-gold) !important;
+  background: linear-gradient(90deg, rgba(251, 191, 36, 0.20), rgba(251, 191, 36, 0.05)) !important;
+  box-shadow: inset 0 0 0 1px rgba(251, 191, 36, 0.18) !important;
+}
+.nav-item.active .nav-icon { color: var(--lc-gold); text-shadow: 0 0 10px rgba(251, 191, 36, 0.7); }
+
+#filter-bar {
+  background: rgba(255,255,255,0.86) !important; border-bottom: 1px solid #e6e9f0 !important;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+}
+#search-input, .filter-select { border-radius: 10px !important; border-color: #e3e7ef !important; }
+#search-input:focus, .filter-select:focus { border-color: #f59e0b !important; box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.12) !important; }
+
+/* every section opens with a hero banner */
+.section-header {
+  position: relative; overflow: hidden; border: none !important; border-radius: 22px;
+  padding: 30px 32px 28px !important; margin-bottom: 26px !important; color: #fff;
+  background:
+    radial-gradient(640px 260px at 92% -40%, rgba(251, 191, 36, 0.32), transparent 60%),
+    radial-gradient(520px 260px at 0% 130%, rgba(59, 130, 246, 0.25), transparent 60%),
+    linear-gradient(135deg, #0a1326 0%, #13254b 60%, #1b3263 100%);
+  box-shadow: 0 18px 40px rgba(10, 19, 38, 0.18);
+}
+.section-header::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 36px 36px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 90% at 80% 20%, #000 20%, transparent 75%);
+          mask-image: radial-gradient(ellipse 70% 90% at 80% 20%, #000 20%, transparent 75%);
+}
+.section-header > * { position: relative; }
+.section-header h2 { color: #fff !important; font-size: 32px !important; font-weight: 800 !important; letter-spacing: -0.9px !important; }
+.section-header p { color: #b9c5dc !important; font-size: 15px !important; max-width: 760px; line-height: 1.6; }
+.section-role-badge {
+  background: rgba(251, 191, 36, 0.14) !important; color: #fde68a !important;
+  border: 1px solid rgba(251, 191, 36, 0.35); border-radius: 999px !important;
+}
+
+.card, .snapshot-card {
+  border-radius: 18px !important; border: 1px solid #e6e9f0 !important; box-shadow: var(--lc-shadow) !important;
+}
+.card-title { font-size: 16px !important; letter-spacing: -0.2px; }
+.stat-card {
+  position: relative; overflow: hidden; border-radius: 18px !important; border: 1px solid #e6e9f0 !important;
+  border-top-width: 1px !important; box-shadow: var(--lc-shadow) !important; background: #fff;
+}
+.stat-card::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 4px; background: #cbd5e1; }
+.stat-card.red::before { background: linear-gradient(90deg, #ef4444, #f97316); }
+.stat-card.amber::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.stat-card.green::before { background: linear-gradient(90deg, #10b981, #34d399); }
+.stat-card.blue::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+.stat-card.navy::before { background: linear-gradient(90deg, #1e3a8a, #3b82f6); }
+.stat-card .stat-value { font-size: 42px !important; font-weight: 800 !important; letter-spacing: -1.6px !important; }
+.stat-card .stat-label { font-size: 10.5px !important; letter-spacing: 0.9px !important; color: #64748b !important; }
+
+thead tr { background: #f8fafc !important; }
+th { font-size: 10.5px !important; letter-spacing: 0.8px !important; text-transform: uppercase; color: #8190a8 !important; }
+tbody tr { transition: background 0.15s; }
+tbody tr:hover { background: #fbfaf5; }
+.pill { border-radius: 999px !important; font-weight: 600 !important; }
+
+.talking-card { border-radius: 20px !important; box-shadow: var(--lc-shadow) !important; }
+.framing-card { border-radius: 22px !important; box-shadow: 0 18px 40px rgba(10, 19, 38, 0.18) !important; }
+.snap-focus { border-left-color: #f59e0b !important; border-radius: 12px !important; background: #fffbeb !important; }
+.risk-bar-fill { border-radius: 999px; }
+.section.active { animation: lcRise 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@keyframes lcRise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .section.active { animation: none; } }
+
+
+/* filter bar sits beside the fixed sidebar, not underneath it */
+@media (min-width: 801px) { #filter-bar { margin-left: var(--sidebar-w); } }
+@media (min-width: 761px) and (max-width: 800px) { #filter-bar { margin-left: 200px; } }
+
 /* ── Phone layout (≤760px): header stacks, sidebar becomes a swipeable tab row, content full width ── */
 @media (max-width: 760px) {
   #header {
@@ -2289,7 +2409,10 @@ tbody tr.row-completed td strong { text-decoration: line-through; font-weight: 4
   .filter-select { flex: 1; min-width: 0; }
 
   #content { padding: 16px 14px !important; }
-  .section-header h2 { font-size: 20px; }
+  .section-header { padding: 22px 20px 20px !important; border-radius: 18px; margin-bottom: 18px !important; }
+  .section-header h2 { font-size: 24px !important; letter-spacing: -0.5px !important; }
+  .section-header p { font-size: 14px !important; }
+  .stat-card .stat-value { font-size: 32px !important; }
   .stats-grid, .action-summary-strip { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
   .grid-2, .grid-3, .grid-4, .comm-layout { grid-template-columns: 1fr !important; }
   .grid-2 > *, .grid-3 > *, .grid-4 > *, .comm-layout > *, .stats-grid > * { min-width: 0; }

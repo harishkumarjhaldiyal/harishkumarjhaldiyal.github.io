@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Maths Gradebook — Interactive Prototype</title>
 <meta name="description" content="A department maths gradebook for Grades 9–12: AO-aligned summatives, IB grade boundaries, needs-attention flags, cross-class alignment and student profiles. Interactive prototype with entirely fictional data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
   color-scheme: light dark;
@@ -39,6 +42,10 @@
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 18px;
+  --display: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.06);
+  --shadow-lift: 0 2px 6px rgba(16, 24, 40, 0.06), 0 18px 40px rgba(16, 24, 40, 0.10);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -69,7 +76,7 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 body {
-  font-family: -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--body);
   background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
@@ -79,73 +86,136 @@ body {
 button, select, input { font-family: inherit; font-size: inherit; color: inherit; }
 [hidden] { display: none !important; }
 
-/* ── Topbar ── */
-#topbar {
-  background: var(--navy); color: #fff; padding: 14px 28px;
-  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+/* ── Hero band ── */
+.band {
+  position: relative; overflow: hidden; color: #fff; padding-bottom: 86px;
+  background:
+    radial-gradient(900px 480px at 88% -12%, rgba(99, 102, 241, 0.45), transparent 60%),
+    radial-gradient(720px 420px at 2% 115%, rgba(34, 211, 238, 0.20), transparent 60%),
+    linear-gradient(160deg, #080d1f 0%, #111a3a 55%, #1b2257 100%);
 }
-#topbar .brand { display: flex; align-items: baseline; gap: 10px; }
-#topbar h1 { font-size: 17px; font-weight: 700; margin: 0; letter-spacing: -0.2px; }
-#topbar .badge {
-  background: var(--accent); color: #fff; font-size: 10.5px; font-weight: 700;
-  letter-spacing: 0.6px; text-transform: uppercase; padding: 3px 8px; border-radius: 999px;
+.band::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 65% 30%, #000 30%, transparent 80%);
+          mask-image: radial-gradient(ellipse 80% 70% at 65% 30%, #000 30%, transparent 80%);
 }
-#topbar a.back { color: #cbd5e1; font-size: 13px; font-weight: 600; text-decoration: none; }
-#topbar a.back:hover { color: #fff; }
+.band > * { position: relative; }
+.band-inner { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+.band svg.bars { position: absolute; right: 4%; bottom: 40px; width: 380px; height: auto; opacity: 0.9; pointer-events: none; }
 
-/* ── Hero ── */
-.hero { max-width: 1120px; margin: 0 auto; padding: 36px 28px 6px; }
-.hero .eyebrow { color: var(--accent); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
-.hero h2 { margin: 6px 0 10px; font-size: 26px; letter-spacing: -0.02em; line-height: 1.25; }
-.hero p { margin: 0; max-width: 800px; color: var(--muted); font-size: 15px; }
-.notice {
-  margin-top: 16px; padding: 11px 14px; border-radius: var(--radius-md);
-  background: var(--accent-soft); border: 1px solid var(--accent-soft-border);
-  font-size: 13.5px; max-width: 800px;
+#topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 0; }
+#topbar .brand { display: flex; align-items: center; gap: 12px; }
+.logo {
+  width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0; display: grid; place-items: center;
+  background: linear-gradient(135deg, #22d3ee, #6366f1 55%, #4338ca);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45), inset 0 1px 0 rgba(255,255,255,0.25);
 }
+.logo svg { width: 20px; height: 20px; color: #fff; }
+#topbar h1 { font-family: var(--display); font-size: 17px; font-weight: 700; margin: 0; letter-spacing: -0.2px; }
+#topbar .badge {
+  font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: #c7d2fe; background: rgba(99, 102, 241, 0.2); border: 1px solid rgba(165, 180, 252, 0.3);
+  padding: 3px 9px; border-radius: 999px;
+}
+#topbar a.back {
+  color: #e2e8f0; font-size: 13px; font-weight: 600; text-decoration: none; padding: 8px 14px; border-radius: 999px;
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); transition: background 0.15s;
+}
+#topbar a.back:hover { background: rgba(255,255,255,0.14); }
+
+.hero { padding-top: 40px; max-width: 720px; }
+.eyebrow-pill {
+  display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.3px;
+  color: #c7d2fe; background: rgba(99, 102, 241, 0.16); border: 1px solid rgba(165, 180, 252, 0.28);
+  padding: 6px 14px; border-radius: 999px;
+}
+.eyebrow-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: #22d3ee; box-shadow: 0 0 10px #22d3ee; }
+.hero h2 {
+  font-family: var(--display); font-weight: 800; font-size: 50px; line-height: 1.05;
+  letter-spacing: -1.6px; margin: 22px 0 16px; color: #fff;
+}
+.grad-text {
+  background: linear-gradient(95deg, #a5b4fc 0%, #818cf8 35%, #67e8f9 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero p { margin: 0; max-width: 640px; color: #b8c1d9; font-size: 16.5px; line-height: 1.65; }
+.hero-points { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.hero-points span {
+  display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: #dbe2f4;
+  padding: 7px 12px; border-radius: 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+}
+.hero-points span::before { content: '✓'; color: #67e8f9; font-weight: 800; }
 
 /* ── Layout ── */
-.wrap { max-width: 1120px; margin: 0 auto; padding: 18px 28px 0; }
-.controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin: 10px 0 14px; }
-.field { display: flex; flex-direction: column; gap: 4px; }
-.field label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.wrap { max-width: 1180px; margin: -58px auto 0; padding: 0 32px; position: relative; z-index: 1; }
+.panel {
+  background: var(--card); border: 1px solid var(--border); border-radius: 22px;
+  box-shadow: var(--shadow-lift); padding: 18px 20px 14px; margin-bottom: 20px;
+}
+.notice {
+  display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--muted);
+  padding: 0 2px 14px; margin-bottom: 14px; border-bottom: 1px solid var(--border-soft);
+}
+.notice .i {
+  flex-shrink: 0; width: 22px; height: 22px; border-radius: 7px; display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent); font-weight: 800; font-size: 12px; font-family: var(--display);
+}
+.notice strong { color: var(--text); }
+.controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin: 0 0 14px; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label { font-size: 10.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: var(--faint); }
 select, .num {
-  background: var(--input-bg); border: 1px solid var(--border); border-radius: var(--radius-sm);
-  padding: 7px 10px; font-size: 14px;
+  background: var(--input-bg); border: 1px solid var(--border); border-radius: 10px;
+  padding: 8px 12px; font-size: 14px; font-weight: 500;
 }
 select:focus, .num:focus, .cell:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
 .btn {
-  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
-  padding: 7px 12px; font-size: 13px; font-weight: 600; cursor: pointer;
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer; transition: border-color 0.15s, background 0.15s;
 }
-.btn:hover { border-color: var(--accent); }
+.btn:hover { border-color: var(--accent); background: var(--accent-soft); }
 .spacer { flex: 1; }
 
-.tabs { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+.tabs {
+  display: flex; gap: 4px; flex-wrap: wrap; padding: 4px; border-radius: 14px;
+  background: var(--card-soft); border: 1px solid var(--border-soft); width: fit-content; max-width: 100%;
+}
 .tab {
-  background: none; border: none; border-bottom: 2px solid transparent; padding: 9px 12px;
-  font-size: 14px; font-weight: 600; color: var(--muted); cursor: pointer; margin-bottom: -1px;
+  background: none; border: none; padding: 8px 14px; border-radius: 10px;
+  font-size: 13.5px; font-weight: 600; color: var(--muted); cursor: pointer; transition: color 0.15s, background 0.15s;
 }
 .tab:hover { color: var(--text); }
-.tab[aria-selected="true"] { color: var(--text); border-bottom-color: var(--accent); }
+.tab[aria-selected="true"] {
+  color: #fff; background: linear-gradient(135deg, #6366f1, #4f46e5);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+}
 
 .card {
-  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm); padding: 18px 20px; margin-bottom: 16px; min-width: 0;
+  background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+  box-shadow: var(--shadow-card); padding: 20px 22px; margin-bottom: 16px; min-width: 0;
 }
-.card h3 { margin: 0; font-size: 15px; letter-spacing: -0.01em; }
-.card .sub { margin: 2px 0 10px; font-size: 13px; color: var(--muted); }
+.card h3 { margin: 0; font-family: var(--display); font-size: 16px; font-weight: 700; letter-spacing: -0.2px; }
+.card .sub { margin: 3px 0 12px; font-size: 13px; color: var(--muted); }
 .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 16px; }
 .grid2 .card { margin-bottom: 0; }
 .stack { display: flex; flex-direction: column; gap: 16px; }
 
 /* ── KPI tiles ── */
-.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
-.kpi { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; box-shadow: var(--shadow-sm); }
-.kpi .k { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
-.kpi .v { font-size: 28px; font-weight: 750; letter-spacing: -0.03em; line-height: 1.15; margin-top: 4px; }
-.kpi .v.small { font-size: 17px; line-height: 1.3; letter-spacing: -0.01em; }
-.kpi .d { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 18px; }
+.kpi {
+  position: relative; overflow: hidden; background: var(--card); border: 1px solid var(--border);
+  border-radius: 18px; padding: 16px 18px 15px; box-shadow: var(--shadow-card);
+}
+.kpi::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 3px; background: linear-gradient(90deg, #6366f1, #22d3ee); }
+.kpi:nth-child(5)::before { background: linear-gradient(90deg, #f59e0b, #f97316); }
+.kpi .k { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--faint); }
+.kpi .v { font-family: var(--display); font-size: 32px; font-weight: 800; letter-spacing: -1px; line-height: 1.1; margin-top: 6px; }
+.kpi .v.small { font-size: 18px; line-height: 1.3; letter-spacing: -0.3px; }
+.kpi .d { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
 
 /* ── Charts ── */
 svg.chart { width: 100%; height: auto; display: block; overflow: visible; }
@@ -236,61 +306,95 @@ table.gb td.calc { text-align: center; color: var(--muted); font-variant-numeric
 .bnd .num { width: 58px; text-align: center; padding: 5px 4px; }
 .check { font-size: 12.5px; font-weight: 600; }
 
+@media (max-width: 900px) {
+  .band svg.bars { width: 260px; right: -30px; opacity: 0.45; }
+  .hero h2 { font-size: 40px; }
+}
 @media (max-width: 720px) {
-  .hero, .wrap { padding-left: 16px; padding-right: 16px; }
-  #topbar { padding: 12px 16px; }
+  .band-inner, .wrap { padding-left: 14px; padding-right: 14px; }
+  .band { padding-bottom: 70px; }
+  .band svg.bars { display: none; }
+  #topbar { padding: 14px 0; }
+  #topbar h1 { font-size: 15px; }
+  #topbar .badge { display: none; }
+  #topbar a.back { padding: 7px 12px; font-size: 12.5px; white-space: nowrap; }
+  #topbar a.back .long { display: none; }
+  #topbar h1 { white-space: nowrap; }
+  .hero { padding-top: 22px; }
+  .hero h2 { font-size: 32px; letter-spacing: -1px; margin: 16px 0 12px; }
+  .hero p { font-size: 15px; }
+  .hero-points { gap: 6px; margin-top: 18px; }
+  .hero-points span { font-size: 12px; padding: 6px 10px; }
+  .wrap { margin-top: -46px; }
+  .panel { padding: 14px 14px 12px; border-radius: 18px; }
   .grid2 { grid-template-columns: 1fr; }
-  .hero h2 { font-size: 22px; }
-  .tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-left: -16px; margin-right: -16px; padding: 0 16px; }
+  .tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; width: 100%; }
   .tabs::-webkit-scrollbar { display: none; }
-  .tab { flex-shrink: 0; white-space: nowrap; padding: 10px 12px; }
+  .tab { flex-shrink: 0; white-space: nowrap; padding: 9px 13px; }
   .controls .field { flex: 1 1 140px; }
   .controls select { width: 100%; }
-  .card { padding: 16px 14px; }
-  .kpi .v { font-size: 24px; }
+  .card { padding: 16px 14px; border-radius: 18px; }
+  .kpis { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kpi { padding: 13px 14px; }
+  .kpi .v { font-size: 26px; }
   table.t th, table.t td { padding: 7px 8px; }
 }
 </style>
 </head>
 <body>
 
-<header id="topbar">
-  <div class="brand">
-    <h1>Maths Gradebook</h1>
-    <span class="badge">Interactive prototype</span>
+<header class="band">
+  <svg class="bars" viewBox="0 0 380 170" aria-hidden="true">
+    <defs><linearGradient id="bg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#818cf8" stop-opacity="0.55"/><stop offset="1" stop-color="#818cf8" stop-opacity="0.05"/></linearGradient>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#67e8f9" stop-opacity="0.6"/><stop offset="1" stop-color="#67e8f9" stop-opacity="0.05"/></linearGradient></defs>
+    <g><rect x="10" y="98" width="34" height="72" rx="6" fill="url(#bg1)"/><rect x="62" y="70" width="34" height="100" rx="6" fill="url(#bg1)"/><rect x="114" y="84" width="34" height="86" rx="6" fill="url(#bg1)"/>
+    <rect x="166" y="44" width="34" height="126" rx="6" fill="url(#bg2)"/><rect x="218" y="58" width="34" height="112" rx="6" fill="url(#bg1)"/><rect x="270" y="30" width="34" height="140" rx="6" fill="url(#bg2)"/><rect x="322" y="50" width="34" height="120" rx="6" fill="url(#bg1)"/></g>
+    <path d="M27 88 L79 60 L131 72 L183 34 L235 46 L287 18 L339 36" fill="none" stroke="#a5b4fc" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+  </svg>
+  <div class="band-inner">
+    <div id="topbar">
+      <div class="brand">
+        <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6" rx="1"/><rect x="12" y="8" width="3" height="10" rx="1"/><rect x="17" y="5" width="3" height="13" rx="1"/></svg></span>
+        <h1>Maths Gradebook</h1>
+        <span class="badge">Prototype</span>
+      </div>
+      <a class="back" href="../projects.html">← <span class="long">Digital Innovation </span>Projects</a>
+    </div>
+
+    <section class="hero">
+      <span class="eyebrow-pill"><span class="dot" aria-hidden="true"></span>Assessment system · Grades 9–12 · IB Diploma</span>
+      <h2>One gradebook for <span class="grad-text">every maths summative</span></h2>
+      <p>A department gradebook designed in Google Sheets. Teachers enter assessment-objective grades (Grades 9–10) or paper marks (IB Diploma); everything else — IB grade conversion from boundaries, class dashboards, supportive needs-attention flags, cross-class alignment for moderation and per-student profiles — updates automatically.</p>
+      <div class="hero-points"><span>AO-aligned grades</span><span>IB grade boundaries</span><span>Needs-attention flags</span><span>Cross-class alignment</span></div>
+    </section>
   </div>
-  <a class="back" href="../projects.html">← Digital Innovation Projects</a>
 </header>
 
-<section class="hero">
-  <div class="eyebrow">Assessment system · Grades 9–12</div>
-  <h2>One gradebook for every maths summative, from Grade 9 to the IB Diploma</h2>
-  <p>A department gradebook designed in Google Sheets. Teachers enter assessment-objective grades (Grades 9–10) or paper marks (IB Diploma); everything else — IB grade conversion from boundaries, class dashboards, supportive needs-attention flags, cross-class alignment for moderation and per-student profiles — updates automatically.</p>
-  <div class="notice"><strong>Every student, teacher and class on this page is fictional.</strong> Edit any grade on the Gradebook tab, or change a boundary on the Rules tab, and watch the dashboards, flags and alignment recalculate. Nothing you type is saved or sent anywhere.</div>
-</section>
-
 <main class="wrap">
-  <div class="controls">
-    <div class="field">
-      <label for="course">Course</label>
-      <select id="course"></select>
+  <div class="panel">
+    <div class="notice"><span class="i" aria-hidden="true">i</span><span><strong>Every student, teacher and class on this page is fictional.</strong> Edit any grade on the Gradebook tab, or change a boundary on the Rules tab, and watch the dashboards, flags and alignment recalculate. Nothing you type is saved or sent anywhere.</span></div>
+    <div class="controls">
+      <div class="field">
+        <label for="course">Course</label>
+        <select id="course"></select>
+      </div>
+      <div class="field" id="classField">
+        <label for="cls">Class</label>
+        <select id="cls"></select>
+      </div>
+      <div class="spacer"></div>
+      <button class="btn" id="reset" type="button">Reset sample data</button>
     </div>
-    <div class="field" id="classField">
-      <label for="cls">Class</label>
-      <select id="cls"></select>
-    </div>
-    <div class="spacer"></div>
-    <button class="btn" id="reset" type="button">Reset sample data</button>
-  </div>
 
-  <nav class="tabs" role="tablist" aria-label="Gradebook views">
-    <button class="tab" role="tab" data-view="dashboard" aria-selected="true">Dashboard</button>
-    <button class="tab" role="tab" data-view="gradebook" aria-selected="false">Gradebook</button>
-    <button class="tab" role="tab" data-view="alignment" aria-selected="false">Alignment</button>
-    <button class="tab" role="tab" data-view="entry" aria-selected="false">Entry status</button>
-    <button class="tab" role="tab" data-view="profile" aria-selected="false">Student profile</button>
-    <button class="tab" role="tab" data-view="rules" aria-selected="false">Rules &amp; boundaries</button>
-  </nav>
+    <nav class="tabs" role="tablist" aria-label="Gradebook views">
+      <button class="tab" role="tab" data-view="dashboard" aria-selected="true">Dashboard</button>
+      <button class="tab" role="tab" data-view="gradebook" aria-selected="false">Gradebook</button>
+      <button class="tab" role="tab" data-view="alignment" aria-selected="false">Alignment</button>
+      <button class="tab" role="tab" data-view="entry" aria-selected="false">Entry status</button>
+      <button class="tab" role="tab" data-view="profile" aria-selected="false">Student profile</button>
+      <button class="tab" role="tab" data-view="rules" aria-selected="false">Rules &amp; boundaries</button>
+    </nav>
+  </div>
 
   <section id="view" role="tabpanel" aria-live="polite"></section>
 </main>

@@ -5,414 +5,458 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Integrity Tracker — Interactive Prototype</title>
 <meta name="description" content="An automated, mechanical integrity-monitoring tool for IB Math Internal Assessments — interactive prototype, entirely fictional data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
+  --ink: #0b1020;
   --navy: #0f172a;
-  --navy-soft: #1e293b;
-  --accent: #6d28d9;
-  --accent-soft: #f3f0ff;
-  --accent-dark: #5b21b6;
-  --bg: #f6f8fb;
+  --accent: #7c3aed;
+  --accent-2: #a855f7;
+  --accent-3: #38bdf8;
+  --accent-soft: #f4f0ff;
+  --accent-soft-border: #e4dbff;
+  --bg: #f5f6fb;
   --card: #ffffff;
-  --border: #e5e9f0;
-  --text: #1e293b;
-  --text-muted: #64748b;
-  --text-faint: #94a3b8;
-  --green: #15803d;
-  --green-bg: #dcfce7;
-  --amber: #b45309;
-  --amber-bg: #fef3c7;
-  --red: #b91c1c;
-  --red-bg: #fee2e2;
-  --slate-bg: #f1f5f9;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  --border: #e7e9f2;
+  --border-soft: #f0f2f7;
+  --text: #182033;
+  --text-muted: #5f6b80;
+  --text-faint: #97a1b3;
+  --green: #047857; --green-bg: #e6f7ef; --green-dot: #10b981;
+  --amber: #a15c07; --amber-bg: #fff4e0; --amber-dot: #f59e0b;
+  --slate-bg: #f1f4f9;
+  --display: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.06);
+  --shadow-lift: 0 2px 6px rgba(16, 24, 40, 0.06), 0 18px 40px rgba(16, 24, 40, 0.10);
 }
-* , *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--body);
   background: var(--bg);
   color: var(--text);
   line-height: 1.55;
-  padding-bottom: 64px; /* room for fixed disclaimer bar */
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 64px;
 }
 a { color: inherit; }
 button { font-family: inherit; }
 
-/* ── Top bar ── */
-#topbar {
-  background: var(--navy);
+/* ── Hero band ── */
+.band {
+  position: relative;
+  overflow: hidden;
   color: #fff;
-  padding: 14px 28px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
+  background:
+    radial-gradient(900px 480px at 85% -10%, rgba(168, 85, 247, 0.38), transparent 60%),
+    radial-gradient(700px 420px at 0% 110%, rgba(56, 189, 248, 0.20), transparent 60%),
+    linear-gradient(160deg, #0a0e1f 0%, #141836 55%, #1f1a4a 100%);
+  padding-bottom: 72px;
 }
-#topbar .brand { display: flex; align-items: baseline; gap: 10px; }
-#topbar .brand h1 { font-size: 17px; font-weight: 700; margin: 0; letter-spacing: -0.2px; }
-#topbar .brand .badge {
-  background: var(--accent);
-  color: #fff;
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  padding: 3px 8px;
-  border-radius: 999px;
+.band::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 60% 30%, #000 30%, transparent 80%);
+          mask-image: radial-gradient(ellipse 80% 70% at 60% 30%, #000 30%, transparent 80%);
+  pointer-events: none;
+}
+.band > * { position: relative; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+
+#topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 18px; padding-bottom: 18px; }
+#topbar .brand { display: flex; align-items: center; gap: 12px; }
+.logo {
+  width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0;
+  display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent) 55%, #4f46e5);
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.45), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+.logo svg { width: 20px; height: 20px; color: #fff; }
+#topbar h1 { font-family: var(--display); font-size: 17px; font-weight: 700; margin: 0; letter-spacing: -0.2px; }
+#topbar .badge {
+  font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+  color: #e9d5ff; background: rgba(168, 85, 247, 0.18); border: 1px solid rgba(196, 181, 253, 0.3);
+  padding: 3px 9px; border-radius: 999px;
 }
 #topbar a.back {
-  color: #cbd5e1;
-  font-size: 13px;
-  font-weight: 600;
-  text-decoration: none;
+  color: #e2e8f0; font-size: 13px; font-weight: 600; text-decoration: none;
+  padding: 8px 14px; border-radius: 999px;
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+  transition: background 0.15s;
 }
-#topbar a.back:hover { color: #fff; }
+#topbar a.back:hover { background: rgba(255,255,255,0.14); }
 
-/* ── Hero ── */
-.hero {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 40px 28px 8px;
+.hero { padding-top: 44px; max-width: 760px; }
+.live-pill {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.3px; color: #d8ccff;
+  background: rgba(124, 58, 237, 0.16); border: 1px solid rgba(196, 181, 253, 0.28);
+  padding: 6px 14px 6px 11px; border-radius: 999px;
 }
-.hero .eyebrow {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.4px;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 10px;
+.pulse { position: relative; width: 8px; height: 8px; border-radius: 50%; background: #34d399; }
+.pulse::after {
+  content: ''; position: absolute; inset: -4px; border-radius: 50%;
+  border: 2px solid rgba(52, 211, 153, 0.6); animation: ping 1.8s ease-out infinite;
 }
-.hero h2 { font-size: 30px; margin: 0 0 12px; color: var(--navy); letter-spacing: -0.4px; }
-.hero p { font-size: 15.5px; color: var(--text-muted); max-width: 720px; margin: 0; }
+@keyframes ping { from { transform: scale(0.6); opacity: 1; } to { transform: scale(1.8); opacity: 0; } }
+.hero h2 {
+  font-family: var(--display); font-weight: 800; font-size: 52px; line-height: 1.04;
+  letter-spacing: -1.6px; margin: 22px 0 16px;
+}
+.grad-text {
+  background: linear-gradient(95deg, #c4b5fd 0%, #a78bfa 35%, #7dd3fc 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero p { font-size: 17px; line-height: 1.65; color: #b8c1d9; margin: 0; max-width: 640px; }
 
-/* ── How it works ── */
-.how {
-  max-width: 1080px;
-  margin: 28px auto 0;
-  padding: 0 28px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 14px;
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 34px; max-width: 760px; }
+.stat {
+  padding: 16px 18px; border-radius: 16px;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.11);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
 }
+.stat .n { font-family: var(--display); font-size: 30px; font-weight: 800; letter-spacing: -1px; line-height: 1; }
+.stat .n.warn { color: #fcd34d; }
+.stat .l { font-size: 12.5px; color: #aab4cc; margin-top: 6px; line-height: 1.35; }
+
+.how { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
 .how-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 18px 20px;
+  padding: 22px 22px 20px; border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.11);
+  transition: transform 0.2s, border-color 0.2s, background 0.2s;
 }
-.how-card .ic { font-size: 20px; margin-bottom: 8px; }
-.how-card h3 { font-size: 14px; margin: 0 0 6px; color: var(--navy); }
-.how-card p { font-size: 13px; color: var(--text-muted); margin: 0; }
+.how-card:hover { transform: translateY(-3px); border-color: rgba(196, 181, 253, 0.35); }
+.how-card .ic {
+  width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; margin-bottom: 14px;
+  background: linear-gradient(135deg, rgba(168,85,247,0.35), rgba(56,189,248,0.25));
+  border: 1px solid rgba(255,255,255,0.14);
+}
+.how-card .ic svg { width: 20px; height: 20px; color: #fff; }
+.how-card h3 { font-family: var(--display); font-size: 16px; font-weight: 700; margin: 0 0 7px; color: #fff; letter-spacing: -0.2px; }
+.how-card p { font-size: 13.5px; line-height: 1.6; color: #aab4cc; margin: 0; }
 
+/* ── Tracker ── */
+.content { margin-top: -44px; position: relative; z-index: 1; }
 .note-strip {
-  max-width: 1080px;
-  margin: 18px auto 0;
-  padding: 12px 20px;
-  margin-left: 28px;
-  margin-right: 28px;
-  background: var(--accent-soft);
-  border: 1px solid #ddd6fe;
-  border-radius: var(--radius-md);
-  font-size: 13px;
-  color: var(--accent-dark);
+  display: flex; align-items: flex-start; gap: 12px;
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+  padding: 14px 18px; font-size: 13.5px; color: var(--text-muted); box-shadow: var(--shadow-card);
 }
+.note-strip .i {
+  flex-shrink: 0; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent); font-weight: 800; font-size: 13px; font-family: var(--display);
+}
+.note-strip strong { color: var(--text); }
 
-/* ── Table section ── */
 .table-section {
-  max-width: 1200px;
-  margin: 32px auto 0;
-  padding: 0 28px;
+  margin-top: 18px; background: var(--card); border: 1px solid var(--border);
+  border-radius: 22px; box-shadow: var(--shadow-lift); overflow: hidden;
 }
 .table-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 12px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;
+  padding: 22px 24px 18px; border-bottom: 1px solid var(--border-soft);
 }
-.table-toolbar h3 { font-size: 15px; margin: 0; color: var(--navy); }
-.table-toolbar .actions { display: flex; gap: 8px; }
+.table-toolbar h3 { font-family: var(--display); font-size: 20px; font-weight: 800; letter-spacing: -0.4px; margin: 0; color: var(--navy); }
+.table-toolbar .sub { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+.table-toolbar .actions { display: flex; gap: 10px; flex-wrap: wrap; }
 .btn {
-  border: none;
-  border-radius: var(--radius-md);
-  padding: 9px 15px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s, transform 0.1s;
+  border: none; border-radius: 12px; padding: 10px 16px; font-size: 13.5px; font-weight: 600;
+  cursor: pointer; transition: transform 0.12s, box-shadow 0.15s, background 0.15s; white-space: nowrap;
 }
-.btn-primary { background: var(--accent); color: #fff; }
-.btn-primary:hover { background: var(--accent-dark); }
+.btn-primary {
+  color: #fff; background: linear-gradient(135deg, var(--accent-2), var(--accent) 60%, #5b21b6);
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(124, 58, 237, 0.42); }
 .btn-ghost { background: #fff; color: var(--navy); border: 1px solid var(--border); }
 .btn-ghost:hover { background: var(--slate-bg); }
 .btn:active { transform: translateY(1px); }
-.btn[disabled] { opacity: 0.6; cursor: not-allowed; }
+.btn[disabled] { opacity: 0.6; cursor: progress; }
 
-.table-wrap {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow-x: auto;
-  box-shadow: 0 1px 2px rgba(15,23,42,0.04);
-}
-table { border-collapse: collapse; width: 100%; min-width: 1150px; font-size: 12.5px; }
+.table-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 1180px; font-size: 13px; }
 thead th {
-  background: var(--navy-soft);
-  color: #fff;
-  text-align: left;
-  padding: 10px 12px;
-  font-weight: 600;
-  font-size: 11.5px;
-  letter-spacing: 0.2px;
-  white-space: nowrap;
+  background: #fafbfd; color: var(--text-faint); text-align: left; padding: 12px 14px;
+  font-weight: 700; font-size: 11px; letter-spacing: 0.7px; text-transform: uppercase; white-space: nowrap;
+  border-bottom: 1px solid var(--border-soft);
 }
-tbody td {
-  padding: 10px 12px;
-  border-bottom: 1px solid var(--border);
-  vertical-align: top;
-}
+tbody td { padding: 14px 14px; border-bottom: 1px solid var(--border-soft); vertical-align: middle; }
 tbody tr:last-child td { border-bottom: none; }
-tbody tr:nth-child(even) { background: #fafbfd; }
-tbody tr:hover { background: var(--accent-soft); }
-.student-name { font-weight: 700; color: var(--navy); white-space: nowrap; }
+tbody tr { transition: background 0.15s; }
+tbody tr:hover { background: #fbfaff; }
+.student-name { white-space: nowrap; }
+.who { display: inline-flex; align-items: center; gap: 11px; font-weight: 700; color: var(--navy); }
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0; display: grid; place-items: center;
+  font-size: 12px; font-weight: 700; color: #fff; font-family: var(--display);
+  background: linear-gradient(135deg, var(--av1, #a855f7), var(--av2, #6366f1));
+}
 .teacher { color: var(--text-muted); white-space: nowrap; }
 .doc-link {
-  color: var(--accent);
-  text-decoration: underline;
-  cursor: pointer;
-  background: none;
-  border: none;
-  font: inherit;
-  padding: 0;
-  white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;
+  color: var(--accent); background: var(--accent-soft); border: 1px solid var(--accent-soft-border);
+  font: inherit; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; cursor: pointer;
+  transition: background 0.15s;
 }
-.doc-link:hover { color: var(--accent-dark); }
-.no-doc { color: var(--text-faint); font-style: italic; }
+.doc-link:hover { background: #ebe3ff; }
+.no-doc { color: var(--text-faint); font-size: 12px; font-style: italic; white-space: nowrap; }
 
 .flag {
-  display: inline-block;
-  padding: 4px 9px;
-  border-radius: 8px;
-  font-size: 11.5px;
-  font-weight: 600;
-  white-space: normal;
-  line-height: 1.45;
-  min-width: 150px;
-  max-width: 240px;
+  display: inline-flex; align-items: flex-start; gap: 8px;
+  padding: 6px 11px; border-radius: 10px; font-size: 12px; font-weight: 600; line-height: 1.45;
+  min-width: 150px; max-width: 250px; white-space: normal;
 }
+.flag::before { content: ''; width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; background: currentColor; }
 .flag-clean { background: var(--green-bg); color: var(--green); }
-.flag-review { background: var(--red-bg); color: var(--red); }
+.flag-clean::before { background: var(--green-dot); }
+.flag-review { background: var(--amber-bg); color: var(--amber); }
+.flag-review::before { background: var(--amber-dot); box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2); }
 .flag-reviewed { background: var(--slate-bg); color: var(--text-muted); }
-.flag-none { background: var(--slate-bg); color: var(--text-faint); font-style: italic; }
+.flag-reviewed::before { background: #94a3b8; }
+.flag-none { background: transparent; color: var(--text-faint); font-style: italic; font-weight: 500; padding-left: 0; }
+.flag-none::before { display: none; }
 
 .reviewed-cell { white-space: nowrap; }
-.reviewed-cell label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11.5px;
-  color: var(--text-muted);
-  cursor: pointer;
+.reviewed-cell label { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-muted); cursor: pointer; }
+.reviewed-cell input[type=checkbox] {
+  appearance: none; -webkit-appearance: none; margin: 0; cursor: pointer;
+  width: 18px; height: 18px; border-radius: 6px; border: 1.5px solid #c7cddb; background: #fff;
+  display: grid; place-items: center; transition: background 0.15s, border-color 0.15s;
 }
-.reviewed-cell input[type=checkbox] { cursor: pointer; }
-.reviewed-date { color: var(--text-faint); font-size: 11px; }
+.reviewed-cell input[type=checkbox]::after {
+  content: ''; width: 9px; height: 5px; border: 2px solid #fff; border-top: 0; border-right: 0;
+  transform: rotate(-45deg) translate(1px, -1px); opacity: 0;
+}
+.reviewed-cell input[type=checkbox]:checked { background: var(--accent); border-color: var(--accent); }
+.reviewed-cell input[type=checkbox]:checked::after { opacity: 1; }
+.reviewed-cell input[type=checkbox]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.reviewed-date { color: var(--text-faint); font-size: 11px; margin-top: 3px; }
 
-.last-checked { color: var(--text-faint); font-size: 11.5px; white-space: nowrap; }
-.notes-cell { color: var(--text-muted); max-width: 160px; }
+.last-checked { color: var(--text-faint); font-size: 12px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.notes-cell { color: var(--text-muted); max-width: 170px; font-size: 12.5px; }
 
 /* ── Toast ── */
 #toast {
-  position: fixed;
-  left: 50%;
-  bottom: 78px;
-  transform: translateX(-50%) translateY(20px);
-  background: var(--navy);
-  color: #fff;
-  padding: 13px 20px;
-  border-radius: var(--radius-md);
-  font-size: 13.5px;
-  max-width: 480px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s, transform 0.2s;
-  z-index: 1000;
+  position: fixed; left: 50%; bottom: 76px; transform: translateX(-50%) translateY(20px);
+  background: rgba(15, 23, 42, 0.95); color: #fff; padding: 13px 20px; border-radius: 14px;
+  font-size: 13.5px; max-width: 480px; width: max-content; text-align: center;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.3); opacity: 0; pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s; z-index: 1000;
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
 }
 #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
 #toast strong { color: #c4b5fd; }
 
 /* ── Modal ── */
 #modal-backdrop {
-  position: fixed; inset: 0;
-  background: rgba(15,23,42,0.5);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 900;
-  padding: 20px;
+  position: fixed; inset: 0; background: rgba(10, 14, 31, 0.55);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  display: none; align-items: center; justify-content: center; z-index: 900; padding: 20px;
 }
 #modal-backdrop.show { display: flex; }
 #modal {
-  background: #fff;
-  border-radius: var(--radius-lg);
-  width: 100%;
-  max-width: 440px;
-  padding: 24px 26px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  background: #fff; border-radius: 20px; width: 100%; max-width: 440px; padding: 26px 26px 22px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35); animation: pop 0.18s ease;
 }
-#modal h4 { margin: 0 0 6px; font-size: 16px; color: var(--navy); }
-#modal p.hint { margin: 0 0 16px; font-size: 12.5px; color: var(--text-muted); }
-#modal label { display: block; font-size: 12.5px; font-weight: 600; color: var(--navy); margin: 12px 0 5px; }
+@keyframes pop { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: none; } }
+#modal h4 { font-family: var(--display); margin: 0 0 6px; font-size: 19px; color: var(--navy); letter-spacing: -0.3px; }
+#modal p.hint { margin: 0 0 16px; font-size: 13px; color: var(--text-muted); }
+#modal label { display: block; font-size: 12.5px; font-weight: 600; color: var(--navy); margin: 12px 0 6px; }
 #modal input {
-  width: 100%;
-  padding: 9px 11px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  font-size: 13.5px;
-  font-family: inherit;
+  width: 100%; padding: 11px 13px; border: 1px solid var(--border); border-radius: 12px;
+  font-size: 14px; font-family: inherit; background: #fafbfd;
 }
-#modal input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
-.modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+#modal input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12); background: #fff; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px; }
 
-/* ── Tech footer ── */
-.tech-footer {
-  max-width: 1080px;
-  margin: 36px auto 0;
-  padding: 20px 28px;
-  color: var(--text-faint);
-  font-size: 12px;
-}
-.tech-footer span.k { color: var(--text-muted); font-weight: 600; }
+.tech-footer { margin-top: 28px; color: var(--text-faint); font-size: 12.5px; }
+.tech-footer span.k { color: var(--text-muted); font-weight: 700; }
 
-/* ── Fixed disclaimer bar ── */
 #disclaimer {
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
-  z-index: 999;
-  background: var(--navy);
-  color: #e2e8f0;
-  font-size: 12.5px;
-  line-height: 1.5;
-  padding: 10px 16px;
-  text-align: center;
-  border-top: 2px solid var(--accent);
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 999;
+  background: rgba(10, 14, 31, 0.92); color: #cbd5e1;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  font-size: 12.5px; line-height: 1.5; padding: 10px 16px; text-align: center;
+  border-top: 1px solid rgba(196, 181, 253, 0.25);
 }
 #disclaimer strong { color: #c4b5fd; }
 
+/* ── Entrance motion ── */
+.rise { animation: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.12s; } .d3 { animation-delay: 0.2s; } .d4 { animation-delay: 0.28s; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .rise, #modal { animation: none; }
+  .pulse::after { animation: none; }
+  .how-card, .btn { transition: none; }
+}
+
+/* ── Tablet ── */
+@media (max-width: 900px) {
+  .how { grid-template-columns: 1fr; }
+  .hero h2 { font-size: 42px; }
+}
+
+/* ── Phone ── */
 @media (max-width: 640px) {
-  .hero h2 { font-size: 24px; }
-  .table-toolbar { flex-direction: column; align-items: stretch; }
-  .table-toolbar > * { width: 100%; }
-  #topbar { padding-left: 16px; padding-right: 16px; }
-  .hero { padding-left: 16px; padding-right: 16px; }
+  .wrap { padding: 0 16px; }
+  #topbar h1 { font-size: 15px; }
+  #topbar .badge { display: none; }
+  #topbar a.back { padding: 7px 12px; font-size: 12.5px; }
+  .hero { padding-top: 26px; }
+  .hero h2 { font-size: 34px; letter-spacing: -1px; margin: 16px 0 12px; }
+  .hero p { font-size: 15px; }
+  .stats { gap: 8px; margin-top: 24px; }
+  .stat { padding: 12px 10px; border-radius: 14px; }
+  .stat .n { font-size: 24px; }
+  .stat .l { font-size: 11px; }
+  .how { margin-top: 24px; gap: 10px; }
+  .how-card { padding: 16px 16px 15px; display: grid; grid-template-columns: 38px 1fr; column-gap: 12px; }
+  .how-card .ic { width: 38px; height: 38px; margin: 0; grid-row: span 2; }
+  .how-card h3 { font-size: 15px; margin-bottom: 4px; }
+  .how-card p { font-size: 13px; }
+  .band { padding-bottom: 56px; }
+  .content { margin-top: -36px; }
+
+  .table-section { background: transparent; border: none; box-shadow: none; border-radius: 0; overflow: visible; }
+  .table-toolbar {
+    flex-direction: column; align-items: stretch; background: var(--card); border: 1px solid var(--border);
+    border-radius: 18px; box-shadow: var(--shadow-card); padding: 18px 16px 16px; margin-bottom: 12px;
+  }
+  .table-toolbar .actions { display: grid; grid-template-columns: 1fr 1.6fr; }
+  .table-toolbar .btn { white-space: normal; }
 
   /* Each student becomes a card: every value labelled, nothing hidden off-screen */
-  .table-wrap { overflow: visible; border: none; box-shadow: none; background: transparent; }
+  .table-wrap { overflow: visible; }
   table { min-width: 0; font-size: 13px; }
   table, tbody, tr, td { display: block; width: 100%; }
   thead { display: none; }
   tbody tr {
-    background: var(--card, #fff); border: 1px solid var(--border, #e5e7eb); border-radius: 14px;
-    margin-bottom: 12px; padding: 6px 14px 10px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+    background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+    margin-bottom: 12px; padding: 8px 16px 10px; box-shadow: var(--shadow-card);
   }
+  tbody tr:hover { background: var(--card); }
   tbody td {
     display: flex; justify-content: space-between; align-items: center; gap: 14px;
-    padding: 7px 0; border-bottom: 1px solid var(--border-soft, #f1f5f9); text-align: right;
+    padding: 9px 0; border-bottom: 1px solid var(--border-soft); text-align: right;
   }
   tbody td:last-child { border-bottom: none; }
   tbody td::before {
     content: attr(data-label); flex-shrink: 0; text-align: left;
-    font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted, #64748b);
+    font-size: 10.5px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--text-faint);
   }
-  tbody td.student-name { font-size: 16px; padding: 8px 0 10px; justify-content: flex-start; text-align: left; }
+  tbody td.student-name { padding: 8px 0 12px; justify-content: flex-start; text-align: left; }
   tbody td.student-name::before { content: none; }
+  .who { font-size: 16px; }
+  .flag { min-width: 0; max-width: 62%; text-align: left; }
   .notes-cell { max-width: none; }
   tbody td:empty, tbody td.notes-cell:empty { display: none; }
   #disclaimer { font-size: 11px; padding: 7px 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #toast { max-width: calc(100% - 32px); width: auto; bottom: 52px; }
   body { padding-bottom: 40px; }
 }
 </style>
 </head>
 <body>
 
-<div id="topbar">
-  <div class="brand">
-    <h1>Integrity Tracker</h1>
-    <span class="badge">Prototype</span>
-  </div>
-  <a class="back" href="../" >← Back to portfolio</a>
-</div>
+<header class="band">
+  <div class="wrap">
+    <div id="topbar">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </span>
+        <h1>Integrity Tracker</h1>
+        <span class="badge">Prototype</span>
+      </div>
+      <a class="back" href="../">← Back to portfolio</a>
+    </div>
 
-<div class="hero">
-  <span class="eyebrow">For All Teachers</span>
-  <h2>Automated Integrity Monitoring</h2>
-  <p>A live-monitoring tool I built for the whole high school. For every student, it runs three mechanical checks against their linked Google Docs, using only Drive/Docs API data, and keeps re-checking on a five-minute cycle so nothing goes stale.</p>
-</div>
+    <div class="hero">
+      <span class="live-pill rise d1"><span class="pulse" aria-hidden="true"></span>Live monitoring · re-checks every 5 minutes</span>
+      <h2 class="rise d2">Automated <span class="grad-text">integrity monitoring</span></h2>
+      <p class="rise d3">A live-monitoring tool I built for the whole high school. For every student, it runs three mechanical checks against their linked Google Docs, using only Drive/Docs API data, and keeps re-checking on a five-minute cycle so nothing goes stale.</p>
+    </div>
 
-<div class="how">
-  <div class="how-card">
-    <div class="ic">📈</div>
-    <h3>Copy-paste / word-count jump</h3>
-    <p>Fetches each Drive revision's real historical text and computes an exact word-count delta between consecutive revisions — flagged as a date range to review, not an accusation.</p>
-  </div>
-  <div class="how-card">
-    <div class="ic">🌐</div>
-    <h3>External collaborator</h3>
-    <p>Lists each document's Drive permissions and flags any account outside the school's own domain.</p>
-  </div>
-  <div class="how-card">
-    <div class="ic">🌙</div>
-    <h3>Late-night editing pattern</h3>
-    <p>Converts each revision's timestamp to local time and flags anything landing in the 11pm–6am window.</p>
-  </div>
-</div>
+    <div class="stats rise d4" aria-live="polite">
+      <div class="stat"><div class="n" id="stat-students">5</div><div class="l">students monitored</div></div>
+      <div class="stat"><div class="n warn" id="stat-review">3</div><div class="l">items to review</div></div>
+      <div class="stat"><div class="n" id="stat-checks">3</div><div class="l">mechanical checks, no AI</div></div>
+    </div>
 
-<div class="note-strip">
-  Ticking a <strong>Reviewed</strong> box doesn't silence a flag forever — it just means only <em>new</em> evidence after that date re-triggers it. Try it below.
-</div>
-
-<div class="table-section">
-  <div class="table-toolbar">
-    <h3>IA Tracker</h3>
-    <div class="actions">
-      <button class="btn btn-ghost" id="run-check-btn">↻ Run Check</button>
-      <button class="btn btn-primary" id="add-student-btn">+ Add Student / Link a Document</button>
+    <div class="how">
+      <div class="how-card rise d2">
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg></div>
+        <h3>Copy-paste / word-count jump</h3>
+        <p>Fetches each Drive revision's real historical text and computes an exact word-count delta between consecutive revisions — flagged as a date range to review, not an accusation.</p>
+      </div>
+      <div class="how-card rise d3">
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <h3>External collaborator</h3>
+        <p>Lists each document's Drive permissions and flags any account outside the school's own domain.</p>
+      </div>
+      <div class="how-card rise d4">
+        <div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div>
+        <h3>Late-night editing pattern</h3>
+        <p>Converts each revision's timestamp to local time and flags anything landing in the 11pm–6am window.</p>
+      </div>
     </div>
   </div>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Student</th>
-          <th>Supervising Teacher</th>
-          <th>IA Draft</th>
-          <th>Notes</th>
-          <th>Proposal</th>
-          <th>Copy-Paste Flag</th>
-          <th>Reviewed</th>
-          <th>External Collaborator Flag</th>
-          <th>Reviewed</th>
-          <th>Late-Night Flag</th>
-          <th>Reviewed</th>
-          <th>Last Checked</th>
-          <th>Teacher Notes</th>
-        </tr>
-      </thead>
-      <tbody id="table-body"></tbody>
-    </table>
-  </div>
-</div>
+</header>
 
-<div class="tech-footer">
-  <p><span class="k">Real implementation:</span> Google Sheets API · Google Drive API · Google Apps Script (5-minute trigger, batched with checkpointing to survive Apps Script's execution-time cap) · Python reference implementation · retry-with-backoff throughout, since individual Drive revision fetches turned out to be flaky enough in practice to need it.</p>
-</div>
+<main class="wrap content">
+  <div class="note-strip">
+    <span class="i" aria-hidden="true">i</span>
+    <span>Ticking a <strong>Reviewed</strong> box doesn't silence a flag forever — it just means only <em>new</em> evidence after that date re-triggers it. Try it below.</span>
+  </div>
+
+  <section class="table-section">
+    <div class="table-toolbar">
+      <div>
+        <h3>IA Tracker</h3>
+        <div class="sub">Five fictional students · flags are prompts for a conversation, not conclusions</div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-ghost" id="run-check-btn">↻ Run Check</button>
+        <button class="btn btn-primary" id="add-student-btn">+ Add Student / Link a Document</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Supervising Teacher</th>
+            <th>IA Draft</th>
+            <th>Notes</th>
+            <th>Proposal</th>
+            <th>Copy-Paste Flag</th>
+            <th>Reviewed</th>
+            <th>External Collaborator Flag</th>
+            <th>Reviewed</th>
+            <th>Late-Night Flag</th>
+            <th>Reviewed</th>
+            <th>Last Checked</th>
+            <th>Teacher Notes</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="tech-footer">
+    <p><span class="k">Real implementation:</span> Google Sheets API · Google Drive API · Google Apps Script (5-minute trigger, batched with checkpointing to survive Apps Script's execution-time cap) · Python reference implementation · retry-with-backoff throughout, since individual Drive revision fetches turned out to be flaky enough in practice to need it.</p>
+  </div>
+</main>
 
 <div id="toast"></div>
 
@@ -486,6 +530,8 @@ const students = [
   },
 ];
 
+const AVATAR_TINTS = [["#a855f7", "#6366f1"], ["#ec4899", "#8b5cf6"], ["#0ea5e9", "#6366f1"], ["#14b8a6", "#0ea5e9"], ["#f59e0b", "#ef4444"]];
+
 function flagClass(check, text) {
   if (text === "No document linked") return "flag flag-none";
   if (text.startsWith("Clean since last review")) return "flag flag-reviewed";
@@ -511,11 +557,22 @@ function reviewedCell(rowIdx, key, check) {
     </div>`;
 }
 
+function initials(name) { return name.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase(); }
+
+function updateStats() {
+  let toReview = 0;
+  students.forEach(s => ['cp', 'collab', 'ln'].forEach(k => { if (flagClass(k, s[k].flag) === 'flag flag-review') toReview++; }));
+  document.getElementById('stat-students').textContent = students.length;
+  document.getElementById('stat-review').textContent = toReview;
+}
+
 function render() {
   const tbody = document.getElementById("table-body");
-  tbody.innerHTML = students.map((s, i) => `
+  tbody.innerHTML = students.map((s, i) => {
+    const t = AVATAR_TINTS[i % AVATAR_TINTS.length];
+    return `
     <tr>
-      <td class="student-name">${s.name}</td>
+      <td class="student-name"><span class="who"><span class="avatar" style="--av1:${t[0]};--av2:${t[1]}" aria-hidden="true">${initials(s.name)}</span>${s.name}</span></td>
       <td class="teacher" data-label="Supervisor">${s.teacher}</td>
       <td data-label="IA Draft">${docCell(s.docs["IA Draft"])}</td>
       <td data-label="Notes">${docCell(s.docs["Notes"])}</td>
@@ -528,8 +585,9 @@ function render() {
       <td data-label="Reviewed">${reviewedCell(i, 'ln', s.ln)}</td>
       <td class="last-checked" data-label="Last checked">${s.lastChecked}</td>
       <td class="notes-cell" data-label="Teacher notes">${s.notes || ""}</td>
-    </tr>
-  `).join("");
+    </tr>`;
+  }).join("");
+  updateStats();
 }
 
 function toggleReviewed(rowIdx, key, checked) {
