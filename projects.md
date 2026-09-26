@@ -7,7 +7,7 @@ title: Digital Innovation Projects
   <span class="section-eyebrow">Digital Innovation Projects</span>
   <h1>Tools I have built</h1>
   <p>
-    Five working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, two real tools I built and run for my own IB coordination work, one for automatic substitute-cover matching, and one for leadership systems.
+    Six working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, two real tools I built and run for my own IB coordination work, a department gradebook for assessment tracking, one for automatic substitute-cover matching, and one for leadership systems.
   </p>
 </div>
 
@@ -35,6 +35,15 @@ title: Digital Innovation Projects
     <h3>Integrity Tracker</h3>
     <p>A live-monitoring tool I built and run for the whole high school — three mechanical, deliberately non-AI checks (per-revision word-count changes, outside-domain collaborators, and late-night editing patterns) that flag items for contextual teacher review, running on an always-on five-minute cycle. This is an interactive prototype seeded entirely with fictional students and documents so the real interface can be explored safely.</p>
     <a href="{{ '/ia-integrity-tracker/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open Integrity Tracker →</a>
+  </div>
+</div>
+
+<div class="feature-card">
+  <div class="fc-body">
+    <span class="fc-eyebrow">Assessment System · For Departments</span>
+    <h3>Maths Gradebook</h3>
+    <p>A department gradebook designed for Grades 9–12 mathematics: summatives aligned to assessment objectives (AO1–AO4) in Grades 9–10, and paper marks converted through IB grade boundaries in the Diploma Programme. Class dashboards, supportive needs-attention flags, cross-class alignment for moderation, entry-status tracking and student profiles all update automatically as grades are entered. This is an interactive prototype seeded entirely with fictional students and classes so the design can be explored safely.</p>
+    <a href="{{ '/gradebook/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open Maths Gradebook →</a>
   </div>
 </div>
 

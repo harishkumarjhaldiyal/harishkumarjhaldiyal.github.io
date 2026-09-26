@@ -37,6 +37,6 @@ title: About Me
 
   <h2>What this portfolio offers</h2>
   <p>
-    This portfolio shares my teaching philosophy, professional experience, and selected resources that reflect my approach to teaching and learning. It also includes five working prototypes under Digital Innovation Projects, including <strong>Leadership Compass OS</strong>, that demonstrate how I think about the operational side of school and Extended Essay leadership.
+    This portfolio shares my teaching philosophy, professional experience, and selected resources that reflect my approach to teaching and learning. It also includes six working prototypes under Digital Innovation Projects, including <strong>Leadership Compass OS</strong>, that demonstrate how I think about the operational side of school and Extended Essay leadership.
   </p>
 </div>

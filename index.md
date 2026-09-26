@@ -69,7 +69,7 @@ title: Harish Kumar — IBDP Extended Essay Coordinator & Mathematics Teacher
 <div class="intro-card" style="margin-bottom: 1rem;">
   <span class="section-eyebrow">Interactive Tools</span>
   <h2 style="margin-top: 0.4rem;">Digital Innovation Projects</h2>
-  <p style="margin-bottom: 1.2rem;">Five working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, two real tools I built and run for my own IB coordination work, one for automatic substitute-cover matching, and one for leadership systems.</p>
+  <p style="margin-bottom: 1.2rem;">Six working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, two real tools I built and run for my own IB coordination work, a department gradebook for assessment tracking, one for automatic substitute-cover matching, and one for leadership systems.</p>
   <a href="{{ '/projects.html' | relative_url }}" class="btn-primary">See Digital Innovation Projects →</a>
 </div>
 
