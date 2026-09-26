@@ -160,7 +160,6 @@ button { font-family: inherit; }
 .mock {
   border-radius: 20px; padding: 18px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 30px 60px rgba(0,0,0,0.35);
-  transform: rotate(1.2deg);
 }
 .mock-head { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #9fb3cc; margin-bottom: 12px; }
 .mock-head strong { color: #fff; font-family: var(--display); font-size: 15px; }
@@ -587,13 +586,10 @@ footer #finalize-btn { min-width: 260px; padding: 14px 22px; font-size: 15px; bo
 .rise { animation: rise 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 .d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.12s; } .d3 { animation-delay: 0.2s; } .d4 { animation-delay: 0.3s; }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-.mock.rise { animation-name: riseTilt; }
-@keyframes riseTilt { from { opacity: 0; transform: translateY(18px) rotate(1.2deg); } to { opacity: 1; transform: rotate(1.2deg); } }
-@media (prefers-reduced-motion: reduce) { .rise, .mock.rise { animation: none; } .how-card { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .rise { animation: none; } .how-card { transition: none; } }
 @media (max-width: 980px) {
   .hero-grid { grid-template-columns: 1fr; gap: 28px; }
   .mock { max-width: 460px; transform: none; }
-  @keyframes riseTilt { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
   .how { grid-template-columns: 1fr; }
   .hero h2 { font-size: 40px; }
 }
