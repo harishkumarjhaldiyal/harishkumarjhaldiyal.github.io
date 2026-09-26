@@ -1,4 +1,14 @@
 theme: jekyll-theme-cayman
 title: Harish Kumar
-description: Mathematics Teacher Portfolio
+description: Teaching portfolio of Harish Kumar — IBDP Extended Essay Coordinator and high school mathematics teacher in Hong Kong, with IB Diploma and Grades 9–12 mathematics, and six school tools designed and built.
+url: "https://harishkumarjhaldiyal.github.io"
 show_downloads: false
+
+# Link-preview card (Open Graph / Twitter) for every page
+twitter:
+  card: summary_large_image
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/img/og-card.jpg

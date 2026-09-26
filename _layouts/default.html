@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Harish Kumar — IBDP Extended Essay Coordinator and International School Mathematics Teacher portfolio. Diploma-wide Extended Essay coordination and IB Diploma Programme mathematics teaching in Hong Kong, with leadership systems work.">
-
     {% seo %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +32,7 @@
 
     <footer class="site-footer-custom" role="contentinfo">
       <div class="footer-name">Harish Kumar</div>
-      <div>International School Mathematics Teacher &middot; Hong Kong</div>
+      <div>IBDP Extended Essay Coordinator &amp; Mathematics Teacher &middot; Hong Kong</div>
       <div style="margin-top: 0.6rem;">
         <a href="{{ '/contact.html' | relative_url }}">Contact</a>
         &middot;
@@ -43,5 +41,11 @@
         <a href="{{ '/projects.html' | relative_url }}">Digital Innovation Projects</a>
       </div>
     </footer>
+    <script>
+      (function () {
+        var nav = document.querySelector('.site-nav'), a = nav && nav.querySelector('a.active');
+        if (a && nav.scrollWidth > nav.clientWidth) nav.scrollLeft = a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2;
+      })();
+    </script>
   </body>
 </html>

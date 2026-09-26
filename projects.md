@@ -11,7 +11,8 @@ title: Digital Innovation Projects
   </p>
 </div>
 
-<div class="feature-card feature-ia">
+<div class="feature-card feature-ia has-shot">
+  <a class="fc-shot" href="{{ '/ia-compass/' | relative_url }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="{{ '/assets/img/projects/ia-compass.jpg' | relative_url }}" alt="IB Math IA Compass landing screen with course pathway cards" width="1440" height="900" loading="lazy"></a>
   <div class="fc-body">
     <span class="fc-eyebrow">For Students</span>
     <h3>IB Math IA Compass</h3>
@@ -20,7 +21,8 @@ title: Digital Innovation Projects
   </div>
 </div>
 
-<div class="feature-card">
+<div class="feature-card has-shot">
+  <a class="fc-shot" href="{{ '/ee-platform/' | relative_url }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="{{ '/assets/img/projects/ee-platform.jpg' | relative_url }}" alt="Extended Essay Coordination Platform deadline calendar with milestone countdowns (fictional data)" width="1440" height="900" loading="lazy"></a>
   <div class="fc-body">
     <span class="fc-eyebrow">Production Tool · For Coordinators</span>
     <h3>IBDP Extended Essay Coordination Platform</h3>
@@ -29,7 +31,8 @@ title: Digital Innovation Projects
   </div>
 </div>
 
-<div class="feature-card feature-integrity">
+<div class="feature-card feature-integrity has-shot">
+  <a class="fc-shot" href="{{ '/ia-integrity-tracker/' | relative_url }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="{{ '/assets/img/projects/ia-integrity-tracker.jpg' | relative_url }}" alt="Integrity Tracker explaining its three review checks, above the tracker table (fictional data)" width="1440" height="900" loading="lazy"></a>
   <div class="fc-body">
     <span class="fc-eyebrow">Production Tool · For All Teachers</span>
     <h3>Integrity Tracker</h3>
@@ -38,7 +41,8 @@ title: Digital Innovation Projects
   </div>
 </div>
 
-<div class="feature-card">
+<div class="feature-card has-shot">
+  <a class="fc-shot" href="{{ '/gradebook/' | relative_url }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="{{ '/assets/img/projects/gradebook.jpg' | relative_url }}" alt="Maths Gradebook dashboard with class trend lines and assessment-objective charts (fictional data)" width="1440" height="900" loading="lazy"></a>
   <div class="fc-body">
     <span class="fc-eyebrow">Assessment System · For Departments</span>
     <h3>Maths Gradebook</h3>
@@ -47,7 +51,8 @@ title: Digital Innovation Projects
   </div>
 </div>
 
-<div class="feature-card">
+<div class="feature-card has-shot">
+  <a class="fc-shot" href="{{ '/cover-teachers/' | relative_url }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="{{ '/assets/img/projects/cover-teachers.jpg' | relative_url }}" alt="Cover Teachers suggesting subject-matched cover for each period (fictional data)" width="1440" height="900" loading="lazy"></a>
   <div class="fc-body">
     <span class="fc-eyebrow">For School Leadership</span>
     <h3>Cover Teachers</h3>
@@ -56,7 +61,8 @@ title: Digital Innovation Projects
   </div>
 </div>
 
-<div class="feature-card">
+<div class="feature-card has-shot">
+  <a class="fc-shot" href="{{ '/leadership-compass/' | relative_url }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="{{ '/assets/img/projects/leadership-compass.jpg' | relative_url }}" alt="Leadership Compass OS executive overview with open actions by role (fictional data)" width="1440" height="900" loading="lazy"></a>
   <div class="fc-body">
     <span class="fc-eyebrow">Leadership Prototype</span>
     <h3>Leadership Compass OS</h3>

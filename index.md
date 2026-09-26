@@ -18,28 +18,30 @@ title: Harish Kumar — IBDP Extended Essay Coordinator & Mathematics Teacher
   </div>
 </section>
 
-<div class="stats-strip">
-  <div class="stat-tile">
-    <div class="stat-num">4+</div>
-    <div class="stat-lbl">Years at Stamford American HK</div>
+<div class="evidence-strip">
+  <div class="evidence lead">
+    <div class="ev-num">+0.6</div>
+    <div class="ev-lbl">grade points above the IB global mean</div>
+    <div class="ev-src">May 2026 DP Mathematics AI SL cohort (co-taught) · mean grade 4.5</div>
   </div>
-  <div class="stat-tile">
-    <div class="stat-num">IB DP</div>
-    <div class="stat-lbl">AI SL / AA SL Curriculum</div>
+  <div class="evidence">
+    <div class="ev-num">165</div>
+    <div class="ev-lbl">Extended Essay students coordinated</div>
+    <div class="ev-src">two DP cohorts · 23 supervisors</div>
   </div>
-  <div class="stat-tile">
-    <div class="stat-num">G9–12</div>
-    <div class="stat-lbl">High School Mathematics</div>
+  <div class="evidence">
+    <div class="ev-num">6</div>
+    <div class="ev-lbl">working school tools designed &amp; built</div>
+    <div class="ev-src">see Digital Innovation Projects below</div>
   </div>
-  <div class="stat-tile">
-    <div class="stat-num">Master's</div>
-    <div class="stat-lbl">International Education · Sunderland</div>
-  </div>
-  <div class="stat-tile">
-    <div class="stat-num">165</div>
-    <div class="stat-lbl">EE Students · 23 Supervisors</div>
+  <div class="evidence">
+    <div class="ev-num">8<small>yrs</small></div>
+    <div class="ev-lbl">in international education</div>
+    <div class="ev-src">4+ years full-time high school mathematics</div>
   </div>
 </div>
+
+<p class="credentials-line"><span>Master's in International Education</span><span>PGCE</span><span>Registered Teacher, Hong Kong</span><span>IB-trained: DP Extended Essay &amp; Maths AI</span></p>
 
 <div class="intro-card">
   <span class="section-eyebrow">Welcome</span>
@@ -52,7 +54,7 @@ title: Harish Kumar — IBDP Extended Essay Coordinator & Mathematics Teacher
   <div class="highlight curriculum">
     <span class="h-eyebrow">Curriculum</span>
     <h4>IB &amp; High School Mathematics</h4>
-    <p>Lesson sequences, assessment design, and curriculum mapping across IB AI/AA SL, high school, and middle school — built on conceptual progression and structured challenge.</p>
+    <p>Lesson sequences, assessment design, and curriculum mapping across IBDP Mathematics AA &amp; AI and AERO/Common Core-aligned Grades 9–10 — built on conceptual progression and structured challenge.</p>
   </div>
   <div class="highlight classroom">
     <span class="h-eyebrow">Classroom</span>
@@ -70,7 +72,12 @@ title: Harish Kumar — IBDP Extended Essay Coordinator & Mathematics Teacher
   <span class="section-eyebrow">Interactive Tools</span>
   <h2 style="margin-top: 0.4rem;">Digital Innovation Projects</h2>
   <p style="margin-bottom: 1.2rem;">Six working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, two real tools I built and run for my own IB coordination work, a department gradebook for assessment tracking, one for automatic substitute-cover matching, and one for leadership systems.</p>
-  <a href="{{ '/projects.html' | relative_url }}" class="btn-primary">See Digital Innovation Projects →</a>
+  <div class="shot-row">
+    <a href="{{ '/gradebook/' | relative_url }}" target="_blank" rel="noopener" title="Maths Gradebook"><img src="{{ '/assets/img/projects/gradebook.jpg' | relative_url }}" alt="Maths Gradebook dashboard with class trend lines and AO charts (fictional data)" width="1440" height="900" loading="lazy"></a>
+    <a href="{{ '/ee-platform/' | relative_url }}" target="_blank" rel="noopener" title="IBDP Extended Essay Coordination Platform"><img src="{{ '/assets/img/projects/ee-platform.jpg' | relative_url }}" alt="Extended Essay Coordination Platform deadline calendar (fictional data)" width="1440" height="900" loading="lazy"></a>
+    <a href="{{ '/ia-compass/' | relative_url }}" target="_blank" rel="noopener" title="IB Math IA Compass"><img src="{{ '/assets/img/projects/ia-compass.jpg' | relative_url }}" alt="IB Math IA Compass landing screen" width="1440" height="900" loading="lazy"></a>
+  </div>
+  <a href="{{ '/projects.html' | relative_url }}" class="btn-primary">See all six projects →</a>
 </div>
 
 <div class="intro-card">
