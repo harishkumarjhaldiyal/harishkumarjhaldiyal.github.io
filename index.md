@@ -4,6 +4,7 @@ title: Harish Kumar — IBDP Extended Essay Coordinator & Mathematics Teacher
 ---
 
 <section class="hero-section">
+  <svg class="hero-graph" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"></svg>
   <img src="profile.JPEG" alt="Harish Kumar" class="hero-photo">
   <div class="hero-text">
     <span class="hero-eyebrow">IBDP EE Coordinator &amp; Mathematics Teacher · Hong Kong</span>
@@ -20,22 +21,22 @@ title: Harish Kumar — IBDP Extended Essay Coordinator & Mathematics Teacher
 
 <div class="evidence-strip">
   <div class="evidence lead">
-    <div class="ev-num">+0.6</div>
+    <div class="ev-num"><span data-count="0.6" data-decimals="1" data-prefix="+">+0.6</span></div>
     <div class="ev-lbl">grade points above the IB global mean</div>
     <div class="ev-src">May 2026 DP Mathematics AI SL cohort (co-taught) · mean grade 4.5</div>
   </div>
   <div class="evidence">
-    <div class="ev-num">165</div>
+    <div class="ev-num"><span data-count="165">165</span></div>
     <div class="ev-lbl">Extended Essay students coordinated</div>
     <div class="ev-src">two DP cohorts · 23 supervisors</div>
   </div>
   <div class="evidence">
-    <div class="ev-num">6</div>
+    <div class="ev-num"><span data-count="6">6</span></div>
     <div class="ev-lbl">working school tools designed &amp; built</div>
     <div class="ev-src">see Digital Innovation Projects below</div>
   </div>
   <div class="evidence">
-    <div class="ev-num">8<small>yrs</small></div>
+    <div class="ev-num"><span data-count="8">8</span><small>yrs</small></div>
     <div class="ev-lbl">in international education</div>
     <div class="ev-src">4+ years full-time high school mathematics</div>
   </div>
@@ -91,3 +92,80 @@ title: Harish Kumar — IBDP Extended Essay Coordinator & Mathematics Teacher
     <a href="{{ '/contact.html' | relative_url }}" class="btn-outline">Get in Touch</a>
   </div>
 </div>
+
+<script>
+/* Hero graph: f(x) = x³ − 3x draws itself, then a point with its tangent travels to the turning point x = 1. */
+(function () {
+  var svg = document.querySelector('.hero-graph');
+  if (!svg) return;
+  if (svg.clientWidth / Math.max(1, svg.clientHeight) < 1.3) svg.setAttribute('preserveAspectRatio', 'xMidYMid meet'); // portrait: show the whole graph
+  var NS = 'http://www.w3.org/2000/svg', W = 1000, H = 560;
+  var x0 = -2.3, x1 = 2.3, y0 = -3.3, y1 = 3.3;
+  var X = function (x) { return (x - x0) / (x1 - x0) * W; };
+  var Y = function (y) { return H - (y - y0) / (y1 - y0) * H; };
+  var f = function (x) { return x * x * x - 3 * x; };
+  var df = function (x) { return 3 * x * x - 3; };
+  function el(tag, attrs) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    svg.appendChild(e);
+    return e;
+  }
+  function path(fn, a, b) {
+    var d = '', n = 220;
+    for (var i = 0; i <= n; i++) {
+      var x = a + (b - a) * i / n;
+      d += (i ? 'L' : 'M') + X(x).toFixed(1) + ' ' + Y(fn(x)).toFixed(1);
+    }
+    return d;
+  }
+  for (var gx = -2; gx <= 2; gx += 0.5) el('line', { x1: X(gx), x2: X(gx), y1: 0, y2: H, 'class': 'hg-grid' });
+  for (var gy = -3; gy <= 3; gy += 1) el('line', { x1: 0, x2: W, y1: Y(gy), y2: Y(gy), 'class': 'hg-grid' });
+  el('line', { x1: 0, x2: W, y1: Y(0), y2: Y(0), 'class': 'hg-axis' });
+  el('line', { x1: X(0), x2: X(0), y1: 0, y2: H, 'class': 'hg-axis' });
+  el('path', { d: path(df, -1.9, 1.9), 'class': 'hg-deriv' });
+  var curve = el('path', { d: path(f, -2.2, 2.2), 'class': 'hg-curve' });
+  var label = el('text', { x: X(1.3), y: Y(2.75), 'class': 'hg-label' });
+  label.textContent = 'f(x) = x³ − 3x';
+  var tangent = el('line', { 'class': 'hg-tangent' });
+  var point = el('circle', { r: 6, 'class': 'hg-point' });
+  var note = el('text', { x: X(1) + 16, y: Y(-2) + 30, 'class': 'hg-note' });
+  note.textContent = "f′(1) = 0";
+
+  var sx = W / (x1 - x0), sy = H / (y1 - y0), half = 95;
+  function place(x) {
+    var px = X(x), py = Y(f(x));
+    var dx = sx, dy = -df(x) * sy, len = Math.sqrt(dx * dx + dy * dy);
+    dx = dx / len * half; dy = dy / len * half;
+    point.setAttribute('cx', px); point.setAttribute('cy', py);
+    tangent.setAttribute('x1', px - dx); tangent.setAttribute('y1', py - dy);
+    tangent.setAttribute('x2', px + dx); tangent.setAttribute('y2', py + dy);
+  }
+
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { place(1); note.classList.add('on'); return; }
+
+  var L = curve.getTotalLength();
+  curve.style.strokeDasharray = L;
+  curve.style.strokeDashoffset = L;
+  point.style.opacity = 0; tangent.style.opacity = 0;
+  var ease = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+  var start = null, DRAW = 2200, TRAVEL = 3400, xa = -2.1, xb = 1;
+  function frame(t) {
+    if (!start) start = t;
+    var e = t - start;
+    if (e < DRAW) {
+      curve.style.strokeDashoffset = L * (1 - ease(e / DRAW));
+    } else {
+      curve.style.strokeDashoffset = 0;
+      var p = Math.min(1, (e - DRAW) / TRAVEL);
+      point.style.opacity = 1; tangent.style.opacity = 1;
+      place(xa + (xb - xa) * ease(p));
+      if (p === 1) { note.classList.add('on'); return; }
+    }
+    requestAnimationFrame(frame);
+  }
+  place(xa);
+  requestAnimationFrame(frame);
+})();
+</script>

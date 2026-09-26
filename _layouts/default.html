@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>document.documentElement.classList.add('js');</script>
     {% seo %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,6 +46,49 @@
       (function () {
         var nav = document.querySelector('.site-nav'), a = nav && nav.querySelector('a.active');
         if (a && nav.scrollWidth > nav.clientWidth) nav.scrollLeft = a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2;
+      })();
+
+      (function () {
+        var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var targets = document.querySelectorAll('.main-content .intro-card, .main-content .page-card, .highlight, .feature-card, .pillar, .resource-tile, .evidence, .pull-quote-lg, .cta-card, .credentials-line, .tool-card');
+        var counters = document.querySelectorAll('[data-count]');
+
+        function count(el) {
+          var end = parseFloat(el.getAttribute('data-count')), dec = +(el.getAttribute('data-decimals') || 0);
+          var pre = el.getAttribute('data-prefix') || '', t0 = null, dur = 1100;
+          function frame(t) {
+            if (!t0) t0 = t;
+            var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+            el.textContent = pre + (end * e).toFixed(dec);
+            if (p < 1) requestAnimationFrame(frame);
+          }
+          requestAnimationFrame(frame);
+        }
+
+        if (reduce || !('IntersectionObserver' in window)) {
+          targets.forEach(function (el) { el.classList.add('is-visible'); });
+          return;
+        }
+        var seen = new Map(), fold = window.innerHeight;
+        targets = Array.prototype.filter.call(targets, function (el) {
+          return el.getBoundingClientRect().top > fold * 0.92; // already on screen at load: show immediately, never hide
+        });
+        targets.forEach(function (el) {
+          var i = seen.get(el.parentNode) || 0;
+          seen.set(el.parentNode, i + 1);
+          el.style.transitionDelay = Math.min(i, 4) * 70 + 'ms';
+          el.classList.add('reveal');
+        });
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (!en.isIntersecting) return;
+            en.target.classList.add('is-visible');
+            en.target.querySelectorAll('[data-count]').forEach(count);
+            io.unobserve(en.target);
+          });
+        }, { rootMargin: '0px 0px -6% 0px', threshold: 0.08 });
+        targets.forEach(function (el) { io.observe(el); });
+        counters.forEach(function (c) { if (!c.closest('.reveal')) count(c); });
       })();
     </script>
   </body>

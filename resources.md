@@ -3,103 +3,78 @@ layout: default
 title: Teaching Resources
 ---
 
-<div class="page-card">
+<div class="page-card page-lead">
   <span class="section-eyebrow">Teaching Resources</span>
   <h1>Materials I design for my classroom</h1>
-
-  <p>
-    This section highlights the kinds of teaching materials I design to support rigorous, student-centred mathematics learning across middle school, high school, and IB contexts. My resources are created to build conceptual understanding, strengthen mathematical communication, and provide students with structured opportunities to think deeply, apply ideas, and grow in confidence.
+  <p class="lead">
+    I design teaching materials that build conceptual understanding, strengthen mathematical communication, and give students structured opportunities to think deeply, apply ideas, and grow in confidence. Rather than a public file repository, this page gives an overview of what I create — selected samples are available on request.
   </p>
+</div>
 
-  <p>
-    Rather than serving as a public file repository, this section offers an overview of the types of instructional materials I use and develop as part of my teaching practice. They reflect my approach to lesson design, assessment, differentiation, and purposeful mathematical challenge.
-  </p>
-
-  <h2>Resource categories</h2>
-  <div class="resource-grid">
-    <div class="resource-tile">
-      <h4>Lesson Plans &amp; Sequences</h4>
-      <p>Unit-level planning, lesson sequences, and progression maps designed around conceptual coherence.</p>
-    </div>
-    <div class="resource-tile">
-      <h4>Instructional Slides</h4>
-      <p>Guided learning materials, worked examples, and visual scaffolds for direct instruction and modelling.</p>
-    </div>
-    <div class="resource-tile">
-      <h4>Assessments &amp; Review</h4>
-      <p>Formative and summative tasks that test reasoning, communication, and application — not just answer-getting.</p>
-    </div>
-    <div class="resource-tile">
-      <h4>Rubrics &amp; Feedback</h4>
-      <p>Success criteria, marking schemes, and feedback structures that make next steps clear for every student.</p>
-    </div>
-    <div class="resource-tile">
-      <h4>Problem-Solving Tasks</h4>
-      <p>Inquiry-based and modelling tasks that stretch thinking, build persistence, and require precision.</p>
-    </div>
-    <div class="resource-tile">
-      <h4>Curriculum Planning</h4>
-      <p>Unit mapping, vertical alignment work, and curriculum design across IB AI/AA SL, high school, and middle school.</p>
-    </div>
+<div class="resource-grid resource-grid-lg">
+  <div class="resource-tile">
+    <div class="rt-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></div>
+    <h4>Lesson plans &amp; sequences</h4>
+    <p>Unit-level planning and progression maps built for clarity and purposeful challenge — lessons that help students connect concepts, develop fluency, and explain their reasoning with growing independence.</p>
   </div>
-
-  <h2>Lesson planning</h2>
-  <p>
-    My lesson planning is focused on clarity, progression, and purposeful challenge. I design lessons that help students connect concepts, develop fluency, and explain their reasoning with increasing confidence and independence.
-  </p>
-
-  <h2>Instructional materials</h2>
-  <p>
-    I create presentations, guided notes, practice tasks, and structured classroom materials that support direct instruction, discussion, modelling, and independent thinking. These resources are designed to make mathematical ideas accessible while maintaining high expectations.
-  </p>
-
-  <h2>Assessment design</h2>
-  <p>
-    My assessments are designed to evaluate both conceptual understanding and procedural skill. I aim to create tasks that require interpretation, reasoning, communication, and application, rather than focusing only on answer-getting.
-  </p>
-
-  <h2>Feedback and support</h2>
-  <p>
-    I use rubrics, success criteria, and feedback structures to help students understand expectations and identify clear next steps in their learning. I value feedback that is specific, actionable, and supportive of growth.
-  </p>
-
-  <h2>The approach behind these materials</h2>
-  <p>
-    Across all resources, my goal is to create learning experiences that are clear, challenging, and meaningful. I value instruction that develops understanding rather than memorisation, encourages students to explain their reasoning, and supports them in applying mathematics with confidence in a range of contexts.
-  </p>
-
-  <h2>Interactive student tool</h2>
-  <p>
-    Alongside classroom materials, I design interactive tools that students can use independently. The IB Math IA Compass is a web app I built to guide students through the Internal Assessment from first idea to final self-check.
-  </p>
-
-  <div class="feature-card feature-ia" style="margin: 1rem 0 1.5rem;">
-    <div class="fc-body">
-      <span class="fc-eyebrow">For Students</span>
-      <h3>IB Math IA Compass</h3>
-      <p>An interactive guide that walks IB Mathematics students through every stage of the Internal Assessment — discovering a topic suited to their course, forging and refining a focused research question, self-checking a draft against the official assessment criteria, and learning from worked examples. It supports all four IB Mathematics pathways: Analysis &amp; Approaches and Applications &amp; Interpretation, at Standard and Higher Level.</p>
-      <a href="{{ '/ia-compass/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open IA Compass →</a>
-    </div>
+  <div class="resource-tile">
+    <div class="rt-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg></div>
+    <h4>Instructional materials</h4>
+    <p>Presentations, guided notes, worked examples, and visual scaffolds for direct instruction, discussion, and modelling — accessible without lowering expectations.</p>
   </div>
-
-  <h2>Leadership systems — prototype</h2>
-
-  <div class="feature-card" style="margin: 1rem 0 1.5rem;">
-    <div class="fc-body">
-      <span class="fc-eyebrow">Working Prototype</span>
-      <h3>Leadership Compass OS</h3>
-      <p>An offline prototype of a school leadership operating system. Brings curriculum alignment, Extended Essay coordination, pastoral follow-up, communication, and accountability into one weekly review cycle. Demonstrates how I think about the operational side of teaching leadership — making ownership, deadlines, blockers, and support visible early enough to act.</p>
-      <a href="{{ '/leadership-compass/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open the prototype →</a>
-    </div>
+  <div class="resource-tile">
+    <div class="rt-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><polyline points="9 14 11 16 15 12"/></svg></div>
+    <h4>Assessments &amp; review</h4>
+    <p>Formative and summative tasks that evaluate conceptual understanding and procedural skill — requiring interpretation, reasoning, communication, and application, not just answer-getting.</p>
   </div>
+  <div class="resource-tile">
+    <div class="rt-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6h11"/><path d="M10 12h11"/><path d="M10 18h11"/><polyline points="3 6 4.5 7.5 7 5"/><polyline points="3 12 4.5 13.5 7 11"/><polyline points="3 18 4.5 19.5 7 17"/></svg></div>
+    <h4>Rubrics &amp; feedback</h4>
+    <p>Success criteria, marking schemes, and feedback structures that make expectations and next steps clear — specific, actionable, and supportive of growth.</p>
+  </div>
+  <div class="resource-tile">
+    <div class="rt-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div>
+    <h4>Problem-solving tasks</h4>
+    <p>Inquiry-based and modelling tasks that stretch thinking, build persistence, and require precision.</p>
+  </div>
+  <div class="resource-tile">
+    <div class="rt-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><path d="M8 2v16"/><path d="M16 6v16"/></svg></div>
+    <h4>Curriculum planning</h4>
+    <p>Unit mapping, vertical alignment, and curriculum design across IBDP Mathematics AA &amp; AI and AERO/Common Core-aligned Grades 9–10.</p>
+  </div>
+</div>
 
-  <h2>Extended Essay coordination materials</h2>
-  <p>
-    As Extended Essay Coordinator, I also design the materials that keep a diploma-wide research programme coherent — milestone calendars, supervisor briefing templates, reflection-session structures, and criteria-based feedback tools that help around 165 students and 23 supervisors stay aligned across two Diploma Programme cohorts.
-  </p>
+<div class="page-card">
+  <span class="section-eyebrow">Beyond the classroom</span>
+  <h2 class="plain">Tools students and colleagues use</h2>
+  <p>Alongside classroom materials, I build interactive tools that make good practice easier to sustain.</p>
+  <div class="tool-cards">
+    <a class="tool-card" href="{{ '/ia-compass/' | relative_url }}" target="_blank" rel="noopener">
+      <img src="{{ '/assets/img/projects/ia-compass.jpg' | relative_url }}" alt="IB Math IA Compass landing screen" width="1440" height="900" loading="lazy">
+      <span class="tc-eyebrow">For students</span>
+      <strong>IB Math IA Compass</strong>
+      <span class="tc-text">Guides students through the Internal Assessment, from first idea to final self-check, for all four IB Mathematics pathways.</span>
+    </a>
+    <a class="tool-card" href="{{ '/gradebook/' | relative_url }}" target="_blank" rel="noopener">
+      <img src="{{ '/assets/img/projects/gradebook.jpg' | relative_url }}" alt="Maths Gradebook dashboard (fictional data)" width="1440" height="900" loading="lazy">
+      <span class="tc-eyebrow">For departments</span>
+      <strong>Maths Gradebook</strong>
+      <span class="tc-text">AO-aligned summatives, IB grade boundaries, and supportive needs-attention flags for every class.</span>
+    </a>
+    <a class="tool-card" href="{{ '/ee-platform/' | relative_url }}" target="_blank" rel="noopener">
+      <img src="{{ '/assets/img/projects/ee-platform.jpg' | relative_url }}" alt="Extended Essay Coordination Platform deadline calendar (fictional data)" width="1440" height="900" loading="lazy">
+      <span class="tc-eyebrow">For EE supervisors</span>
+      <strong>Extended Essay coordination</strong>
+      <span class="tc-text">Milestone calendars, supervisor briefs, and reflection-session structures for around 165 students and 23 supervisors.</span>
+    </a>
+  </div>
+  <p class="more-link"><a href="{{ '/projects.html' | relative_url }}">See all six Digital Innovation Projects →</a></p>
+</div>
 
-  <h2>Available upon request</h2>
-  <p>
-    Selected sample materials are available upon request for professional review. These may include lesson plans, assessments, instructional resources, and examples of curriculum design that reflect my teaching approach across different year levels and contexts.
-  </p>
+<div class="cta-card">
+  <div>
+    <h2 class="plain">Available on request</h2>
+    <p>Selected sample materials — lesson plans, assessments, instructional resources, and curriculum design — are available for professional review.</p>
+  </div>
+  <a href="{{ '/contact.html' | relative_url }}" class="btn-hero">Request samples</a>
 </div>
