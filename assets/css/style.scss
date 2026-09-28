@@ -1138,6 +1138,7 @@ a:hover { color: #1d4ed8; text-decoration: none; }
   .shot-row { grid-template-columns: 1fr 1fr; }
   .shot-row a:nth-child(3) { display: none; }
   .evidence-strip { grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+  .evidence.lead { grid-column: 1 / -1; }
   .evidence { padding: 1.05rem 1rem 1rem; }
   .evidence .ev-num { font-size: 2rem; }
   .evidence .ev-lbl { font-size: 0.86rem; }

@@ -21,11 +21,6 @@ title: Harish Kumar — IBDP Extended Essay Coordinator & Mathematics Teacher
 
 <div class="evidence-strip">
   <div class="evidence lead">
-    <div class="ev-num"><span data-count="0.6" data-decimals="1" data-prefix="+">+0.6</span></div>
-    <div class="ev-lbl">grade points above the IB global mean</div>
-    <div class="ev-src">May 2026 DP Mathematics AI SL cohort (co-taught) · mean grade 4.5</div>
-  </div>
-  <div class="evidence">
     <div class="ev-num"><span data-count="165">165</span></div>
     <div class="ev-lbl">Extended Essay students coordinated</div>
     <div class="ev-src">two DP cohorts · 23 supervisors</div>
