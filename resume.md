@@ -75,7 +75,7 @@ title: Resume / CV
     </div>
   </div>
 
-  <h2>Digital Innovation Projects</h2>
+  <h2>Selected Digital Innovation Projects</h2>
   <ul>
     <li><strong>IBDP Extended Essay Coordination Platform</strong> — Built and deployed a diploma-wide automated IBDP Extended Essay coordination platform supporting approximately 165 students across two DP cohorts, with 23 supervisors currently assigned; it centralises milestones and deadlines, surfaces process-integrity indicators, prioritises interventions, generates supervisor briefs for human review and provides cohort analytics. <a href="https://harishkumarjhaldiyal.github.io/ee-platform/" target="_blank" rel="noopener">View project →</a></li>
     <li><strong>IB Math IA Compass</strong> — Published an interactive student guide for AA/AI at SL/HL, supporting topic discovery, research-question refinement, criteria-based self-assessment and worked examples. <a href="https://harishkumarjhaldiyal.github.io/ia-compass/" target="_blank" rel="noopener">View project →</a></li>
