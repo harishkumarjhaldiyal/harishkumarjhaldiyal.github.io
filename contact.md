@@ -65,20 +65,12 @@ title: Contact
   <h2>Other ways to connect</h2>
   <div class="contact-grid">
     <div class="contact-tile">
-      <div class="ct-label">Name</div>
-      <div class="ct-value">Harish Kumar</div>
-    </div>
-    <div class="contact-tile">
       <div class="ct-label">Location</div>
       <div class="ct-value">Hong Kong</div>
     </div>
     <div class="contact-tile">
       <div class="ct-label">LinkedIn</div>
       <div class="ct-value"><a href="https://linkedin.com/in/harishjhaldiyal" target="_blank" rel="noopener">linkedin.com/in/harishjhaldiyal</a></div>
-    </div>
-    <div class="contact-tile">
-      <div class="ct-label">Best for</div>
-      <div class="ct-value">Teaching · Curriculum · Leadership</div>
     </div>
   </div>
 
