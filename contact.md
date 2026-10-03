@@ -74,9 +74,6 @@ title: Contact
     </div>
   </div>
 
-  <p style="margin-top: 1.5rem;">
-    <a href="https://linkedin.com/in/harishjhaldiyal" target="_blank" rel="noopener" class="btn-outline">Connect on LinkedIn</a>
-  </p>
 
   <h2>Professional interests</h2>
   <ul class="tag-cloud">
