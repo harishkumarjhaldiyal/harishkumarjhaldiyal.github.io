@@ -36,7 +36,7 @@ title: Digital Innovation Projects
   <div class="fc-body">
     <span class="fc-eyebrow">Production Tool · For All Teachers</span>
     <h3>Integrity Tracker</h3>
-    <p>A live-monitoring tool I built and run for the whole high school — three mechanical, deliberately non-AI checks (per-revision word-count changes, outside-domain collaborators, and late-night editing patterns) that flag items for contextual teacher review, running on an always-on five-minute cycle. This is an interactive prototype seeded entirely with fictional students and documents so the real interface can be explored safely.</p>
+    <p>A monitoring tool I built and run for the whole high school — three mechanical, deliberately non-AI checks (per-revision word-count changes, outside-domain collaborators, and late-night editing patterns) that flag items for contextual teacher review, running automatically every night. This is an interactive prototype seeded entirely with fictional students and documents so the real interface can be explored safely.</p>
     <a href="{{ '/ia-integrity-tracker/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open Integrity Tracker →</a>
   </div>
 </div>

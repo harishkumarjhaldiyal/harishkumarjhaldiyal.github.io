@@ -381,9 +381,9 @@ tbody tr:hover { background: #fbfaff; }
     </div>
 
     <div class="hero">
-      <span class="live-pill rise d1"><span class="pulse" aria-hidden="true"></span>Live monitoring · re-checks every 5 minutes</span>
+      <span class="live-pill rise d1"><span class="pulse" aria-hidden="true"></span>Automated monitoring · re-checks every night</span>
       <h2 class="rise d2">Automated <span class="grad-text">integrity monitoring</span></h2>
-      <p class="rise d3">A live-monitoring tool I built for the whole high school. For every student, it runs three mechanical checks against their linked Google Docs, using only Drive/Docs API data, and keeps re-checking on a five-minute cycle so nothing goes stale.</p>
+      <p class="rise d3">A monitoring tool I built for the whole high school. For every student, it runs three mechanical checks against their linked Google Docs, using only Drive/Docs API data, and re-checks every night so nothing goes stale.</p>
     </div>
 
     <div class="stats rise d4" aria-live="polite">
@@ -454,7 +454,7 @@ tbody tr:hover { background: #fbfaff; }
   </section>
 
   <div class="tech-footer">
-    <p><span class="k">Real implementation:</span> Google Sheets API · Google Drive API · Google Apps Script (5-minute trigger, batched with checkpointing to survive Apps Script's execution-time cap) · Python reference implementation · retry-with-backoff throughout, since individual Drive revision fetches turned out to be flaky enough in practice to need it.</p>
+    <p><span class="k">Real implementation:</span> Google Sheets API · Google Drive API · Google Apps Script (nightly trigger, batched with checkpointing to survive Apps Script's execution-time cap) · Python reference implementation · retry-with-backoff throughout, since individual Drive revision fetches turned out to be flaky enough in practice to need it.</p>
   </div>
 </main>
 
