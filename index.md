@@ -69,9 +69,9 @@ title: Harish Kumar — IBDP Extended Essay Coordinator & Mathematics Teacher
 <div class="intro-card" style="margin-bottom: 1rem;">
   <span class="section-eyebrow">Interactive Tools</span>
   <h2 style="margin-top: 0.4rem;">Digital Innovation Projects</h2>
-  <p style="margin-bottom: 1.2rem;">Six working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, two real tools I built and run for my own IB coordination work, a department gradebook for assessment tracking, one for automatic substitute-cover matching, and one for leadership systems.</p>
+  <p style="margin-bottom: 1.2rem;">Six working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, two real tools I built and run for my own IB coordination work, a department dashboard for assessment results, one for automatic substitute-cover matching, and one for leadership systems.</p>
   <div class="shot-row">
-    <a href="{{ '/gradebook/' | relative_url }}" target="_blank" rel="noopener" title="Maths Gradebook"><img src="{{ '/assets/img/projects/gradebook.jpg' | relative_url }}" alt="Maths Gradebook dashboard with class trend lines and AO charts (fictional data)" width="1440" height="900" loading="lazy"></a>
+    <a href="{{ '/maths-dashboard/' | relative_url }}" target="_blank" rel="noopener" title="Maths Department Dashboard"><img src="{{ '/assets/img/projects/maths-dashboard.jpg' | relative_url }}" alt="Maths Department Dashboard overview (fictional data)" width="1440" height="900" loading="lazy"></a>
     <a href="{{ '/ee-platform/' | relative_url }}" target="_blank" rel="noopener" title="IBDP Extended Essay Coordination Platform"><img src="{{ '/assets/img/projects/ee-platform.jpg' | relative_url }}" alt="Extended Essay Coordination Platform deadline calendar (fictional data)" width="1440" height="900" loading="lazy"></a>
     <a href="{{ '/ia-compass/' | relative_url }}" target="_blank" rel="noopener" title="IB Math IA Compass"><img src="{{ '/assets/img/projects/ia-compass.jpg' | relative_url }}" alt="IB Math IA Compass landing screen" width="1440" height="900" loading="lazy"></a>
   </div>

@@ -55,11 +55,11 @@ title: Teaching Resources
       <strong>IB Math IA Compass</strong>
       <span class="tc-text">Guides students through the Internal Assessment, from first idea to final self-check, for all four IB Mathematics pathways.</span>
     </a>
-    <a class="tool-card" href="{{ '/gradebook/' | relative_url }}" target="_blank" rel="noopener">
-      <img src="{{ '/assets/img/projects/gradebook.jpg' | relative_url }}" alt="Maths Gradebook dashboard (fictional data)" width="1440" height="900" loading="lazy">
+    <a class="tool-card" href="{{ '/maths-dashboard/' | relative_url }}" target="_blank" rel="noopener">
+      <img src="{{ '/assets/img/projects/maths-dashboard.jpg' | relative_url }}" alt="Maths Department Dashboard overview (fictional data)" width="1440" height="900" loading="lazy">
       <span class="tc-eyebrow">For departments</span>
-      <strong>Maths Gradebook</strong>
-      <span class="tc-text">AO-aligned summatives, IB grade boundaries, and supportive needs-attention flags for every class.</span>
+      <strong>Maths Department Dashboard</strong>
+      <span class="tc-text">Course overviews, cross-teacher alignment, and supportive needs-attention flags, built on the department gradebook.</span>
     </a>
     <a class="tool-card" href="{{ '/ee-platform/' | relative_url }}" target="_blank" rel="noopener">
       <img src="{{ '/assets/img/projects/ee-platform.jpg' | relative_url }}" alt="Extended Essay Coordination Platform deadline calendar (fictional data)" width="1440" height="900" loading="lazy">

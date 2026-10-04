@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maths Department Dashboard · Prototype by Harish Kumar</title>
+<meta name="description" content="A department dashboard for Grades 9–12 mathematics: course overviews, a summative calendar, cross-teacher alignment, predicted grades against results, needs-attention flags and student profiles. Interactive prototype with fictional data.">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/icon-192.png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0f172a;--navy-deep:#0b1322;--navy-soft:#1e3a5f;
+  --blue:#2563eb;--blue-light:#60a5fa;--blue-soft:#eff6ff;
+  --bg:#f6f8fb;--card:#fff;--border:#e5e9f0;
+  --text:#1e293b;--muted:#64748b;--faint:#94a3b8;
+  --green:#15803d;--amber:#b45309;--red:#b42318;
+  --c1:#2a78d6;--c2:#eb6834;--c3:#1baf7a;--c4:#8b5cf6;
+  --g1:#d9480f;--g2:#f08c00;--g3:#f2c94c;--g4:#a9d18e;--g5:#5cb88f;--g6:#2c9a7f;--g7:#146c63;
+  --r8:8px;--r12:12px;--r16:16px;--r20:20px;
+  --shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.07);
+  --shadow-lg:0 2px 4px rgba(15,23,42,.06),0 24px 48px rgba(15,23,42,.12);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,.display{font-family:"Plus Jakarta Sans",Inter,sans-serif;letter-spacing:-.01em}
+button{font:inherit;cursor:pointer}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+.top{position:sticky;top:0;z-index:40;background:rgba(11,19,34,.82);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid rgba(255,255,255,.07)}
+.top-in{max-width:1280px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;font-family:"Plus Jakarta Sans";white-space:nowrap}
+.brand-mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#60a5fa,#2563eb 55%,#1baf7a);display:grid;place-items:center;box-shadow:0 4px 14px rgba(37,99,235,.45)}
+.nav{display:flex;gap:4px;margin-left:8px;overflow-x:auto;scrollbar-width:none;min-width:0;flex:1}
+.nav::-webkit-scrollbar{display:none}
+.nav button{color:#cbd5e1;background:none;border:0;padding:7px 12px;border-radius:999px;font-weight:500;white-space:nowrap;font-size:13px;transition:background .2s,color .2s}
+.nav button:hover,.nav button.on{background:rgba(255,255,255,.1);color:#fff}
+.tools{display:flex;gap:8px;align-items:center}
+.ibtn{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#e2e8f0;border-radius:999px;padding:7px 12px;font-size:13px;white-space:nowrap;transition:background .2s,border-color .2s}
+.ibtn:hover{background:rgba(255,255,255,.14)}
+.ibtn.on{background:#e8f0ff;color:#1e3a8a;border-color:#e8f0ff}
+.ibtn kbd{font:600 11px Inter;border:1px solid rgba(255,255,255,.25);border-radius:5px;padding:0 5px;color:#94a3b8}
+.ibtn svg{width:15px;height:15px}
+
+.band{position:relative;background:var(--navy-deep);color:#fff;overflow:hidden;padding:44px 0 92px}
+.band:before{content:"";position:absolute;inset:-20%;background:radial-gradient(600px 380px at 12% 18%,rgba(37,99,235,.45),transparent 60%),radial-gradient(520px 360px at 88% 30%,rgba(27,175,122,.30),transparent 60%),radial-gradient(500px 300px at 55% 110%,rgba(139,92,246,.28),transparent 60%);animation:drift 22s ease-in-out infinite alternate}
+.band:after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(ellipse at 50% 40%,#000 25%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 40%,#000 25%,transparent 75%)}
+@keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-3%,2%,0) scale(1.06)}}
+.band-in{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#93c5fd;background:rgba(96,165,250,.12);border:1px solid rgba(96,165,250,.25);padding:5px 11px;border-radius:999px}
+.live{width:7px;height:7px;border-radius:50%;background:#34d399;box-shadow:0 0 0 0 rgba(52,211,153,.6);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(52,211,153,.55)}70%{box-shadow:0 0 0 9px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+.hero h1{font-size:clamp(30px,4.4vw,52px);line-height:1.05;margin:16px 0 12px;font-weight:800}
+.hero h1 span{background:linear-gradient(90deg,#93c5fd,#a7f3d0 60%,#c4b5fd);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:#cbd5e1;font-size:15.5px;max-width:520px;margin:0}
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:26px}
+.kpi{position:relative;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r16);padding:14px 14px 12px;overflow:hidden;min-width:0}
+.kpi:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--kc,linear-gradient(90deg,#60a5fa,#2563eb))}
+.kpi b{display:block;font:800 26px "Plus Jakarta Sans";letter-spacing:-.02em;color:#fff;white-space:nowrap}
+.kpi span{display:block;font-size:11.5px;color:#94a3b8;margin-top:2px;line-height:1.3}
+.orbit-wrap{position:relative;aspect-ratio:1/1;max-width:500px;width:100%;justify-self:center}
+.orbit{width:100%;height:100%;display:block}
+.orbit circle.dot{cursor:pointer;transition:r .15s}
+.orbit circle.dot:hover{stroke:#fff;stroke-width:2}
+.orbit-cap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
+.orbit-cap b{display:block;font:800 40px "Plus Jakarta Sans";color:#fff;letter-spacing:-.03em}
+.orbit-cap span{font-size:12px;color:#94a3b8;text-transform:uppercase;letter-spacing:.09em}
+.scale{display:flex;align-items:center;gap:8px;justify-content:center;margin-top:10px;font-size:11.5px;color:#94a3b8}
+.scale i{display:block;width:140px;height:8px;border-radius:999px;background:linear-gradient(90deg,var(--g1),var(--g2),var(--g3),var(--g4),var(--g5),var(--g6),var(--g7))}
+.scale em{font-style:normal;display:inline-flex;align-items:center;gap:5px}
+.scale em:before{content:"";width:8px;height:8px;border-radius:50%;border:1.5px solid #64748b}
+
+.content{max-width:1280px;margin:-56px auto 0;position:relative;z-index:2;padding:0 20px 60px}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r20);box-shadow:var(--shadow-lg);padding:22px;margin-bottom:22px;min-width:0}
+.panel-h{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.panel-h h2{margin:0;font-size:20px;font-weight:700}
+.panel-h p{margin:3px 0 0;color:var(--muted);font-size:13px}
+.sec{scroll-margin-top:70px}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.ccard{position:relative;text-align:left;display:flex;flex-direction:column;justify-content:flex-start;background:linear-gradient(180deg,#fff,#fbfcfe);border:1px solid var(--border);border-radius:var(--r16);padding:16px;transition:transform .25s,box-shadow .25s,border-color .25s;min-width:0;overflow:hidden}
+.ccard:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:#c7d7f5}
+.ccard.sel{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.15),var(--shadow)}
+.ccard.empty{opacity:.62}
+.ccard .row1{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.code{font:700 12px Inter;padding:3px 9px;border-radius:999px;background:var(--blue-soft);color:#1d4ed8;white-space:nowrap}
+.code.dp{background:#f3efff;color:#6d28d9}
+.ccard h3{margin:10px 0 2px;font-size:15px;font-weight:700;line-height:1.25}
+.ccard .meta{color:var(--muted);font-size:12.5px}
+.ccard .big{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:12px}
+.ccard .big b{font:800 30px "Plus Jakarta Sans";letter-spacing:-.02em;line-height:1}
+.ccard .big small{display:block;color:var(--muted);font-size:11.5px;margin-top:3px}
+.ring{width:46px;height:46px;flex:0 0 46px}
+.mini{display:flex;align-items:flex-end;gap:3px;height:34px;margin-top:12px}
+.mini i{flex:1;border-radius:3px 3px 0 0;min-height:2px;transform-origin:bottom;animation:grow .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.teachers{display:flex;gap:4px;flex-wrap:wrap;margin-top:10px}
+.tchip{font-size:11px;font-weight:600;color:#475569;background:#f1f5f9;border-radius:6px;padding:2px 6px}
+
+.timeline{position:relative;overflow-x:auto}
+.timeline svg{display:block;min-width:720px;width:100%}
+.nodate{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;font-size:12.5px;color:var(--muted);align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:999px;padding:3px 10px;background:#fff;font-size:12px;color:var(--text)}
+
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--border);background:#fff;color:var(--text);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:500;transition:all .18s;white-space:nowrap}
+.chip:hover{border-color:#b9cdf3;background:#f8fbff}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip[disabled]{opacity:.5;cursor:not-allowed}
+.chip small{color:inherit;opacity:.7;margin-left:4px}
+.cscroll{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.ctl{display:grid;gap:10px;margin-bottom:16px;min-width:0}
+.ctl>div{min-width:0}
+.ctl label{font-size:11.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.stat{position:relative;background:#f8fafc;border:1px solid var(--border);border-radius:var(--r12);padding:14px;overflow:hidden;min-width:0}
+.stat:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--sc,linear-gradient(90deg,#60a5fa,#2563eb))}
+.stat span{display:block;font-size:12px;color:var(--muted)}
+.stat b{display:block;font:800 24px "Plus Jakarta Sans";margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat small{display:block;color:var(--muted);font-size:12px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.chart{border:1px solid var(--border);border-radius:var(--r16);padding:16px;min-width:0;background:#fff}
+.chart h3{margin:0;font-size:14.5px;font-weight:700}
+.chart .sub{color:var(--muted);font-size:12.5px;margin:2px 0 12px}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.note{border:1px dashed #cbd5e1;border-radius:var(--r12);padding:18px;color:var(--muted);font-size:13px;text-align:center;background:#fbfcfe}
+.axis text{fill:#64748b;font-size:11px}
+.axis line{stroke:#e2e8f0}
+.lbl{fill:#334155;font-size:11.5px;font-weight:600}
+.bar{transition:opacity .15s}
+.bar:hover{opacity:.82}
+
+.tablewrap{margin-top:16px;border:1px solid var(--border);border-radius:var(--r16);overflow:hidden}
+.tablebar{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--border);flex-wrap:wrap;background:#fbfcfe}
+.tablebar input{border:1px solid var(--border);border-radius:999px;padding:8px 14px;font:inherit;min-width:0;width:240px;max-width:100%;outline:none}
+.tablebar input:focus{border-color:#93b4f0;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.tscroll{overflow-x:auto;max-height:520px;overflow-y:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{position:sticky;top:0;background:#f8fafc;text-align:left;font-weight:600;color:#475569;padding:9px 10px;border-bottom:1px solid var(--border);white-space:nowrap;cursor:pointer;user-select:none;font-size:12px}
+th.num,td.num{text-align:center}
+th:hover{color:var(--blue)}
+td{padding:8px 10px;border-bottom:1px solid #f1f5f9;white-space:nowrap}
+tbody tr{cursor:pointer;transition:background .12s}
+tbody tr:hover{background:#f6f9ff}
+.who{display:flex;align-items:center;gap:9px}
+.av{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:#fff;font:700 11px Inter;flex:0 0 28px}
+.g{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 6px;border-radius:7px;font-weight:700;font-size:12.5px;color:#fff}
+.g.t{background:#fff4e5;color:var(--amber);border:1px dashed #f5b971}
+.muted{color:var(--faint)}
+
+.att{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.aitem{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--border);border-radius:var(--r12);padding:12px;background:#fff;text-align:left;transition:box-shadow .2s,transform .2s;min-width:0}
+.aitem:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
+.aitem .who b{display:block;font-size:13.5px}
+.aitem .who span{font-size:12px;color:var(--muted)}
+.reasons{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.rs{font-size:11.5px;border-radius:6px;padding:2px 7px;background:#fdecea;color:#9f1d14;font-weight:600}
+.rs.drop{background:#fff4e5;color:#92400e}
+.rs.data{background:#eef2ff;color:#3730a3}
+.groupt{font:700 13px "Plus Jakarta Sans";margin:18px 0 8px;color:#334155;display:flex;align-items:center;gap:8px}
+.groupt:first-child{margin-top:0}
+.count{font:700 11px Inter;background:#fdecea;color:#9f1d14;border-radius:999px;padding:2px 8px}
+
+.es{width:100%}
+.es td,.es th{cursor:default}
+.prog{position:relative;height:8px;border-radius:999px;background:#eef2f6;overflow:hidden;min-width:90px}
+.prog i{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:linear-gradient(90deg,#60a5fa,#2563eb);transform-origin:left;animation:growx 1s cubic-bezier(.2,.8,.2,1) both}
+.prog.done i{background:linear-gradient(90deg,#34d399,#15803d)}
+@keyframes growx{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.tag{font-size:11.5px;font-weight:600;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.tag.ok{background:#e7f6ec;color:var(--green)}
+.tag.prog_{background:#e8f0ff;color:#1d4ed8}
+.tag.late{background:#fdecea;color:#9f1d14}
+.tag.up{background:#f1f5f9;color:#475569}
+.tag.setup{background:#fff4e5;color:#92400e}
+
+#tip{position:fixed;z-index:90;pointer-events:none;background:rgba(15,23,42,.94);color:#fff;font-size:12.5px;padding:8px 10px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s;max-width:260px;line-height:1.4}
+#tip.on{opacity:1;transform:none}
+#tip b{font-weight:700}
+
+.scrim{position:fixed;inset:0;background:rgba(15,23,42,.42);backdrop-filter:blur(2px);z-index:80;opacity:0;pointer-events:none;transition:opacity .25s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(460px,100%);background:#fff;z-index:85;transform:translateX(100%);transition:transform .32s cubic-bezier(.2,.8,.2,1);box-shadow:-20px 0 60px rgba(15,23,42,.2);display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.dhead{position:relative;padding:26px 22px 22px;color:#fff;background:var(--navy-deep);overflow:hidden}
+.dhead:before{content:"";position:absolute;inset:-40%;background:radial-gradient(260px 180px at 20% 20%,rgba(37,99,235,.55),transparent 60%),radial-gradient(240px 160px at 90% 70%,rgba(27,175,122,.35),transparent 60%)}
+.dhead>*{position:relative}
+.dhead .dclose{position:absolute;z-index:5;display:grid;place-items:center;padding:0;cursor:pointer;transition:background .15s}.dhead .dclose:hover{background:rgba(255,255,255,.22)}.dhead .dclose:focus-visible{outline:2px solid #93c5fd;outline-offset:2px}
+.dclose{position:absolute;right:14px;top:14px;border:0;background:rgba(255,255,255,.12);color:#fff;width:32px;height:32px;border-radius:50%;font-size:18px;line-height:1}
+.dav{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;font:800 20px "Plus Jakarta Sans";color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.dhead h3{margin:12px 0 2px;font-size:22px;font-weight:800}
+.dhead .sub{color:#cbd5e1;font-size:13px}
+.dbody{padding:18px 22px 30px;overflow-y:auto;flex:1}
+.dsum{border:1px solid var(--border);border-radius:var(--r12);padding:12px;margin-bottom:10px}
+.dsum .h{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.dsum .h b{font-size:13.5px}
+.dsum .h span{color:var(--muted);font-size:12px;white-space:nowrap}
+.aorow{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.aob{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;color:var(--muted);font-weight:600}
+
+.pal{position:fixed;inset:0;z-index:95;display:none;align-items:flex-start;justify-content:center;padding:12vh 16px 16px;background:rgba(15,23,42,.45);backdrop-filter:blur(3px)}
+.pal.on{display:flex}
+.pbox{width:min(560px,100%);background:#fff;border-radius:18px;box-shadow:var(--shadow-lg);overflow:hidden}
+.pbox input{width:100%;border:0;border-bottom:1px solid var(--border);padding:16px 18px;font:500 16px Inter;outline:none}
+.plist{max-height:50vh;overflow-y:auto}
+.pitem{display:flex;align-items:center;gap:10px;padding:10px 16px;cursor:pointer}
+.pitem.on,.pitem:hover{background:#f1f6ff}
+.pitem small{color:var(--muted);margin-left:auto;white-space:nowrap}
+
+.loading{position:fixed;inset:0;z-index:100;background:var(--navy-deep);display:grid;place-items:center;color:#cbd5e1;transition:opacity .5s}
+.loading.off{opacity:0;pointer-events:none}
+.loader{display:flex;gap:7px;justify-content:center;margin-bottom:16px}
+.loader i{width:10px;height:10px;border-radius:50%;background:#60a5fa;animation:bob 1s ease-in-out infinite}
+.loader i:nth-child(2){animation-delay:.12s;background:#34d399}
+.loader i:nth-child(3){animation-delay:.24s;background:#a78bfa}
+@keyframes bob{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-10px);opacity:1}}
+.err{max-width:420px;text-align:center;padding:20px}
+
+.altabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px}
+.alnote{color:var(--muted);font-size:12.5px;margin:0 0 12px}
+.diff{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:1px 6px;margin-left:6px}
+.diff.ok{background:#e7f6ec;color:var(--green)}
+.diff.gap{background:#fdecea;color:#9f1d14}
+.diff.few{background:#f1f5f9;color:#64748b}
+.tcell{white-space:nowrap}
+.tcell small{color:var(--muted);font-size:11.5px;margin-left:4px}
+.cov td.num,.cov th.num{width:1%}
+.tick{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:7px;font-weight:800;font-size:13px}
+.tick.y{background:#e7f6ec;color:var(--green)}
+.tick.n{background:#f8fafc;color:#cbd5e1}
+.cnt{font-weight:800}
+.cnt.zero{color:#b45309}
+.chk{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.chk.y{background:#e7f6ec;color:var(--green)}
+.chk.n{background:#fff4e5;color:#92400e}
+.chk.x{background:#fdecea;color:#9f1d14}
+.spread{display:grid;gap:10px}
+.srow{display:grid;grid-template-columns:70px minmax(0,1fr) 250px;gap:12px;align-items:center}
+.sbar{display:flex;height:26px;border-radius:7px;overflow:hidden;background:#f1f5f9}
+.sbar i{display:block;height:100%}
+.slab{font-size:12px;color:var(--muted);white-space:nowrap}
+.slab b{color:var(--text)}
+@media (max-width:640px){.srow{grid-template-columns:52px minmax(0,1fr)}.srow .slab{grid-column:2}}
+.ptag{display:inline-block;font-size:10.5px;font-weight:700;color:#6d28d9;background:#f3efff;border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:1px;white-space:nowrap}
+.foot{text-align:center;color:var(--faint);font-size:12px;padding:10px 0 30px}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+.drawer{width:min(720px,100%)}
+.dhead{padding:24px 24px 20px}
+.pglow{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(ellipse at 30% 30%,#000 20%,transparent 70%);mask-image:radial-gradient(ellipse at 30% 30%,#000 20%,transparent 70%);pointer-events:none}
+.phero{display:flex;gap:18px;align-items:center;padding-right:40px;min-width:0}
+.pav{position:relative;width:84px;height:84px;flex:0 0 84px}
+.pav svg{position:absolute;inset:0}
+.pav .dav{position:absolute;left:13px;top:13px;width:58px;height:58px;border-radius:50%}
+.pwho{min-width:0}
+.peye{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#93c5fd}
+.dhead .pwho h3{margin:3px 0 3px;font-size:24px;line-height:1.15;font-weight:800;overflow-wrap:anywhere}
+.pchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.pchips span{font-size:11.5px;font-weight:600;color:#e2e8f0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:3px 9px;white-space:nowrap}
+.pchips span.pp{background:rgba(196,181,253,.16);border-color:rgba(196,181,253,.35);color:#ddd6fe}
+.ptiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px;margin-top:18px}
+.ptile{position:relative;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:11px 12px 10px;overflow:hidden;min-width:0}
+.ptile:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--tc)}
+.ptile span{display:block;font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em}
+.ptile b{display:flex;align-items:center;gap:5px;font:800 24px "Plus Jakarta Sans";color:#fff;letter-spacing:-.02em;margin-top:2px;white-space:nowrap}
+.ptile b i{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;font-style:normal}
+.ptile b i.up{background:rgba(52,211,153,.18);color:#34d399}
+.ptile b i.dn{background:rgba(248,113,113,.18);color:#f87171}
+.ptile small{display:block;font-size:11.5px;color:#cbd5e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dbody{padding:18px 22px 34px;background:var(--bg)}
+.pcard{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px 14px 14px;margin-bottom:12px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.pch{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px}
+.pch h4{margin:0;font:700 15px "Plus Jakarta Sans";color:var(--navy)}
+.pch p{margin:2px 0 0;font-size:12px;color:var(--muted)}
+.pbig{text-align:right;flex:0 0 auto}
+.pbig b{display:block;font:800 24px "Plus Jakarta Sans";color:var(--navy);line-height:1}
+.pbig span{font-size:11px;color:var(--muted)}
+.pchart{overflow:hidden}
+.pchart svg{display:block;max-width:100%;height:auto}
+.ptk{font:500 10.5px Inter;fill:#94a3b8}
+.pzl{font:700 10px Inter;opacity:.9}
+.pxl{font:600 11px Inter;fill:#334155}
+.pxd{font:500 10px Inter;fill:#94a3b8}
+.plab{font:700 11px Inter}
+.ppill{font:700 11px Inter;fill:#fff}
+.pmk{font:600 10.5px Inter;fill:#64748b}
+.pax{font:700 12px Inter}
+.pdraw{animation:pfDraw 1.4s cubic-bezier(.4,0,.2,1) .15s forwards}
+@keyframes pfDraw{to{stroke-dashoffset:0}}
+.pfade{animation:pfFade .8s ease both}
+@keyframes pfFade{from{opacity:0}}
+.ppt{animation:pfPop .45s cubic-bezier(.2,1.4,.4,1) both;transform-box:fill-box;transform-origin:center}
+@keyframes pfPop{from{opacity:0;transform:scale(.2)}}
+.ppulse{animation:pfPulse 2.2s ease-out 1.2s infinite;opacity:0}
+@keyframes pfPulse{0%{opacity:.5;transform:scale(1)}100%{opacity:0;transform:scale(2.6)}}
+.ppulse2{animation:pfPop .5s cubic-bezier(.2,1.4,.4,1) .5s both;transform-box:fill-box;transform-origin:center}
+.pdot{animation:pfFade .5s ease both}
+.pgrow{animation:pfGrow .9s cubic-bezier(.2,1.2,.4,1) .2s both}
+@keyframes pfGrow{from{transform:scale(0);opacity:0}}
+.plg{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:11.5px;color:var(--muted)}
+.plg span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.plg.sm{justify-content:center;margin-top:2px}
+.lk{display:inline-block;width:18px;height:0;border-top:3px solid #2563eb;border-radius:2px}
+.lk.me{border-image:linear-gradient(90deg,#60a5fa,#2563eb,#1baf7a) 1}
+.lk.bnd{height:10px;border:0;background:rgba(148,163,184,.35);border-radius:3px}
+.lk.med{border-top:2px dashed #64748b}
+.lk.cls{border-top:2px dotted #8b5cf6}
+.lk.pred{border-top:2px dotted #0f172a}
+.pins{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:8px}
+.pins li{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--text);line-height:1.4}
+.pic{flex:0 0 26px;width:26px;height:26px;border-radius:8px;display:grid;place-items:center}
+.pic svg{width:15px;height:15px}
+.pic.up{background:#e7f6ee;color:#15803d}.pic.down{background:#fdecea;color:#b42318}.pic.flat{background:#eef2f7;color:#475569}
+.pic.star{background:#fff6dd;color:#b45309}.pic.target{background:#eef2ff;color:#4338ca}.pic.data{background:#f1f5f9;color:#64748b}
+.pao{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:14px;align-items:center}
+.pao.one{grid-template-columns:minmax(0,1fr)}
+.prad{display:flex;flex-direction:column;align-items:center;min-width:0}
+.prad svg{max-width:100%;height:auto}
+.pbars{display:grid;gap:12px;min-width:0}
+.pbar{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) auto;gap:10px;align-items:center}
+.pbl{min-width:0}
+.pbl b{display:block;font-size:13px}
+.pbl span{display:block;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pbt{position:relative;height:10px;background:#eef2f7;border-radius:999px}
+.pbme{position:absolute;left:0;top:0;bottom:0;width:var(--w);border-radius:999px;animation:pfBar .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes pfBar{from{width:0}}
+.pball{position:absolute;top:-4px;bottom:-4px;width:3px;margin-left:-1.5px;background:#0f172a;border-radius:2px}
+.pbv{text-align:right;white-space:nowrap;font-size:13px}
+.pbv span{display:block;font-size:11px;font-weight:700}
+.pbv .up{color:#15803d}.pbv .dn{color:#b42318}
+.ptrack{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-top:6px}
+.ptg{position:relative;height:54px;border-radius:10px;background:color-mix(in srgb,var(--gc) 16%,#fff);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:2px solid transparent}
+.ptg span{font:800 16px "Plus Jakarta Sans";color:#334155}
+.ptg em{font-style:normal;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#475569}
+.ptg em.b{color:#fff;background:#0f172a;border-radius:6px;padding:0 4px}
+.ptg.pp{border:2px dashed #0f172a}
+.ptg.pl{background:var(--gc)}
+.ptg.pl span{color:#fff}
+.pnote{margin-top:10px;font-size:13px;color:var(--text)}
+.prow{border:1px solid var(--border);border-radius:12px;padding:11px 12px;margin-top:8px;position:relative}
+.prow .h{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.prow .h b{font-size:13.5px}
+.prow .h span{color:var(--muted);font-size:12px;white-space:nowrap}
+.pcmp{display:flex;align-items:center;gap:10px;margin-top:10px}
+.pcmp span{font-size:11.5px;color:var(--muted);white-space:nowrap}
+.pct{position:relative;flex:1;height:8px;background:#eef2f7;border-radius:999px;min-width:60px}
+.pq{position:absolute;top:0;bottom:0;background:#cbd5e1;border-radius:999px}
+.pmd{position:absolute;top:-3px;bottom:-3px;width:2px;margin-left:-1px;background:#64748b}
+.pme{position:absolute;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:2.5px solid #0f172a;box-sizing:border-box}
+.pbadge{margin-top:8px}
+.ppart{margin-top:9px}
+.ppart>span{display:block;font-size:11.5px;font-weight:700;color:var(--muted)}
+.ppart .aorow{margin-top:4px}
+.pnote2{font-size:11.5px;color:var(--muted);margin-top:2px}
+.pdelta{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;border-radius:999px;padding:2px 9px}
+.pdelta.up{background:#e7f6ee;color:#15803d}.pdelta.dn{background:#fdecea;color:#b42318}.pdelta.fl{background:#eef2f7;color:#475569}
+.dbody .rise{animation:pfRise .55s cubic-bezier(.2,.8,.2,1) both}
+.dhead .rise{animation:pfRise .55s cubic-bezier(.2,.8,.2,1) both}
+@keyframes pfRise{from{opacity:0;transform:translateY(10px)}}
+@media (max-width:640px){
+  .dhead{padding:20px 16px 16px}
+  .phero{gap:12px}
+  .pav{width:68px;height:68px;flex-basis:68px}
+  .pav svg{width:68px;height:68px}
+  .pav .dav{left:10px;top:10px;width:48px;height:48px;font-size:17px}
+  .dhead .pwho h3{font-size:20px}
+  .ptiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ptile b{font-size:21px}
+  .dbody{padding:14px 12px 30px}
+  .pcard{padding:14px 12px 12px}
+  .pao{grid-template-columns:minmax(0,1fr)}
+  .pbar{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) auto}
+  .pcmp{flex-wrap:wrap}
+  .pcmp span{white-space:normal}
+}
+
+@media (max-width:980px){
+  .band-in{grid-template-columns:minmax(0,1fr)}
+  .orbit-wrap{max-width:380px}
+  .kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .grid2{grid-template-columns:minmax(0,1fr)}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .top-in{padding:8px 14px;gap:8px}
+  .brand .bt{display:none}
+  .ibtn .lbl2{display:none}
+  .ibtn kbd{display:none}
+  .band{padding:28px 0 80px}
+  .band-in{padding:0 16px}
+  .content{padding:0 12px 40px}
+  .panel{padding:16px;border-radius:16px}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpi b{font-size:22px}
+  .tablebar input{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+.proto{font:700 10px/1 Inter,sans-serif;letter-spacing:1.2px;text-transform:uppercase;color:#bfdbfe;border:1px solid rgba(147,197,253,.4);border-radius:999px;padding:4px 8px;margin-left:10px;white-space:nowrap}
+a.ibtn{text-decoration:none}
+.demo-note{max-width:760px;margin:0 auto;line-height:1.6}
+.demo-note b{color:var(--muted)}
+@media (max-width:520px){.proto{display:none}}
+</style>
+</head>
+<body>
+<div class="loading" id="loading"><div><div class="loader"><i></i><i></i><i></i></div><div id="loadmsg">Loading marks</div></div></div>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand"><div class="brand-mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M4 19 9 12l4 4 7-10"/></svg></div><span class="bt">Maths Department</span><span class="proto">Prototype</span></div>
+    <nav class="nav" id="nav">
+      <button type="button" data-go="overview" class="on">Overview</button>
+      <button type="button" data-go="courses">Courses</button>
+      <button type="button" data-go="explore">Explore</button>
+      <button type="button" data-go="alignment">Alignment</button>
+      <button type="button" data-go="attention">Needs attention</button>
+    </nav>
+    <div class="tools">
+      <a class="ibtn" href="../projects.html" title="Back to portfolio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg><span class="lbl2">Portfolio</span></a>
+      <button class="ibtn" id="searchBtn" title="Find a student"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="lbl2">Find student</span><kbd>/</kbd></button>
+      <button class="ibtn" id="hideBtn" title="Hide names for projecting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M10.6 10.6a2 2 0 0 0 2.8 2.8M9.9 5.1A10 10 0 0 1 12 5c5 0 9 4.5 10 7a13 13 0 0 1-3 4.2M6.6 6.6C4.3 8 2.7 10 2 12c1 2.5 5 7 10 7a9.6 9.6 0 0 0 5.4-1.6"/></svg><span class="lbl2">Hide names</span></button>
+      <button class="ibtn" id="refreshBtn" title="Refresh data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-2.6-6.4L21 8"/><path d="M21 3v5h-5"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<section class="band sec" id="overview">
+  <div class="band-in">
+    <div class="hero">
+      <span class="eyebrow"><i class="live"></i><span id="updated">HS Maths</span></span>
+      <h1>HS Maths<br><span>Department Dashboard</span></h1>
+      <p>Summative results for Grades 9 to 12, taken straight from the department gradebook. Click a course, a summative or a student for more detail. Every student, teacher and mark in this prototype is fictional.</p>
+      <div class="kpis" id="kpis"></div>
+    </div>
+    <div>
+      <div class="orbit-wrap"><svg class="orbit" id="orbit" viewBox="-250 -250 500 500" role="img" aria-label="Every student shown as a dot coloured by their latest result"></svg><div class="orbit-cap"><b id="orbitN">0</b><span>students</span></div></div>
+      <div class="scale"><span>Low</span><i></i><span>High</span><em>no mark yet</em></div>
+    </div>
+  </div>
+</section>
+
+<main class="content">
+  <section class="panel sec reveal" id="courses">
+    <div class="panel-h"><div><h2>Courses</h2><p>Latest summative for each course. G9 and G10 show the average AO grade, DP shows the average %.</p></div></div>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section class="panel sec reveal" id="timelineP">
+    <div class="panel-h"><div><h2>Summative calendar</h2><p>The ring fills up as marks go in. A dashed ring means the AOs or papers have not been ticked on the Assessments tab yet.</p></div></div>
+    <div class="timeline" id="timeline"></div>
+    <div class="nodate" id="nodate"></div>
+  </section>
+
+  <section class="panel sec reveal" id="explore">
+    <div class="panel-h"><div><h2 id="exTitle">Course detail</h2><p id="exSub"></p></div></div>
+    <div class="ctl">
+      <div><label>Course</label><div class="cscroll" id="courseChips"></div></div>
+      <div><label>Summative</label><div class="cscroll" id="sumChips"></div></div>
+      <div><label>Teacher</label><div class="cscroll" id="teacherChips"></div></div>
+      <div id="progRow"><label>Programme</label><div class="cscroll" id="progChips"></div></div>
+    </div>
+    <div id="exBody"></div>
+  </section>
+
+  <section class="panel sec reveal" id="alignment">
+    <div class="panel-h"><div><h2>Alignment</h2><p id="alSub"></p></div></div>
+    <div class="stats" id="alStats"></div>
+    <div class="altabs" id="alProg" style="margin-bottom:6px"></div>
+    <div class="altabs" id="alTabs">
+      <button type="button" class="chip on" data-al="gaps">Teacher averages</button>
+      <button type="button" class="chip" data-al="spread">Grade spread</button>
+      <button type="button" class="chip" data-al="cover">AO coverage</button>
+      <button type="button" class="chip" data-al="common">Common assessments</button>
+      <button type="button" class="chip" data-al="pred">Predicted vs results</button>
+    </div>
+    <div id="alBody"></div>
+  </section>
+
+  <section class="panel sec reveal" id="attention">
+    <div class="panel-h"><div><h2>Needs attention</h2><p id="attSub"></p></div></div>
+    <div id="attBody"></div>
+  </section>
+
+  <div class="foot" id="foot"></div>
+</main>
+
+<div id="tip"></div>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true"><div class="dhead" id="dhead"></div><div class="dbody" id="dbody"></div></aside>
+<div class="pal" id="pal"><div class="pbox"><input id="pin" placeholder="Search by name or student code" autocomplete="off"><div class="plist" id="plist"></div></div></div>
+
+<script>
+window.__DATA__=(function(){
+var d={"rules":{"aoLow":3,"aoDrop":2,"dpDrop":10,"dpLow":40,"alAO":0.75,"alDP":10,"alMin":5},"predicted":{"9105706|AASL":{"g":6,"calc":null},"9105712|AASL":{"g":7,"calc":null},"9105723|AASL":{"g":7,"calc":null},"9105750|AASL":{"g":6,"calc":null},"9105784|AASL":{"g":6,"calc":null},"9105824|AASL":{"g":7,"calc":null},"9105836|AASL":{"g":7,"calc":null},"9105841|AASL":{"g":6,"calc":null},"9105855|AASL":{"g":5,"calc":null},"9105875|AASL":{"g":6,"calc":null},"9105904|AASL":{"g":6,"calc":null},"9105914|AASL":{"g":7,"calc":null},"9105917|AASL":{"g":7,"calc":null},"9105925|AASL":{"g":7,"calc":null},"9105960|AASL":{"g":7,"calc":null},"9105976|AASL":{"g":7,"calc":null},"9105986|AASL":{"g":6,"calc":null},"9105999|AASL":{"g":4,"calc":null},"9106005|AASL":{"g":5,"calc":null},"9106033|AASL":{"g":5,"calc":null},"9106062|AASL":{"g":7,"calc":null},"9106078|AASL":{"g":7,"calc":null},"9106083|AASL":{"g":7,"calc":null},"9106116|AASL":{"g":6,"calc":null},"9106134|AASL":{"g":6,"calc":null},"9106170|AASL":{"g":6,"calc":null},"9106204|AASL":{"g":6,"calc":null},"9106243|AAHL":{"g":6,"calc":null},"9106278|AAHL":{"g":5,"calc":null},"9106289|AAHL":{"g":7,"calc":null},"9106313|AAHL":{"g":6,"calc":null},"9106351|AAHL":{"g":5,"calc":null},"9106360|AAHL":{"g":4,"calc":null},"9106391|AAHL":{"g":7,"calc":null},"9106406|AAHL":{"g":7,"calc":null},"9106409|AAHL":{"g":6,"calc":null},"9106420|AAHL":{"g":7,"calc":null},"9106426|AAHL":{"g":5,"calc":null},"9106440|AAHL":{"g":5,"calc":null},"9106469|AISL":{"g":7,"calc":null},"9106473|AISL":{"g":7,"calc":null},"9106480|AISL":{"g":7,"calc":null},"9106514|AISL":{"g":7,"calc":null},"9106551|AISL":{"g":5,"calc":null},"9106559|AISL":{"g":6,"calc":null},"9106586|AISL":{"g":7,"calc":null},"9106603|AISL":{"g":7,"calc":null},"9106625|AISL":{"g":7,"calc":null},"9106637|AISL":{"g":7,"calc":null},"9106667|AISL":{"g":7,"calc":null},"9106677|AISL":{"g":6,"calc":null},"9106715|AISL":{"g":7,"calc":null},"9106736|AISL":{"g":7,"calc":null},"9106764|AISL":{"g":5,"calc":null},"9106805|AISL":{"g":4,"calc":null},"9106843|AISL":{"g":7,"calc":null},"9106856|AISL":{"g":5,"calc":null},"9106859|AISL":{"g":5,"calc":null},"9106874|AISL":{"g":6,"calc":null},"9106907|AISL":{"g":6,"calc":null},"9106942|AISL":{"g":4,"calc":null},"9106978|AISL":{"g":6,"calc":null},"9107001|AISL":{"g":6,"calc":null},"9107004|AISL":{"g":7,"calc":null},"9107030|AISL":{"g":6,"calc":null},"9107044|AISL":{"g":5,"calc":null}},"programme":{"9103895":"HS Diploma","9103993":"IB Courses","9104870":"IB Courses","9105050":"IB Courses","9105139":"HS Diploma","9105750":"HS Diploma","9106637":"IB Courses"},"courses":[{"code":"9Pure","name":"Grade 9 Pure","type":"AO","level":"G9","bounds":null,"assessments":[{"slot":1,"name":"Number and Algebra Foundations","date":-62,"ao":[true,false,true,false],"max":[null,null,null],"unit":""},{"slot":2,"name":"Expansions and Factorisation (No Calculator)","date":-34,"ao":[true,true,true,false],"max":[null,null,null],"unit":"Unit 2 Summative"},{"slot":3,"name":"Expansions and Factorisation (Calculator)","date":-34,"ao":[true,false,true,true],"max":[null,null,null],"unit":"Unit 2 Summative"},{"slot":4,"name":"Exponents and Surds","date":-8,"ao":[true,true,true,false],"max":[null,null,null],"unit":""},{"slot":5,"name":"Linear Systems","date":17,"ao":[true,false,true,true],"max":[null,null,null],"unit":""},{"slot":6,"name":"Coordinate Geometry","date":45,"ao":[false,false,false,false],"max":[null,null,null],"unit":""}],"students":[{"t":"ALIN","id":"9100240","f":"Axel","p":"","l":"Calloway","c":"9C","r":{"1":[4,null,5,null],"2":[4,4,5,null],"3":[5,null,4,5],"4":[5,4,5,null]}},{"t":"ALIN","id":"9100128","f":"Leila","p":"","l":"Calloway","c":"9B","r":{"1":[5,null,5,null],"2":[5,5,5,null],"3":[5,null,4,5],"4":[5,6,4,null]}},{"t":"ALIN","id":"9100468","f":"Dalia","p":"","l":"Carreira","c":"9B","r":{"1":[6,null,4,null],"2":[4,5,5,null],"3":[4,null,4,4],"4":[4,5,4,null]}},{"t":"ALIN","id":"9100406","f":"Meera","p":"","l":"Carreira","c":"9C","r":{"1":[5,null,4,null],"2":[5,4,4,null],"3":[5,null,4,4],"4":[3,4,4,null]}},{"t":"ALIN","id":"9100438","f":"Cyrus","p":"","l":"Corvino","c":"9B","r":{"1":[6,null,6,null],"2":[6,6,6,null],"3":[6,null,6,6],"4":[6,6,5,null]}},{"t":"ALIN","id":"9100186","f":"Emil","p":"","l":"Devereux","c":"9C","r":{"1":[6,null,5,null],"2":[5,6,6,null],"3":[5,null,6,6],"4":[6,6,6,null]}},{"t":"ALIN","id":"9100300","f":"Lotte","p":"","l":"Grimaldi","c":"9C","r":{"1":[5,null,5,null],"2":[5,3,5,null],"3":[4,null,5,5],"4":[4,4,5,null]}},{"t":"ALIN","id":"9100216","f":"Hamza","p":"","l":"Jablonski","c":"9C","r":{"1":[5,null,4,null],"2":[3,4,4,null],"3":[5,null,5,4],"4":[4,4,5,null]}},{"t":"ALIN","id":"9100534","f":"Otto","p":"","l":"Kaczmarek","c":"9D","r":{"1":[5,null,4,null],"2":[5,6,5,null],"3":[5,null,5,5],"4":[5,6,4,null]}},{"t":"ALIN","id":"9100364","f":"Odette","p":"","l":"Moreau","c":"9D","r":{"1":[4,null,3,null],"2":[4,5,4,null],"3":[3,null,4,4],"4":[4,4,4,null]}},{"t":"ALIN","id":"9100268","f":"Petra","p":"","l":"Moreau","c":"9A","r":{"1":[4,null,5,null],"2":[6,4,5,null],"3":[6,null,5,5],"4":[5,5,4,null]}},{"t":"ALIN","id":"9100396","f":"Wren","p":"","l":"Paredes","c":"9D","r":{"1":[6,null,6,null],"2":[5,5,6,null],"3":[6,null,7,6],"4":[5,6,5,null]}},{"t":"ALIN","id":"9100151","f":"Nikolai","p":"Niko","l":"Radcliffe","c":"9C","r":{"1":[6,null,6,null],"2":[5,6,5,null],"3":[4,null,5,5],"4":[4,5,4,null]}},{"t":"ALIN","id":"9100564","f":"Talia","p":"","l":"Stavros","c":"9A","r":{"1":[4,null,5,null],"2":[4,4,4,null],"3":[5,null,5,4],"4":[4,5,4,null]}},{"t":"ALIN","id":"9100222","f":"Farah","p":"","l":"Thackeray","c":"9A","r":{"1":[5,null,5,null],"2":[6,6,5,null],"3":[5,null,5,6],"4":[5,5,5,null]}},{"t":"ALIN","id":"9100278","f":"Kofi","p":"","l":"Vasquez","c":"9C","r":{"1":[5,null,5,null],"2":[5,5,6,null],"3":[5,null,5,6],"4":[6,6,5,null]}},{"t":"ALIN","id":"9100504","f":"Axel","p":"","l":"Winterbourne","c":"9C","r":{"1":[3,null,3,null],"2":[4,4,3,null],"3":[3,null,3,4],"4":[4,4,3,null]}},{"t":"ALIN","id":"9100281","f":"Soren","p":"","l":"Zielinski","c":"9A","r":{"1":[4,null,4,null],"2":[5,5,4,null],"3":[3,null,5,3],"4":[4,4,4,null]}},{"t":"ALIN","id":"9100326","f":"Greta","p":"","l":"Zubiri","c":"9B","r":{"1":[4,null,4,null],"2":[5,4,4,null],"3":[4,null,3,4],"4":[4,4,4,null]}},{"t":"RDAS","id":"9100794","f":"Lotte","p":"","l":"Dunmore","c":"9D","r":{"1":[5,null,5,null],"2":[4,5,5,null],"3":[5,null,4,4],"4":[4,6,5,null]}},{"t":"RDAS","id":"9100666","f":"Farah","p":"","l":"Fitzroy","c":"9D","r":{"1":[6,null,4,null],"2":[5,4,5,null],"3":[6,null,6,6],"4":[5,5,5,null]}},{"t":"RDAS","id":"9100671","f":"Yara","p":"","l":"Hollander","c":"9B","r":{"1":[4,null,4,null],"2":[5,4,3,null],"3":[5,null,5,4],"4":[4,3,4,null]}},{"t":"RDAS","id":"9100838","f":"Keira","p":"","l":"Iwasaki","c":"9D","r":{"1":[5,null,4,null],"2":[5,5,5,null],"3":[5,null,4,5],"4":[5,5,5,null]}},{"t":"RDAS","id":"9100634","f":"Samir","p":"","l":"Jorgensen","c":"9C","r":{"1":[4,null,4,null],"2":[4,4,5,null],"3":[4,null,4,4],"4":[5,4,5,null]}},{"t":"RDAS","id":"9100810","f":"Jonas","p":"","l":"Laurent","c":"9A","r":{"1":[7,null,7,null],"2":[7,7,6,null],"3":[7,null,7,7],"4":[6,6,7,null]}},{"t":"RDAS","id":"9100693","f":"Lotte","p":"","l":"Lindqvist","c":"9C","r":{"1":[5,null,4,null],"2":[4,4,5,null],"3":[5,null,5,5],"4":[5,4,5,null]}},{"t":"RDAS","id":"9100688","f":"Odette","p":"","l":"Lombardi","c":"9A","r":{"1":[4,null,4,null],"2":[4,4,4,null],"3":[5,null,5,4],"4":[4,4,4,null]}},{"t":"RDAS","id":"9100893","f":"Maren","p":"","l":"Orsini","c":"9C","r":{"1":[6,null,5,null],"2":[6,5,6,null],"3":[6,null,6,7],"4":[6,6,5,null]}},{"t":"RDAS","id":"9100866","f":"Keira","p":"","l":"Pemberton","c":"9B","r":{"1":[6,null,5,null],"2":[5,4,5,null],"3":[6,null,5,5],"4":[4,4,5,null]}},{"t":"RDAS","id":"9100760","f":"Yusuf","p":"","l":"Radcliffe","c":"9C","r":{"1":[6,null,6,null],"2":[5,5,6,null],"3":[5,null,5,7],"4":[5,5,7,null]}},{"t":"RDAS","id":"9100752","f":"Caspian","p":"Cas","l":"Salgado","c":"9D","r":{"1":[4,null,5,null],"2":[5,5,5,null],"3":[5,null,5,5],"4":[5,5,5,null]}},{"t":"RDAS","id":"9100896","f":"Freya","p":"","l":"Tanaka","c":"9B","r":{"1":[5,null,6,null],"2":[6,5,6,null],"3":[6,null,7,7],"4":[5,5,6,null]}},{"t":"RDAS","id":"9100600","f":"Kofi","p":"","l":"Tereshko","c":"9A","r":{"1":[5,null,5,null],"2":[4,5,5,null],"3":[6,null,5,5],"4":[4,5,5,null]}},{"t":"RDAS","id":"9100745","f":"Carys","p":"","l":"Thackeray","c":"9D","r":{"1":[5,null,4,null],"2":[5,5,4,null],"3":[5,null,4,4],"4":[5,4,5,null]}},{"t":"RDAS","id":"9100722","f":"Hamza","p":"","l":"Underhill","c":"9A","r":{"1":[4,null,6,null],"2":[5,5,5,null],"3":[5,null,4,5],"4":[5,5,4,null]}},{"t":"RDAS","id":"9100835","f":"Priya","p":"","l":"Urquhart","c":"9B","r":{"1":[5,null,5,null],"2":[4,3,4,null],"3":[5,null,4,4],"4":[4,5,5,null]}},{"t":"RDAS","id":"9100698","f":"Thiago","p":"","l":"Vesely","c":"9B","r":{"1":[4,null,4,null],"2":[3,5,5,null],"3":[4,null,4,4],"4":[5,4,5,null]}},{"t":"SNOV","id":"9101240","f":"Farah","p":"","l":"Ashdown","c":"9A","r":{"1":[5,null,5,null],"2":[5,4,5,null],"3":[5,null,5,5]}},{"t":"SNOV","id":"9100917","f":"Talia","p":"","l":"Delacroix","c":"9B","r":{"1":[4,null,6,null],"2":[5,4,5,null],"3":[5,null,6,5]}},{"t":"SNOV","id":"9100952","f":"Jude","p":"","l":"Fitzroy","c":"9B","r":{"1":[5,null,5,null],"2":[5,4,5,null],"3":[5,null,4,4]}},{"t":"SNOV","id":"9101053","f":"Marit","p":"","l":"Halvorsen","c":"9D","r":{"1":[4,null,4,null],"2":[5,4,3,null],"3":[4,null,4,3]}},{"t":"SNOV","id":"9100978","f":"Finn","p":"","l":"Hollander","c":"9B","r":{"1":[6,null,5,null],"2":[6,5,6,null],"3":[5,null,5,5]}},{"t":"SNOV","id":"9101200","f":"Jonas","p":"","l":"Iwasaki","c":"9A","r":{"1":["ab",null,"ab",null],"2":[5,6,5,null],"3":[5,null,5,5]}},{"t":"SNOV","id":"9100925","f":"Mateo","p":"Teo","l":"Kettering","c":"9C","r":{"1":[4,null,5,null],"2":[4,3,5,null],"3":[4,null,5,4]}},{"t":"SNOV","id":"9101118","f":"Marit","p":"","l":"Lachance","c":"9C","r":{"1":[4,null,5,null],"2":[6,4,4,null],"3":[5,null,5,5]}},{"t":"SNOV","id":"9101020","f":"Emil","p":"","l":"Nyberg","c":"9B","r":{"1":[6,null,6,null],"2":[5,6,5,null],"3":[5,null,6,5]}},{"t":"SNOV","id":"9101128","f":"Esme","p":"","l":"Ostrowski","c":"9D","r":{"1":[6,null,5,null],"2":[6,6,5,null],"3":[5,null,6,5]}},{"t":"SNOV","id":"9100991","f":"Bashir","p":"","l":"Underhill","c":"9C","r":{"1":[4,null,5,null],"2":[4,4,5,null],"3":[3,null,4,4]}},{"t":"SNOV","id":"9101107","f":"Anouk","p":"","l":"Vesely","c":"9D","r":{"1":[4,null,4,null],"2":[4,5,4,null],"3":[5,null,4,4]}},{"t":"SNOV","id":"9101246","f":"Hana","p":"","l":"Whitlock","c":"9A","r":{"1":[6,null,5,null],"2":[7,6,7,null],"3":[6,null,6,7]}},{"t":"SNOV","id":"9101039","f":"Elodie","p":"Elle","l":"Winterbourne","c":"9B","r":{"1":[6,null,6,null],"2":[6,6,6,null],"3":[7,null,5,6]}},{"t":"SNOV","id":"9101049","f":"Hana","p":"","l":"Winterbourne","c":"9A","r":{"1":[4,null,4,null],"2":[4,4,4,null],"3":[5,null,4,3]}},{"t":"SNOV","id":"9101093","f":"Yara","p":"","l":"Winterbourne","c":"9B","r":{"1":[5,null,5,null],"2":[5,4,5,null],"3":[5,null,6,5]}},{"t":"SNOV","id":"9101169","f":"Freya","p":"","l":"Yamamoto","c":"9D","r":{"1":[5,null,4,null],"2":[5,5,4,null],"3":[5,null,5,5]}}]},{"code":"9App","name":"Grade 9 Applied","type":"AO","level":"G9","bounds":null,"assessments":[{"slot":1,"name":"Number Skills and Ratio","date":-60,"ao":[true,false,true,true],"max":[null,null,null],"unit":""},{"slot":2,"name":"Exponents and Radicals","date":-27,"ao":[true,true,true,true],"max":[null,null,null],"unit":""},{"slot":3,"name":"Linear Systems","date":-6,"ao":[true,false,true,true],"max":[null,null,null],"unit":""},{"slot":4,"name":"Financial Mathematics","date":24,"ao":[true,false,false,true],"max":[null,null,null],"unit":""}],"students":[{"t":"JPAR","id":"9101669","f":"Nadia","p":"","l":"Achterberg","c":"9D","r":{"1":[6,null,6,6],"2":[7,6,6,7]}},{"t":"JPAR","id":"9101761","f":"Esme","p":"","l":"Bellweather","c":"9D","r":{"1":[4,null,4,4],"2":["ab","ab","ab","ab"]}},{"t":"JPAR","id":"9101576","f":"Lucian","p":"","l":"Bellweather","c":"9A","r":{"1":[6,null,5,4],"2":[5,4,4,4]}},{"t":"JPAR","id":"9101920","f":"Bashir","p":"","l":"Delacroix","c":"9C","r":{"1":[4,null,4,4],"2":[4,5,3,4]}},{"t":"JPAR","id":"9101817","f":"Asha","p":"","l":"Dunmore","c":"9C","r":{"1":[6,null,5,6],"2":[6,6,6,6]}},{"t":"JPAR","id":"9101792","f":"Amara","p":"","l":"Laurent","c":"9A","r":{"1":[4,null,5,4],"2":[4,4,4,4]}},{"t":"JPAR","id":"9101845","f":"Kofi","p":"","l":"Lombardi","c":"9B","r":{"1":[5,null,6,5],"2":[4,5,5,6]}},{"t":"JPAR","id":"9101616","f":"Priya","p":"","l":"Montoya","c":"9A","r":{"1":[4,null,4,5],"2":[5,4,4,4]}},{"t":"JPAR","id":"9101595","f":"Lucian","p":"","l":"Nordstrom","c":"9B","r":{"1":[7,null,7,6],"2":[7,6,6,7]}},{"t":"JPAR","id":"9101720","f":"Rafael","p":"","l":"Nordstrom","c":"9C","r":{"1":[3,null,3,3],"2":[4,3,4,3]}},{"t":"JPAR","id":"9101904","f":"Yusuf","p":"","l":"Pemberton","c":"9B","r":{"1":[5,null,7,6],"2":[5,5,5,5]}},{"t":"JPAR","id":"9101876","f":"Oisin","p":"","l":"Radcliffe","c":"9A","r":{"1":[4,null,5,5],"2":[5,5,5,5]}},{"t":"JPAR","id":"9101696","f":"Yusuf","p":"","l":"Salgado","c":"9A","r":{"1":[5,null,4,5],"2":[5,5,5,5]}},{"t":"JPAR","id":"9101638","f":"Felix","p":"","l":"Urquhart","c":"9B","r":{"1":[5,null,3,4],"2":[4,3,4,5]}},{"t":"JPAR","id":"9101579","f":"Dmitri","p":"Dima","l":"Villeneuve","c":"9D","r":{"1":[5,null,6,5],"2":[5,6,5,5]}},{"t":"JPAR","id":"9101909","f":"Wren","p":"","l":"Villeneuve","c":"9C","r":{"1":[5,null,5,4],"2":[6,5,5,5]}},{"t":"MOKO","id":"9101442","f":"Wren","p":"","l":"Bergstrom","c":"9C","r":{"1":[4,null,4,5],"2":[4,4,4,4],"3":[4,null,4,3]}},{"t":"MOKO","id":"9101473","f":"Matteo","p":"Matt","l":"Calloway","c":"9C","r":{"1":[6,null,6,5],"2":[5,6,6,5],"3":[6,null,6,5]}},{"t":"MOKO","id":"9101487","f":"Emeka","p":"","l":"Castellano","c":"9A","r":{"1":[5,null,5,6],"2":[5,5,5,6],"3":[5,null,5,6]}},{"t":"MOKO","id":"9101368","f":"Thiago","p":"","l":"Eriksen","c":"9C","r":{"1":[5,null,5,5],"2":[5,6,6,5],"3":[6,null,5,6]}},{"t":"MOKO","id":"9101528","f":"Petra","p":"","l":"Fitzroy","c":"9D","r":{"1":[5,null,5,5],"2":[5,5,5,5],"3":[5,null,5,6]}},{"t":"MOKO","id":"9101406","f":"Zubin","p":"","l":"Fitzroy","c":"9A","r":{"1":[4,null,5,5],"2":[4,5,5,5],"3":[4,null,4,5]}},{"t":"MOKO","id":"9101313","f":"Otto","p":"","l":"Halvorsen","c":"9D","r":{"1":[4,null,5,5],"2":[5,5,6,5],"3":[5,null,6,4]}},{"t":"MOKO","id":"9101425","f":"Tariq","p":"","l":"Halvorsen","c":"9B","r":{"1":[6,null,6,5],"2":[6,6,6,5],"3":[5,null,6,5]}},{"t":"MOKO","id":"9101435","f":"Tess","p":"","l":"Janssen","c":"9D","r":{"1":[5,null,5,5],"2":[5,4,5,4],"3":[4,null,5,5]}},{"t":"MOKO","id":"9101345","f":"Omar","p":"","l":"Kovalenko","c":"9B","r":{"1":[6,null,6,5],"2":[6,5,5,5],"3":[6,null,5,5]}},{"t":"MOKO","id":"9101554","f":"Lucian","p":"","l":"Laurent","c":"9B","r":{"1":[5,null,4,5],"2":[4,5,4,5],"3":[5,null,4,4]}},{"t":"MOKO","id":"9101285","f":"Matteo","p":"Matt","l":"Quintero","c":"9A","r":{"1":[7,null,6,6],"2":[6,6,6,6],"3":[6,null,6,6]}},{"t":"MOKO","id":"9101539","f":"Cyrus","p":"","l":"Salgado","c":"9B","r":{"1":[5,null,5,5],"2":[5,5,4,6],"3":[6,null,5,5]}},{"t":"MOKO","id":"9101252","f":"Rafael","p":"","l":"Thackeray","c":"9D","r":{"1":[5,null,5,6],"2":[6,6,6,6],"3":[4,null,5,5]}},{"t":"MOKO","id":"9101273","f":"Yusuf","p":"","l":"Winterbourne","c":"9D","r":{"1":[3,null,3,4],"2":[4,4,3,3],"3":[4,null,4,4]}}]},{"code":"10Pure","name":"Grade 10 Pure","type":"AO","level":"G10","bounds":null,"assessments":[{"slot":1,"name":"Formulae and Functions (No Calculator)","date":-41,"ao":[true,true,true,false],"max":[null,null,null],"unit":"Unit 1 Summative"},{"slot":2,"name":"Formulae and Functions (Calculator)","date":-41,"ao":[true,false,true,false],"max":[null,null,null],"unit":"Unit 1 Summative"},{"slot":3,"name":"Quadratics","date":-11,"ao":[true,true,true,true],"max":[null,null,null],"unit":""},{"slot":4,"name":"Trigonometry","date":21,"ao":[true,false,true,true],"max":[null,null,null],"unit":""},{"slot":5,"name":"Circle Geometry","date":50,"ao":[false,false,false,false],"max":[null,null,null],"unit":""}],"students":[{"t":"ALIN","id":"9102430","f":"Rohan","p":"","l":"Bellweather","c":"10B","r":{"1":[6,4,6,null],"2":[6,null,5,null],"3":[5,4,6,5]}},{"t":"ALIN","id":"9102600","f":"Lars","p":"","l":"Bergstrom","c":"10C","r":{"1":["ab","ab","ab",null],"2":[5,null,5,null],"3":[6,4,5,6]}},{"t":"ALIN","id":"9102496","f":"Talia","p":"","l":"Fairweather","c":"10A","r":{"1":[5,4,5,null],"2":[4,null,4,null],"3":[4,4,4,4]}},{"t":"ALIN","id":"9102468","f":"Clara","p":"","l":"Hartigan","c":"10D","r":{"1":[3,4,3,null],"2":[3,null,4,null],"3":[4,3,4,4]}},{"t":"ALIN","id":"9102608","f":"Petra","p":"","l":"Jorgensen","c":"10D","r":{"1":[3,4,4,null],"2":[5,null,5,null],"3":[4,5,4,4]}},{"t":"ALIN","id":"9102693","f":"Tariq","p":"","l":"Kettering","c":"10D","r":{"1":[3,2,4,null],"2":[3,null,3,null],"3":[3,2,3,3]}},{"t":"ALIN","id":"9102616","f":"Asha","p":"","l":"Koskinen","c":"10D","r":{"1":[5,6,7,null],"2":[7,null,7,null],"3":[7,6,7,7]}},{"t":"ALIN","id":"9102555","f":"Levi","p":"","l":"Laurent","c":"10B","r":{"1":[5,6,6,null],"2":[5,null,6,null],"3":[5,5,6,6]}},{"t":"ALIN","id":"9102654","f":"Esme","p":"","l":"Montoya","c":"10C","r":{"1":[4,4,5,null],"2":[5,null,4,null],"3":[6,5,4,6]}},{"t":"ALIN","id":"9102365","f":"Farah","p":"","l":"Olawale","c":"10D","r":{"1":[5,4,4,null],"2":[4,null,4,null],"3":[5,5,4,4]}},{"t":"ALIN","id":"9102389","f":"Anders","p":"Andy","l":"Petrovic","c":"10A","r":{"1":[6,5,5,null],"2":[5,null,6,null],"3":[5,5,5,5]}},{"t":"ALIN","id":"9102360","f":"Alba","p":"","l":"Salgado","c":"10D","r":{"1":[5,6,5,null],"2":[5,null,4,null],"3":[5,5,5,5]}},{"t":"ALIN","id":"9102333","f":"Meera","p":"","l":"Stavros","c":"10C","r":{"1":[5,6,5,null],"2":[6,null,5,null],"3":[5,5,6,5]}},{"t":"ALIN","id":"9102672","f":"Zofia","p":"","l":"Stavros","c":"10A","r":{"1":[5,4,6,null],"2":[4,null,5,null],"3":[5,4,5,5]}},{"t":"ALIN","id":"9102565","f":"Kian","p":"","l":"Thackeray","c":"10D","r":{"1":[6,5,5,null],"2":[5,null,4,null],"3":[6,5,5,5]}},{"t":"ALIN","id":"9102452","f":"Asha","p":"","l":"Wexford","c":"10C","r":{"1":[6,7,6,null],"2":[6,null,5,null],"3":[5,5,5,6]}},{"t":"ALIN","id":"9102533","f":"Kofi","p":"","l":"Zielinski","c":"10D","r":{"1":[4,4,3,null],"2":[5,null,3,null],"3":[4,4,3,5]}},{"t":"MOKO","id":"9103078","f":"Yara","p":"","l":"Ashdown","c":"10A","r":{"1":[6,6,6,null],"2":[6,null,7,null],"3":[7,6,7,6]}},{"t":"MOKO","id":"9102828","f":"Noemi","p":"","l":"Bellweather","c":"10A","r":{"1":[6,7,7,null],"2":[7,null,7,null],"3":[7,7,6,7]}},{"t":"MOKO","id":"9102908","f":"Tomas","p":"","l":"Bergstrom","c":"10C","r":{"1":[5,5,5,null],"2":[5,null,5,null],"3":[5,6,4,5]}},{"t":"MOKO","id":"9102874","f":"Amara","p":"","l":"Calloway","c":"10D","r":{"1":[6,5,5,null],"2":[6,null,5,null],"3":[6,5,6,6]}},{"t":"MOKO","id":"9103066","f":"Viggo","p":"","l":"Calloway","c":"10D","r":{"1":[6,5,6,null],"2":[6,null,7,null],"3":[6,6,6,6]}},{"t":"MOKO","id":"9102722","f":"Greta","p":"","l":"Engstrom","c":"10B","r":{"1":[4,4,3,null],"2":[4,null,4,null],"3":[4,3,4,3]}},{"t":"MOKO","id":"9102803","f":"Asha","p":"","l":"Galanis","c":"10D","r":{"1":[5,5,5,null],"2":[5,null,4,null],"3":[5,5,5,5]}},{"t":"MOKO","id":"9102838","f":"Idris","p":"","l":"Grimaldi","c":"10B","r":{"1":[4,4,5,null],"2":[4,null,4,null],"3":[5,3,4,4]}},{"t":"MOKO","id":"9102763","f":"Omar","p":"","l":"Haddad","c":"10C","r":{"1":[4,5,5,null],"2":[4,null,3,null],"3":[5,4,4,4]}},{"t":"MOKO","id":"9103163","f":"Tomas","p":"","l":"Kaczmarek","c":"10C","r":{"1":[6,7,6,null],"2":[7,null,6,null],"3":[6,7,6,7]}},{"t":"MOKO","id":"9102975","f":"Felix","p":"","l":"Kettering","c":"10D","r":{"1":[5,4,5,null],"2":[5,null,5,null],"3":[5,5,5,6]}},{"t":"MOKO","id":"9103106","f":"Ayla","p":"","l":"Paredes","c":"10A","r":{"1":[5,5,5,null],"2":[3,null,4,null],"3":[5,4,4,4]}},{"t":"MOKO","id":"9103130","f":"Tess","p":"","l":"Pellegrini","c":"10C","r":{"1":[5,4,5,null],"2":[4,null,5,null],"3":[5,5,5,6]}},{"t":"MOKO","id":"9102995","f":"Cyrus","p":"","l":"Rosenthal","c":"10A","r":{"1":[7,5,6,null],"2":[6,null,6,null],"3":[6,5,7,6]}},{"t":"MOKO","id":"9102949","f":"Imani","p":"","l":"Tanaka","c":"10B","r":{"1":[5,6,5,null],"2":[5,null,6,null],"3":[5,4,6,6]}},{"t":"MOKO","id":"9102900","f":"Greta","p":"","l":"Thackeray","c":"10D","r":{"1":[5,5,5,null],"2":[5,null,6,null],"3":[5,5,5,5]}},{"t":"MOKO","id":"9103026","f":"Alba","p":"","l":"Zielinski","c":"10D","r":{"1":[6,4,5,null],"2":[5,null,6,null],"3":[5,5,6,5]}},{"t":"MOKO","id":"9102756","f":"Viggo","p":"","l":"Zielinski","c":"10D","r":{"1":[5,5,6,null],"2":[5,null,7,null],"3":[5,5,6,6]}},{"t":"TWEB","id":"9102198","f":"Otto","p":"","l":"Abernathy","c":"10A","r":{"1":[7,7,7,null],"2":[7,null,6,null],"3":[7,7,7,7]}},{"t":"TWEB","id":"9102065","f":"Clara","p":"","l":"Achterberg","c":"10C","r":{"1":[7,6,6,null],"2":[7,null,7,null],"3":[7,7,6,7]}},{"t":"TWEB","id":"9101955","f":"Esme","p":"","l":"Arvidsson","c":"10A","r":{"1":[7,7,7,null],"2":[7,null,7,null],"3":[7,7,7,7]}},{"t":"TWEB","id":"9102080","f":"Emeka","p":"","l":"Bellweather","c":"10C","r":{"1":[7,6,7,null],"2":[7,null,7,null],"3":[7,7,7,7]}},{"t":"TWEB","id":"9102249","f":"Selma","p":"","l":"Devereux","c":"10C","r":{"1":[7,7,7,null],"2":[7,null,7,null],"3":[7,7,7,7]}},{"t":"TWEB","id":"9102110","f":"Petra","p":"","l":"Montoya","c":"10D","r":{"1":[5,6,5,null],"2":[5,null,6,null],"3":[6,5,6,7]}},{"t":"TWEB","id":"9101984","f":"Rohan","p":"","l":"Nakamura","c":"10B","r":{"1":[5,5,5,null],"2":[5,null,6,null],"3":[5,5,5,6]}},{"t":"TWEB","id":"9102283","f":"Lucian","p":"","l":"Olawale","c":"10C","r":{"1":[6,5,5,null],"2":[6,null,6,null],"3":[6,5,6,6]}},{"t":"TWEB","id":"9102234","f":"Rafael","p":"","l":"Orsini","c":"10C","r":{"1":[6,6,6,null],"2":[6,null,6,null],"3":[6,6,6,6]}},{"t":"TWEB","id":"9101943","f":"Bashir","p":"","l":"Paredes","c":"10A","r":{"1":[6,6,6,null],"2":[7,null,6,null],"3":[6,7,6,5]}},{"t":"TWEB","id":"9102010","f":"Vera","p":"","l":"Salgado","c":"10B","r":{"1":[6,6,7,null],"2":[7,null,7,null],"3":[7,6,7,6]}},{"t":"TWEB","id":"9102268","f":"Keira","p":"","l":"Sandoval","c":"10C","r":{"1":[6,5,5,null],"2":[6,null,6,null],"3":[6,5,6,6]}},{"t":"TWEB","id":"9102329","f":"Anouk","p":"","l":"Tanaka","c":"10C","r":{"1":[6,5,7,null],"2":[6,null,6,null],"3":[6,6,6,6]}},{"t":"TWEB","id":"9102312","f":"Anouk","p":"","l":"Tereshko","c":"10C","r":{"1":[7,7,6,null],"2":[7,null,5,null],"3":[7,7,7,7]}},{"t":"TWEB","id":"9102037","f":"Cyrus","p":"","l":"Ulloa","c":"10D","r":{"1":[6,6,5,null],"2":[6,null,6,null],"3":[6,6,6,6]}},{"t":"TWEB","id":"9102140","f":"Felix","p":"","l":"Ulloa","c":"10C","r":{"1":[7,7,7,null],"2":[7,null,7,null],"3":[7,7,7,7]}},{"t":"TWEB","id":"9102028","f":"Levi","p":"","l":"Vasquez","c":"10C","r":{"1":[6,5,6,null],"2":[6,null,6,null],"3":[7,5,7,7]}},{"t":"TWEB","id":"9102181","f":"Rohan","p":"","l":"Vasquez","c":"10D","r":{"1":[6,6,7,null],"2":[7,null,6,null],"3":[6,7,7,7]}}]},{"code":"10App","name":"Grade 10 Applied","type":"AO","level":"G10","bounds":null,"assessments":[{"slot":1,"name":"Algebra and Graphs","date":-58,"ao":[true,false,true,false],"max":[null,null,null],"unit":""},{"slot":2,"name":"Measurement and Geometry","date":-25,"ao":[true,false,true,true],"max":[null,null,null],"unit":""},{"slot":3,"name":"Statistics","date":-5,"ao":[true,true,true,true],"max":[null,null,null],"unit":""},{"slot":4,"name":"Quadratic Models","date":27,"ao":[true,true,false,true],"max":[null,null,null],"unit":""}],"students":[{"t":"RDAS","id":"9103178","f":"Yusuf","p":"","l":"Arvidsson","c":"10D","r":{"1":[6,null,7,null],"2":[6,null,6,7],"3":[6,6,6,6]}},{"t":"RDAS","id":"9103399","f":"Clara","p":"","l":"Ashdown","c":"10A","r":{"1":[5,null,4,null],"2":[5,null,5,5],"3":[5,4,5,5]}},{"t":"RDAS","id":"9103478","f":"Asha","p":"","l":"Castellano","c":"10D","r":{"1":[5,null,4,null],"2":[5,null,4,4],"3":[5,5,5,3]}},{"t":"RDAS","id":"9103279","f":"Zara","p":"","l":"Devereux","c":"10A","r":{"1":[4,null,4,null],"2":[4,null,4,3],"3":[4,4,4,4]}},{"t":"RDAS","id":"9103302","f":"Nikolai","p":"Niko","l":"Dragomir","c":"10A","r":{"1":[5,null,4,null],"2":[5,null,5,6],"3":[5,5,5,5]}},{"t":"RDAS","id":"9103499","f":"Matteo","p":"Matt","l":"Dunmore","c":"10C","r":{"1":[5,null,5,null],"2":[5,null,5,5],"3":[6,5,5,5]}},{"t":"RDAS","id":"9103239","f":"Leila","p":"","l":"Jorgensen","c":"10C","r":{"1":[4,null,3,null],"2":[5,null,3,5],"3":[4,4,3,5]}},{"t":"RDAS","id":"9103384","f":"Yara","p":"","l":"Kaczmarek","c":"10B","r":{"1":[7,null,6,null],"2":[7,null,7,6],"3":[7,6,7,6]}},{"t":"RDAS","id":"9103530","f":"Emeka","p":"","l":"Moreau","c":"10B","r":{"1":[5,null,5,null],"2":[5,null,5,5],"3":[6,5,4,5]}},{"t":"RDAS","id":"9103519","f":"Tess","p":"","l":"Ostrowski","c":"10A","r":{"1":[5,null,6,null],"2":[6,null,6,6],"3":[6,7,7,7]}},{"t":"RDAS","id":"9103255","f":"Freya","p":"","l":"Pellegrini","c":"10B","r":{"1":[5,null,5,null],"2":[6,null,5,6],"3":[6,6,6,6]}},{"t":"RDAS","id":"9103409","f":"Elias","p":"","l":"Stavros","c":"10D","r":{"1":[4,null,6,null],"2":[5,null,5,5],"3":[6,5,5,6]}},{"t":"RDAS","id":"9103359","f":"Maren","p":"","l":"Tereshko","c":"10D","r":{"1":[5,null,6,null],"2":[6,null,6,6],"3":[5,4,6,6]}},{"t":"RDAS","id":"9103443","f":"Jude","p":"","l":"Ulloa","c":"10C","r":{"1":[5,null,5,null],"2":[5,null,5,6],"3":[5,4,5,5]}},{"t":"RDAS","id":"9103205","f":"Yusuf","p":"","l":"Ulloa","c":"10B","r":{"1":[6,null,5,null],"2":[5,null,5,6],"3":[5,6,5,5]}},{"t":"RDAS","id":"9103336","f":"Rafael","p":"","l":"Zamora","c":"10C","r":{"1":[4,null,4,null],"2":[4,null,5,4],"3":[5,4,5,3]}},{"t":"SNOV","id":"9103650","f":"Lars","p":"","l":"Arvidsson","c":"10C","r":{"1":[7,null,7,null],"2":[7,null,7,6]}},{"t":"SNOV","id":"9103647","f":"Petra","p":"","l":"Bergstrom","c":"10B","r":{"1":[6,null,5,null],"2":[5,null,6,6]}},{"t":"SNOV","id":"9103698","f":"Vera","p":"","l":"Eriksen","c":"10B","r":{"1":[7,null,6,null],"2":[6,null,6,6]}},{"t":"SNOV","id":"9103572","f":"Tomas","p":"","l":"Jablonski","c":"10D","r":{"1":[6,null,6,null],"2":[4,null,6,5]}},{"t":"SNOV","id":"9103733","f":"Zubin","p":"","l":"Janssen","c":"10B","r":{"1":[6,null,7,null],"2":[7,null,6,6]}},{"t":"SNOV","id":"9103767","f":"Linnea","p":"","l":"Koskinen","c":"10B","r":{"1":[5,null,4,null],"2":[6,null,5,4]}},{"t":"SNOV","id":"9103541","f":"Carys","p":"","l":"Mbeki","c":"10B","r":{"1":[5,null,5,null],"2":[4,null,5,4]}},{"t":"SNOV","id":"9103799","f":"Viggo","p":"","l":"Mbeki","c":"10B","r":{"1":[6,null,6,null],"2":[7,null,6,6]}},{"t":"SNOV","id":"9103621","f":"Keira","p":"","l":"Novak","c":"10D","r":{"1":[7,null,7,null],"2":[7,null,7,7]}},{"t":"SNOV","id":"9103608","f":"Matteo","p":"","l":"Olawale","c":"10A","r":{"1":[5,null,5,null],"2":[5,null,4,5]}},{"t":"SNOV","id":"9103836","f":"Meera","p":"","l":"Pellegrini","c":"10A","r":{"1":[6,null,5,null],"2":[6,null,5,7]}},{"t":"SNOV","id":"9103724","f":"Arlo","p":"","l":"Salgado","c":"10A","r":{"1":[5,null,4,null],"2":[4,null,4,4]}},{"t":"SNOV","id":"9103682","f":"Wren","p":"","l":"Tereshko","c":"10B","r":{"1":[6,null,6,null],"2":[7,null,6,6]}},{"t":"SNOV","id":"9103534","f":"Clara","p":"","l":"Underhill","c":"10C","r":{"1":[5,null,5,null],"2":[4,null,4,4]}},{"t":"SNOV","id":"9103873","f":"Noemi","p":"","l":"Urquhart","c":"10C","r":{"1":[5,null,5,null],"2":[4,null,5,5]}}]},{"code":"11AASL","name":"Grade 11 AA SL","type":"DP","level":"G11","bounds":[75.000001,59.000001,43.000001,28.000001,16.000001,7.000001],"assessments":[{"slot":1,"name":"Sequences and Series","date":-55,"ao":[false,false,false,false],"max":[40,40,null],"unit":""},{"slot":2,"name":"Functions","date":-22,"ao":[false,false,false,false],"max":[45,45,null],"unit":""},{"slot":3,"name":"Binomial Theorem","date":-6,"ao":[false,false,false,false],"max":[30,null,null],"unit":""},{"slot":4,"name":"Exponents and Logarithms","date":20,"ao":[false,false,false,false],"max":[40,40,null],"unit":""}],"students":[{"t":"ALIN","id":"9103993","f":"Elodie","p":"Elle","l":"Achterberg","c":"11C","r":{"1":[32,35,null],"2":[37,38,null],"3":[28,null,null]}},{"t":"ALIN","id":"9104163","f":"Elias","p":"","l":"Carreira","c":"11A","r":{"1":[19,21,null],"2":[23,24,null],"3":[17,null,null]}},{"t":"ALIN","id":"9104044","f":"Wren","p":"","l":"Corvino","c":"11B","r":{"1":[28,25,null],"2":[33,29,null],"3":[19,null,null]}},{"t":"ALIN","id":"9104198","f":"Romy","p":"","l":"Dunmore","c":"11D","r":{"1":[24,25,null],"2":[26,31,null],"3":[18,null,null]}},{"t":"ALIN","id":"9104095","f":"Yusuf","p":"","l":"Engstrom","c":"11A","r":{"1":[26,30,null],"2":[32,31,null],"3":[20,null,null]}},{"t":"ALIN","id":"9103999","f":"Dalia","p":"","l":"Eriksen","c":"11B","r":{"1":[24,20,null],"2":[25,32,null],"3":[20,null,null]}},{"t":"ALIN","id":"9103928","f":"Darius","p":"","l":"Fairweather","c":"11D","r":{"1":[31,29,null],"2":[26,33,null],"3":[22,null,null]}},{"t":"ALIN","id":"9104124","f":"Zara","p":"","l":"Galanis","c":"11C","r":{"1":[28,30,null],"2":[38,39,null],"3":[25,null,null]}},{"t":"ALIN","id":"9103895","f":"Noemi","p":"","l":"Grimaldi","c":"11C","r":{"1":[35,32,null],"2":[39,38,null],"3":[27,null,null]}},{"t":"ALIN","id":"9104218","f":"Imani","p":"","l":"Haddad","c":"11C","r":{"1":[28,29,null],"2":[34,31,null],"3":[20,null,null]}},{"t":"ALIN","id":"9104060","f":"Rohan","p":"","l":"Lachance","c":"11A","r":{"1":[31,28,null],"2":[30,33,null],"3":[20,null,null]}},{"t":"ALIN","id":"9103911","f":"Maren","p":"","l":"Marchetti","c":"11B","r":{"1":[26,23,null],"2":[29,33,null],"3":[17,null,null]}},{"t":"ALIN","id":"9103876","f":"Samir","p":"","l":"Mbeki","c":"11C","r":{"1":[21,22,null],"2":[26,29,null],"3":[16,null,null]}},{"t":"ALIN","id":"9104018","f":"Sana","p":"","l":"Montoya","c":"11D","r":{"1":[24,28,null],"2":[23,25,null],"3":[19,null,null]}},{"t":"ALIN","id":"9104073","f":"Zubin","p":"","l":"Salgado","c":"11A","r":{"1":[31,31,null],"2":[32,37,null],"3":[23,null,null]}},{"t":"ALIN","id":"9103961","f":"Lars","p":"","l":"Sandoval","c":"11B","r":{"1":[30,33,null],"2":[33,28,null],"3":[20,null,null]}},{"t":"ALIN","id":"9104132","f":"Maren","p":"","l":"Urquhart","c":"11D","r":{"1":[29,29,null],"2":[33,34,null],"3":[19,null,null]}},{"t":"JPAR","id":"9104246","f":"Farah","p":"","l":"Castellano","c":"11D","r":{"1":[33,31,null],"2":[37,41,null]}},{"t":"JPAR","id":"9104573","f":"Bashir","p":"","l":"Dunmore","c":"11A","r":{"1":[24,23,null],"2":[27,30,null]}},{"t":"JPAR","id":"9104364","f":"Jude","p":"","l":"Engstrom","c":"11D","r":{"1":[28,28,null],"2":[30,22,null]}},{"t":"JPAR","id":"9104222","f":"Anouk","p":"","l":"Galanis","c":"11A","r":{"1":[20,21,null],"2":[23,26,null]}},{"t":"JPAR","id":"9104319","f":"Hamza","p":"","l":"Kaczmarek","c":"11D","r":{"1":[26,24,null],"2":[24,29,null]}},{"t":"JPAR","id":"9104507","f":"Anders","p":"","l":"Koskinen","c":"11D","r":{"1":[33,34,null],"2":[38,37,null]}},{"t":"JPAR","id":"9104344","f":"Tess","p":"","l":"Laurent","c":"11C","r":{"1":[21,21,null],"2":[30,25,null]}},{"t":"JPAR","id":"9104472","f":"Ravi","p":"","l":"Marchetti","c":"11D","r":{"1":[33,38,null],"2":[39,36,null]}},{"t":"JPAR","id":"9104383","f":"Nils","p":"","l":"Montoya","c":"11D","r":{"1":[28,29,null],"2":[35,34,null]}},{"t":"JPAR","id":"9104487","f":"Soren","p":"","l":"Montoya","c":"11C","r":{"1":[26,23,null],"2":[28,33,null]}},{"t":"JPAR","id":"9104558","f":"Hana","p":"","l":"Novak","c":"11A","r":{"1":[27,27,null],"2":[31,31,null]}},{"t":"JPAR","id":"9104544","f":"Lars","p":"","l":"Nyberg","c":"11B","r":{"1":[22,23,null],"2":[18,25,null]}},{"t":"JPAR","id":"9104281","f":"Darius","p":"","l":"Paredes","c":"11A","r":{"1":[23,23,null],"2":[26,24,null]}},{"t":"JPAR","id":"9104416","f":"Milo","p":"","l":"Pellegrini","c":"11C","r":{"1":[27,26,null],"2":[29,26,null]}},{"t":"JPAR","id":"9104442","f":"Yusuf","p":"","l":"Vesely","c":"11B","r":{"1":[22,22,null],"2":[28,19,null]}},{"t":"JPAR","id":"9104593","f":"Cyrus","p":"","l":"Zamora","c":"11C","r":{"1":[26,29,null],"2":[33,33,null]}}]},{"code":"11AAHL","name":"Grade 11 AA HL","type":"DP","level":"G11","bounds":[71.000001,56.000001,42.000001,28.000001,18.000001,8.000001],"assessments":[{"slot":1,"name":"Sequences, Series and Proof","date":-52,"ao":[false,false,false,false],"max":[55,55,null],"unit":""},{"slot":2,"name":"Functions and Complex Numbers","date":-18,"ao":[false,false,false,false],"max":[55,55,25],"unit":""},{"slot":3,"name":"Counting and Binomial Theorem","date":23,"ao":[false,false,false,false],"max":[40,40,null],"unit":""}],"students":[{"t":"TWEB","id":"9104615","f":"Soren","p":"","l":"Brannigan","c":"11C","r":{"1":[33,31,null],"2":[33,34,12]}},{"t":"TWEB","id":"9104767","f":"Matteo","p":"Matt","l":"Delacroix","c":"11B","r":{"1":[49,44,null],"2":[50,46,22]}},{"t":"TWEB","id":"9104747","f":"Emeka","p":"","l":"Haddad","c":"11C","r":{"1":[30,27,null],"2":[27,35,14]}},{"t":"TWEB","id":"9104726","f":"Kenji","p":"","l":"Hartigan","c":"11A","r":{"1":[25,25,null],"2":[23,21,10]}},{"t":"TWEB","id":"9104651","f":"Ravi","p":"","l":"Jablonski","c":"11C","r":{"1":[29,32,null],"2":[34,34,14]}},{"t":"TWEB","id":"9104840","f":"Rania","p":"","l":"Koskinen","c":"11C","r":{"1":[35,36,null],"2":[29,37,18]}},{"t":"TWEB","id":"9104695","f":"Nils","p":"","l":"Marchetti","c":"11A","r":{"1":[50,49,null],"2":[47,48,22]}},{"t":"TWEB","id":"9104609","f":"Hana","p":"","l":"Okonkwo","c":"11B","r":{"1":[32,35,null],"2":[26,30,13]}},{"t":"TWEB","id":"9104676","f":"Yusuf","p":"","l":"Olawale","c":"11A","r":{"1":[37,36,null],"2":[42,39,17]}},{"t":"TWEB","id":"9104635","f":"Cyrus","p":"","l":"Ostrowski","c":"11A","r":{"1":[40,43,null],"2":[42,47,22]}},{"t":"TWEB","id":"9104741","f":"Soren","p":"","l":"Quintero","c":"11C","r":{"1":[45,40,null],"2":[45,46,20]}},{"t":"TWEB","id":"9104804","f":"Petra","p":"","l":"Underhill","c":"11A","r":{"1":[37,36,null],"2":[37,39,16]}},{"t":"TWEB","id":"9104830","f":"Jude","p":"","l":"Vesely","c":"11C","r":{"1":[35,34,null],"2":[35,33,16]}},{"t":"TWEB","id":"9104844","f":"Ravi","p":"","l":"Whitlock","c":"11A","r":{"1":[41,37,null],"2":[34,41,19]}}]},{"code":"11AISL","name":"Grade 11 AI SL","type":"DP","level":"G11","bounds":[77.000001,61.000001,46.000001,31.000001,19.000001,9.000001],"assessments":[{"slot":1,"name":"Number and Approximation","date":-57,"ao":[false,false,false,false],"max":[40,40,null],"unit":""},{"slot":2,"name":"Linear and Quadratic Models","date":-24,"ao":[false,false,false,false],"max":[40,40,null],"unit":""},{"slot":3,"name":"Descriptive Statistics","date":18,"ao":[false,false,false,false],"max":[40,40,null],"unit":""}],"students":[{"t":"MOKO","id":"9104945","f":"Idris","p":"","l":"Ashdown","c":"11D","r":{"1":[25,25,null],"2":[25,26,null]}},{"t":"MOKO","id":"9104881","f":"Tariq","p":"","l":"Brannigan","c":"11C","r":{"1":[17,15,null],"2":[20,14,null]}},{"t":"MOKO","id":"9105107","f":"Alba","p":"","l":"Calloway","c":"11C","r":{"1":[30,30,null],"2":[27,32,null]}},{"t":"MOKO","id":"9105139","f":"Ravi","p":"","l":"Fairweather","c":"11D","r":{"1":[31,33,null],"2":[33,35,null]}},{"t":"MOKO","id":"9104857","f":"Cyrus","p":"","l":"Fontaine","c":"11C","r":{"1":[26,24,null],"2":[28,28,null]}},{"t":"MOKO","id":"9104870","f":"Maren","p":"","l":"Galanis","c":"11C","r":{"1":[35,36,null],"2":[40,34,null]}},{"t":"MOKO","id":"9105160","f":"Sana","p":"","l":"Galanis","c":"11C","r":{"1":[22,21,null],"2":[26,24,null]}},{"t":"MOKO","id":"9104953","f":"Omar","p":"","l":"Ilves","c":"11C","r":{"1":[27,25,null],"2":["ab","ab",null]}},{"t":"MOKO","id":"9105079","f":"Tariq","p":"","l":"Lachance","c":"11B","r":{"1":[21,23,null],"2":[23,23,null]}},{"t":"MOKO","id":"9104932","f":"Odette","p":"","l":"Laurent","c":"11A","r":{"1":[38,31,null],"2":[33,33,null]}},{"t":"MOKO","id":"9104904","f":"Hana","p":"","l":"Marchetti","c":"11D","r":{"1":[26,24,null],"2":[25,24,null]}},{"t":"MOKO","id":"9105014","f":"Tariq","p":"","l":"Montoya","c":"11C","r":{"1":[23,28,null],"2":[29,34,null]}},{"t":"MOKO","id":"9104967","f":"Zubin","p":"","l":"Rosenthal","c":"11B","r":{"1":[27,29,null],"2":[24,27,null]}},{"t":"MOKO","id":"9105050","f":"Lotte","p":"","l":"Ulloa","c":"11C","r":{"1":[15,18,null],"2":[16,15,null]}},{"t":"MOKO","id":"9104992","f":"Zubin","p":"","l":"Villeneuve","c":"11A","r":{"1":[23,21,null],"2":[26,26,null]}},{"t":"RDAS","id":"9105323","f":"Linnea","p":"","l":"Blackwood","c":"11B","r":{"1":[26,28,null],"2":[28,26,null]}},{"t":"RDAS","id":"9105172","f":"Wren","p":"","l":"Blackwood","c":"11C","r":{"1":[30,25,null],"2":[25,28,null]}},{"t":"RDAS","id":"9105443","f":"Bashir","p":"","l":"Devereux","c":"11B","r":{"1":[24,25,null],"2":[29,25,null]}},{"t":"RDAS","id":"9105333","f":"Hugo","p":"","l":"Galanis","c":"11B","r":{"1":[39,34,null],"2":[35,34,null]}},{"t":"RDAS","id":"9105205","f":"Meera","p":"","l":"Hollander","c":"11D","r":{"1":[24,22,null],"2":[25,21,null]}},{"t":"RDAS","id":"9105309","f":"Meera","p":"","l":"Iwasaki","c":"11D","r":{"1":[20,20,null],"2":[19,18,null]}},{"t":"RDAS","id":"9105246","f":"Matteo","p":"Matt","l":"Janssen","c":"11B","r":{"1":[29,27,null],"2":[28,28,null]}},{"t":"RDAS","id":"9105404","f":"Greta","p":"","l":"Kaczmarek","c":"11C","r":{"1":[20,19,null],"2":[19,18,null]}},{"t":"RDAS","id":"9105348","f":"Maren","p":"","l":"Moreau","c":"11B","r":{"1":[20,18,null],"2":[21,21,null]}},{"t":"RDAS","id":"9105283","f":"Sana","p":"","l":"Nordstrom","c":"11B","r":{"1":[30,26,null],"2":[33,29,null]}},{"t":"RDAS","id":"9105190","f":"Tomas","p":"","l":"Petrovic","c":"11C","r":{"1":[19,18,null],"2":[22,21,null]}},{"t":"RDAS","id":"9105211","f":"Caspian","p":"Cas","l":"Stavros","c":"11B","r":{"1":[24,23,null],"2":[27,23,null]}},{"t":"RDAS","id":"9105363","f":"Idris","p":"","l":"Wexford","c":"11A","r":{"1":[31,27,null],"2":[28,29,null]}},{"t":"RDAS","id":"9105235","f":"Leila","p":"","l":"Whitlock","c":"11C","r":{"1":[21,20,null],"2":[18,22,null]}}]},{"code":"11AIHL","name":"Grade 11 AI HL","type":"DP","level":"G11","bounds":[69.000001,54.000001,40.000001,27.000001,17.000001,8.000001],"assessments":[{"slot":1,"name":"Number, Matrices and Models","date":-50,"ao":[false,false,false,false],"max":[55,55,null],"unit":""},{"slot":2,"name":"Graph Theory","date":-15,"ao":[false,false,false,false],"max":[55,null,25],"unit":""},{"slot":3,"name":"Statistics and Bivariate Data","date":26,"ao":[false,false,false,false],"max":[55,55,null],"unit":""}],"students":[{"t":"SNOV","id":"9105597","f":"Elodie","p":"Elle","l":"Delacroix","c":"11D","r":{"1":[51,45,null],"2":[53,null,21]}},{"t":"SNOV","id":"9105516","f":"Viggo","p":"","l":"Fitzroy","c":"11D","r":{"1":[32,30,null],"2":[29,null,15]}},{"t":"SNOV","id":"9105688","f":"Keira","p":"","l":"Jablonski","c":"11B","r":{"1":[37,36,null],"2":[35,null,16]}},{"t":"SNOV","id":"9105478","f":"Esme","p":"","l":"Moreau","c":"11C","r":{"1":[31,36,null],"2":[36,null,18]}},{"t":"SNOV","id":"9105535","f":"Freya","p":"","l":"Okonkwo","c":"11B","r":{"1":[32,37,null],"2":[35,null,14]}},{"t":"SNOV","id":"9105638","f":"Nils","p":"","l":"Paredes","c":"11B","r":{"1":[30,29,null],"2":[27,null,12]}},{"t":"SNOV","id":"9105561","f":"Mateo","p":"Teo","l":"Stavros","c":"11D","r":{"1":[39,36,null],"2":[40,null,16]}},{"t":"SNOV","id":"9105657","f":"Viggo","p":"","l":"Tereshko","c":"11D","r":{"1":[40,40,null],"2":[46,null,20]}},{"t":"SNOV","id":"9105594","f":"Tobias","p":"","l":"Vesely","c":"11A","r":{"1":[28,23,null],"2":[20,null,9]}}]},{"code":"12AASL","name":"Grade 12 AA SL","type":"DP","level":"G12","bounds":[75.000001,59.000001,43.000001,28.000001,16.000001,7.000001],"assessments":[{"slot":1,"name":"Differentiation","date":-66,"ao":[false,false,false,false],"max":[40,40,null],"unit":""},{"slot":2,"name":"Integration","date":-38,"ao":[false,false,false,false],"max":[40,40,null],"unit":""},{"slot":3,"name":"Probability and Distributions","date":-12,"ao":[false,false,false,false],"max":[40,40,null],"unit":""},{"slot":4,"name":"Mock Examination","date":40,"ao":[false,false,false,false],"max":[80,80,null],"unit":""}],"students":[{"t":"ALIN","id":"9106204","f":"Linnea","p":"","l":"Achterberg","c":"12C","r":{"1":[30,30,null],"2":[31,29,null],"3":[29,27,null]}},{"t":"ALIN","id":"9106078","f":"Priya","p":"","l":"Calloway","c":"12B","r":{"1":[22,26,null],"2":[27,26,null],"3":[21,24,null]}},{"t":"ALIN","id":"9106062","f":"Noemi","p":"","l":"Castellano","c":"12D","r":{"1":[26,25,null],"2":[29,24,null],"3":[30,26,null]}},{"t":"ALIN","id":"9106170","f":"Elias","p":"","l":"Ilves","c":"12B","r":{"1":[31,30,null],"2":[29,30,null],"3":[29,28,null]}},{"t":"ALIN","id":"9105999","f":"Tobias","p":"Toby","l":"Ivanova","c":"12B","r":{"1":[25,19,null],"2":[23,22,null],"3":[24,23,null]}},{"t":"ALIN","id":"9106116","f":"Zara","p":"","l":"Ivanova","c":"12B","r":{"1":[25,26,null],"2":[24,23,null],"3":[27,24,null]}},{"t":"ALIN","id":"9105960","f":"Farah","p":"","l":"Kaczmarek","c":"12A","r":{"1":[25,25,null],"2":[29,25,null],"3":[23,25,null]}},{"t":"ALIN","id":"9106083","f":"Asha","p":"","l":"Okonkwo","c":"12C","r":{"1":[33,34,null],"2":[33,31,null],"3":[30,29,null]}},{"t":"ALIN","id":"9106033","f":"Elodie","p":"Elle","l":"Oyelaran","c":"12C","r":{"1":[23,27,null],"2":[28,27,null],"3":[25,28,null]}},{"t":"ALIN","id":"9106134","f":"Odette","p":"","l":"Rosenthal","c":"12B","r":{"1":[27,30,null],"2":[26,28,null],"3":[25,26,null]}},{"t":"ALIN","id":"9106005","f":"Nadia","p":"","l":"Varga","c":"12A","r":{"1":[20,20,null],"2":[20,24,null],"3":[21,23,null]}},{"t":"ALIN","id":"9105976","f":"Meera","p":"","l":"Winterbourne","c":"12A","r":{"1":[26,23,null],"2":[26,28,null],"3":[27,26,null]}},{"t":"ALIN","id":"9105986","f":"Rania","p":"","l":"Zamora","c":"12C","r":{"1":[29,29,null],"2":[30,31,null],"3":[28,28,null]}},{"t":"JPAR","id":"9105723","f":"Zara","p":"","l":"Castellano","c":"12C","r":{"1":[34,32,null],"2":[31,33,null],"3":[32,33,null]}},{"t":"JPAR","id":"9105784","f":"Saoirse","p":"","l":"Dragomir","c":"12B","r":{"1":[26,27,null],"2":[22,24,null],"3":[25,28,null]}},{"t":"JPAR","id":"9105917","f":"Anders","p":"Andy","l":"Fairweather","c":"12A","r":{"1":[37,40,null],"2":[36,36,null],"3":[39,40,null]}},{"t":"JPAR","id":"9105875","f":"Axel","p":"","l":"Fitzroy","c":"12D","r":{"1":[23,24,null],"2":[22,25,null],"3":[27,26,null]}},{"t":"JPAR","id":"9105836","f":"Kian","p":"","l":"Galanis","c":"12D","r":{"1":[21,25,null],"2":[26,26,null],"3":[23,22,null]}},{"t":"JPAR","id":"9105925","f":"Viggo","p":"","l":"Ilves","c":"12D","r":{"1":[29,32,null],"2":[33,27,null],"3":[31,31,null]}},{"t":"JPAR","id":"9105914","f":"Zara","p":"","l":"Ilves","c":"12C","r":{"1":[29,24,null],"2":[23,32,null],"3":[29,28,null]}},{"t":"JPAR","id":"9105750","f":"Selma","p":"","l":"Ivanova","c":"12D","r":{"1":[30,30,null],"2":[28,30,null],"3":[29,31,null]}},{"t":"JPAR","id":"9105712","f":"Meera","p":"","l":"Laurent","c":"12A","r":{"1":[31,35,null],"2":[33,30,null],"3":[32,33,null]}},{"t":"JPAR","id":"9105824","f":"Sana","p":"","l":"Lombardi","c":"12B","r":{"1":[31,34,null],"2":[31,36,null],"3":[34,32,null]}},{"t":"JPAR","id":"9105855","f":"Ines","p":"","l":"Olawale","c":"12D","r":{"1":[23,24,null],"2":[21,20,null],"3":[22,23,null]}},{"t":"JPAR","id":"9105904","f":"Mirela","p":"","l":"Sandoval","c":"12C","r":{"1":[31,25,null],"2":[23,25,null],"3":[18,21,null]}},{"t":"JPAR","id":"9105706","f":"Tariq","p":"","l":"Sandoval","c":"12C","r":{"1":[29,29,null],"2":[29,30,null],"3":[31,33,null]}},{"t":"JPAR","id":"9105841","f":"Farah","p":"","l":"Yamamoto","c":"12C","r":{"1":[26,24,null],"2":[23,27,null],"3":[26,30,null]}}]},{"code":"12AAHL","name":"Grade 12 AA HL","type":"DP","level":"G12","bounds":[71.000001,56.000001,42.000001,28.000001,18.000001,8.000001],"assessments":[{"slot":1,"name":"Calculus","date":-64,"ao":[false,false,false,false],"max":[55,55,null],"unit":""},{"slot":2,"name":"Vectors","date":-33,"ao":[false,false,false,false],"max":[55,55,null],"unit":""},{"slot":3,"name":"Differential Equations and Series","date":-9,"ao":[false,false,false,false],"max":[55,55,25],"unit":""},{"slot":4,"name":"Mock Examination","date":40,"ao":[false,false,false,false],"max":[110,110,55],"unit":""}],"students":[{"t":"TWEB","id":"9106391","f":"Elias","p":"","l":"Bergstrom","c":"12A","r":{"1":[44,43,null],"2":[39,36,null],"3":[43,44,18]}},{"t":"TWEB","id":"9106409","f":"Keira","p":"","l":"Eriksen","c":"12A","r":{"1":[37,36,null],"2":[37,33,null],"3":[37,34,17]}},{"t":"TWEB","id":"9106313","f":"Cyrus","p":"","l":"Laurent","c":"12A","r":{"1":[32,27,null],"2":[33,32,null],"3":[30,34,17]}},{"t":"TWEB","id":"9106243","f":"Kian","p":"","l":"Lindqvist","c":"12C","r":{"1":[34,36,null],"2":[32,34,null],"3":[35,29,15]}},{"t":"TWEB","id":"9106420","f":"Yusuf","p":"","l":"Mbeki","c":"12A","r":{"1":[44,49,null],"2":[48,46,null],"3":[48,50,20]}},{"t":"TWEB","id":"9106278","f":"Felix","p":"","l":"Nordstrom","c":"12B","r":{"1":[36,31,null],"2":[27,28,null],"3":[31,34,14]}},{"t":"TWEB","id":"9106351","f":"Rafael","p":"","l":"Novak","c":"12B","r":{"1":[31,30,null],"2":[26,29,null],"3":[31,31,15]}},{"t":"TWEB","id":"9106406","f":"Lotte","p":"","l":"Quintero","c":"12A","r":{"1":[34,34,null],"2":[32,35,null],"3":[34,34,15]}},{"t":"TWEB","id":"9106440","f":"Tobias","p":"Toby","l":"Vandermeer","c":"12B","r":{"1":[28,29,null],"2":[35,36,null],"3":[32,30,15]}},{"t":"TWEB","id":"9106289","f":"Yara","p":"","l":"Vandermeer","c":"12B","r":{"1":[45,42,null],"2":[43,41,null],"3":[47,41,21]}},{"t":"TWEB","id":"9106426","f":"Jonas","p":"","l":"Yamamoto","c":"12A","r":{"1":[24,29,null],"2":[21,24,null],"3":[27,28,11]}},{"t":"TWEB","id":"9106360","f":"Finn","p":"","l":"Ybarra","c":"12C","r":{"1":[29,29,null],"2":[25,23,null],"3":[26,25,13]}}]},{"code":"12AISL","name":"Grade 12 AI SL","type":"DP","level":"G12","bounds":[77.000001,61.000001,46.000001,31.000001,19.000001,9.000001],"assessments":[{"slot":1,"name":"Voronoi Diagrams and Geometry","date":-63,"ao":[false,false,false,false],"max":[40,40,null],"unit":""},{"slot":2,"name":"Probability and Distributions","date":-36,"ao":[false,false,false,false],"max":[60,null,null],"unit":""},{"slot":3,"name":"Hypothesis Testing","date":-10,"ao":[false,false,false,false],"max":[40,40,null],"unit":""},{"slot":4,"name":"Mock Examination","date":40,"ao":[false,false,false,false],"max":[80,80,null],"unit":""}],"students":[{"t":"MOKO","id":"9107030","f":"Arlo","p":"","l":"Engstrom","c":"12B","r":{"1":[17,17,null],"2":[23,null,null],"3":[14,15,null]}},{"t":"MOKO","id":"9106859","f":"Amara","p":"","l":"Fitzroy","c":"12B","r":{"1":[23,24,null],"2":[36,null,null],"3":[24,25,null]}},{"t":"MOKO","id":"9107001","f":"Rafael","p":"","l":"Halvorsen","c":"12C","r":{"1":[27,29,null],"2":[46,null,null],"3":[33,29,null]}},{"t":"MOKO","id":"9106805","f":"Farah","p":"","l":"Ivanova","c":"12D","r":{"1":[23,25,null],"2":[37,null,null],"3":[22,26,null]}},{"t":"MOKO","id":"9106856","f":"Dmitri","p":"Dima","l":"Kettering","c":"12B","r":{"1":[23,24,null],"2":[33,null,null],"3":[21,26,null]}},{"t":"MOKO","id":"9106843","f":"Jonas","p":"","l":"Kettering","c":"12A","r":{"1":[38,35,null],"2":[55,null,null],"3":["ab","ab",null]}},{"t":"MOKO","id":"9106764","f":"Elias","p":"","l":"Koskinen","c":"12C","r":{"1":[20,24,null],"2":[41,null,null],"3":[22,22,null]}},{"t":"MOKO","id":"9107004","f":"Noemi","p":"","l":"Moreau","c":"12C","r":{"1":[36,35,null],"2":[56,null,null],"3":[35,36,null]}},{"t":"MOKO","id":"9106942","f":"Yara","p":"","l":"Paredes","c":"12A","r":{"1":[19,19,null],"2":[29,null,null],"3":[22,16,null]}},{"t":"MOKO","id":"9107044","f":"Kian","p":"","l":"Petrovic","c":"12A","r":{"1":[21,21,null],"2":[30,null,null],"3":[22,21,null]}},{"t":"MOKO","id":"9106874","f":"Juno","p":"","l":"Tereshko","c":"12C","r":{"1":[23,24,null],"2":[39,null,null],"3":[24,27,null]}},{"t":"MOKO","id":"9106907","f":"Kian","p":"","l":"Urquhart","c":"12C","r":{"1":[17,22,null],"2":[37,null,null],"3":[22,20,null]}},{"t":"MOKO","id":"9106978","f":"Milo","p":"","l":"Yamamoto","c":"12A","r":{"1":[19,23,null],"2":[30,null,null],"3":[22,20,null]}},{"t":"SNOV","id":"9106667","f":"Farah","p":"","l":"Achterberg","c":"12C","r":{"1":[37,40,null],"2":[54,null,null],"3":[39,36,null]}},{"t":"SNOV","id":"9106469","f":"Nils","p":"","l":"Bellweather","c":"12D","r":{"1":[38,40,null],"2":[59,null,null],"3":[38,40,null]}},{"t":"SNOV","id":"9106559","f":"Soren","p":"","l":"Bellweather","c":"12D","r":{"1":[39,40,null],"2":[59,null,null],"3":[40,39,null]}},{"t":"SNOV","id":"9106603","f":"Viggo","p":"","l":"Castellano","c":"12D","r":{"1":[34,33,null],"2":[50,null,null],"3":[38,33,null]}},{"t":"SNOV","id":"9106715","f":"Felix","p":"","l":"Devereux","c":"12D","r":{"1":[34,33,null],"2":[44,null,null],"3":[35,32,null]}},{"t":"SNOV","id":"9106480","f":"Bashir","p":"","l":"Galanis","c":"12B","r":{"1":[36,39,null],"2":[59,null,null],"3":[38,35,null]}},{"t":"SNOV","id":"9106514","f":"Selma","p":"","l":"Halvorsen","c":"12C","r":{"1":[36,35,null],"2":[56,null,null],"3":[38,37,null]}},{"t":"SNOV","id":"9106736","f":"Asha","p":"","l":"Iwasaki","c":"12A","r":{"1":[40,40,null],"2":[59,null,null],"3":[40,40,null]}},{"t":"SNOV","id":"9106677","f":"Marit","p":"","l":"Iwasaki","c":"12A","r":{"1":[39,40,null],"2":[59,null,null],"3":[40,40,null]}},{"t":"SNOV","id":"9106637","f":"Noemi","p":"","l":"Lombardi","c":"12D","r":{"1":[33,31,null],"2":[49,null,null],"3":[31,31,null]}},{"t":"SNOV","id":"9106586","f":"Mateo","p":"","l":"Moreau","c":"12D","r":{"1":[35,33,null],"2":[51,null,null],"3":[31,32,null]}},{"t":"SNOV","id":"9106625","f":"Kian","p":"","l":"Nordstrom","c":"12D","r":{"1":[40,38,null],"2":[55,null,null],"3":[34,29,null]}},{"t":"SNOV","id":"9106473","f":"Elodie","p":"","l":"Novak","c":"12A","r":{"1":[28,35,null],"2":[48,null,null],"3":[32,36,null]}},{"t":"SNOV","id":"9106551","f":"Imani","p":"","l":"Winterbourne","c":"12D","r":{"1":[30,31,null],"2":[48,null,null],"3":[32,29,null]}}]}]};
+var iso=function(off){var t=new Date();t.setDate(t.getDate()+off);return t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0')};
+d.courses.forEach(function(c){c.assessments.forEach(function(a){a.date=iso(a.date)})});
+var n=new Date();d.updated=iso(0)+'T'+String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
+return d;
+})();
+</script>
+<script>
+(function(){
+var D=null, S={course:null,slot:null,teacher:'All',prog:'All',hide:false,sortK:null,sortD:1,q:''};
+var RM=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var GC=['var(--g1)','var(--g2)','var(--g3)','var(--g4)','var(--g5)','var(--g6)','var(--g7)'];
+var GH=['#d9480f','#f08c00','#f2c94c','#a9d18e','#5cb88f','#2c9a7f','#146c63'];
+var AOC=['#2a78d6','#eb6834','#1baf7a','#8b5cf6'];
+var AON=['AO1','AO2','AO3','AO4'];
+var AOL={AO1:'Knowing and understanding',AO2:'Investigating patterns',AO3:'Communicating',AO4:'Applying in real-life contexts'};
+var AVC=['#2563eb','#0ea5e9','#14b8a6','#22c55e','#8b5cf6','#ec4899','#f97316','#6366f1'];
+var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var $=function(id){return document.getElementById(id)};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+var avg=function(a){return a.length?a.reduce(function(x,y){return x+y},0)/a.length:null};
+var med=function(a){if(!a.length)return null;var b=a.slice().sort(function(x,y){return x-y}),m=b.length>>1;return b.length%2?b[m]:(b[m-1]+b[m])/2};
+var f1=function(x){return x==null?'-':(Math.round(x*10)/10).toFixed(1)};
+var pc=function(x){return x==null?'-':Math.round(x*100)+'%'};
+var hash=function(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return Math.abs(h)};
+var gcol=function(g){return g==null?'#cbd5e1':GH[Math.max(1,Math.min(7,Math.round(g)))-1]};
+var ncol=function(n){if(n==null)return null;var x=Math.max(0,Math.min(1,n))*6,i=Math.min(5,Math.floor(x)),t=x-i;return mix(GH[i],GH[i+1],t)};
+function mix(a,b,t){var p=function(h){return[parseInt(h.substr(1,2),16),parseInt(h.substr(3,2),16),parseInt(h.substr(5,2),16)]},A=p(a),B=p(b);return 'rgb('+A.map(function(v,i){return Math.round(v+(B[i]-v)*t)}).join(',')+')'}
+function fdate(iso,long){if(!iso)return 'date not set';var p=iso.split('-');return (+p[2])+' '+MON[+p[1]-1]+(long?' '+p[0]:'')}
+function today(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+
+function nm(s){if(S.hide)return 'Student '+(s.id||'?');var p=s.p||s.f;return (p+' '+s.l).trim()}
+function full(s){if(S.hide)return 'Student '+(s.id||'?');var x=s.f;if(s.p&&s.f.toLowerCase().indexOf(s.p.toLowerCase())<0)x+=' ('+s.p+')';return (x+' '+s.l).trim()}
+function ini(s){if(S.hide)return '#';var p=(s.p||s.f||'?').trim(),l=(s.l||'').trim();return ((p[0]||'')+(l[0]||'')).toUpperCase()}
+function avc(s){return AVC[hash(s.id||(s.f+s.l))%AVC.length]}
+
+function prog(s){return (D.programme&&D.programme[s.id])||'IB Diploma'}
+function inProg(c,s){return c.type!=='DP'||S.prog==='All'||prog(s)===S.prog}
+function progTag(c,s){var p=prog(s);return c.type==='DP'&&p!=='IB Diploma'?' <span class="ptag">'+esc(p)+'</span>':''}
+function progChips(){return ['All','IB Diploma','IB Courses','HS Diploma'].map(function(p){return '<button class="chip'+(S.prog===p?' on':'')+'" data-pg="'+p+'">'+(p==='All'?'All students':p)+'</button>'}).join('')}
+function bindProg(){Array.prototype.forEach.call(document.querySelectorAll('[data-pg]'),function(b){b.onclick=function(){S.prog=b.getAttribute('data-pg');renderExplore();renderAlignment()}})}
+function byDate(a,b){var x=a.date||'9999',y=b.date||'9999';return x<y?-1:x>y?1:a.slot-b.slot}
+function isSet(c,a){return c.type==='AO'?a.ao.some(Boolean):a.max.some(function(m){return m>0})}
+function act(c){return c.assessments.filter(function(a){return isSet(c,a)}).sort(byDate)}
+function dpGrade(b,p){var v=p*100;for(var i=0;i<6;i++)if(v>=b[i]-1e-9)return 7-i;return 1}
+function res(c,s,a){
+  var cells=s.r[a.slot]||[],o={need:0,got:0,text:false};
+  if(c.type==='AO'){
+    o.ao=[null,null,null,null];var vals=[];
+    a.ao.forEach(function(on,j){if(!on)return;o.need++;var v=cells[j];if(typeof v==='number'&&v>=1&&v<=7){o.got++;o.ao[j]=v;vals.push(v)}else if(typeof v==='string')o.text=true});
+    o.mean=avg(vals);o.norm=o.mean==null?null:(o.mean-1)/6;o.complete=o.need>0&&o.got===o.need;o.score=o.mean;
+  }else{
+    o.p=[null,null,null];var tot=0,mx=0;
+    a.max.forEach(function(m,j){if(!(m>0))return;o.need++;mx+=m;var v=cells[j];if(typeof v==='number'){o.got++;tot+=v;o.p[j]=v}else if(typeof v==='string'){o.p[j]=v;o.text=true}});
+    o.complete=o.need>0&&o.got===o.need;o.max=mx;o.total=o.complete?tot:null;o.pct=o.complete?tot/mx:null;
+    o.grade=o.pct!=null&&c.bounds?dpGrade(c.bounds,o.pct):null;
+    o.norm=o.grade!=null?(o.grade-1)/6:o.pct;o.score=o.pct;
+  }
+  return o;
+}
+function predOf(c,s){if(c.type!=='DP'||!D.predicted||!s.id)return null;var p=D.predicted[s.id+'|'+c.code.slice(2).toUpperCase()];if(!p)return null;return p.g!=null?{g:p.g,conf:true}:(p.calc!=null?{g:p.calc,conf:false}:null)}
+function hasPred(c){return c.type==='DP'&&c.students.some(function(s){return predOf(c,s)})}
+function latest(c,s){var A=act(c),L=null;A.forEach(function(a){var r=res(c,s,a);if(r.got>0)L={a:a,r:r}});return L}
+function teachers(c){var t={};c.students.forEach(function(s){if(s.t)t[s.t]=1});return Object.keys(t).sort()}
+function latestA(c){var A=act(c),L=null;A.forEach(function(a){if(c.students.some(function(s){return res(c,s,a).got>0}))L=a});return L}
+
+function attention(){
+  var R=D.rules,out=[];
+  D.courses.forEach(function(c){
+    var A=act(c);
+    c.students.forEach(function(s){
+      var rs=[],seq=[];
+      A.forEach(function(a){var r=res(c,s,a);if(r.got>0||r.text)seq.push({a:a,r:r})});
+      seq.forEach(function(x){if(x.r.text)rs.push({k:'data',t:'Check mark: '+short(x.a.name)})});
+      var G=groups(c).filter(function(g){return g.as.some(function(a){return res(c,s,a).got>0})});
+      if(G.length){
+        var LG=G[G.length-1];
+        if(c.type==='AO'){
+          [0,1,2,3].forEach(function(j){var g=gAO(c,s,LG,j);if(g!=null&&g<=R.aoLow+1e-9)rs.push({k:'low',t:AON[j]+': '+(g%1?f1(g):g)+' ('+short(LG.name)+')'})});
+        }else{var lv=pVal(c,s,LG);if(lv!=null){
+          if(c.bounds){var lg=dpGrade(c.bounds,lv/100);if(lg<=R.aoLow)rs.push({k:'low',t:'Grade '+lg+' ('+short(LG.name)+')'});var pg=predOf(c,s);if(pg&&pg.g-lg>=2)rs.push({k:'drop',t:'Predicted '+pg.g+', got '+lg})}
+          else if(lv<R.dpLow)rs.push({k:'low',t:Math.round(lv)+'% ('+short(LG.name)+')'});
+        }}
+        for(var i=1;i<G.length;i++){
+          if(c.type==='AO'){[0,1,2,3].forEach(function(j){var q=gAO(c,s,G[i-1],j),g=gAO(c,s,G[i],j);if(g!=null&&q!=null&&q-g>=R.aoDrop-1e-9)rs.push({k:'drop',t:AON[j]+' down from '+(q%1?f1(q):q)+' to '+(g%1?f1(g):g)})})}
+          else{var pv=pVal(c,s,G[i-1]),cv=pVal(c,s,G[i]);if(pv!=null&&cv!=null&&pv-cv>=R.dpDrop)rs.push({k:'drop',t:'Down '+Math.round(pv-cv)+'%'})}
+        }
+      }
+      if(rs.length)out.push({c:c,s:s,rs:rs});
+    });
+  });
+  return out;
+}
+function short(n){return n.length>34?n.slice(0,32).replace(/\s+\S*$/,'')+'\u2026':n}
+
+function countUp(el,to,fmt,dur){fmt=fmt||function(v){return Math.round(v).toLocaleString()};if(RM||dur===1||to==null||!isFinite(to)){el.textContent=to==null?'-':fmt(to);return}var t0=null;dur=dur||1200;function st(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-k,3);el.textContent=fmt(to*e);if(k<1)requestAnimationFrame(st)}requestAnimationFrame(st)}
+
+var tip=$('tip');
+function showTip(e,html){tip.innerHTML=html;tip.classList.add('on');moveTip(e)}
+function moveTip(e){var x=e.clientX+14,y=e.clientY+14,w=tip.offsetWidth,h=tip.offsetHeight;if(x+w>innerWidth-8)x=e.clientX-w-14;if(y+h>innerHeight-8)y=e.clientY-h-14;tip.style.left=x+'px';tip.style.top=y+'px'}
+function hideTip(){tip.classList.remove('on')}
+document.addEventListener('mouseover',function(e){var t=e.target.closest&&e.target.closest('[data-tip]');if(t)showTip(e,t.getAttribute('data-tip'))});
+document.addEventListener('mousemove',function(e){if(tip.classList.contains('on'))moveTip(e)});
+document.addEventListener('mouseout',function(e){var t=e.target.closest&&e.target.closest('[data-tip]');if(t&&!t.contains(e.relatedTarget))hideTip()});
+document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('[data-stu]');if(t){var p=t.getAttribute('data-stu').split('|');openStudent(p[0],+p[1])}});
+
+function allStudents(){var o=[];D.courses.forEach(function(c){c.students.forEach(function(s,i){o.push({c:c,s:s,i:i})})});return o}
+function stuKey(c,i){return c.code+'|'+i}
+
+function renderKPIs(quiet){
+  var stu=0,ids={},sets=0,ent=0,exp=0,entDue=0,attn=attention(),due=today();
+  D.courses.forEach(function(c){
+    c.students.forEach(function(s){var k=s.id||(c.code+s.f+s.l);if(!ids[k]){ids[k]=1;stu++}});
+    act(c).forEach(function(a){sets++;c.students.forEach(function(s){var r=res(c,s,a);ent+=r.got;if(a.date&&a.date<=due){exp+=r.need;entDue+=r.got}})});
+  });
+  var ag=alAllGaps().filter(function(g){return g.st!=='single'}),alv=ag.length?ag.filter(function(g){return g.st==='ok'}).length/ag.length:null;
+  var uniq={};attn.forEach(function(x){uniq[x.c.code+x.s.id+x.s.f]=1});
+  var K=[
+    {v:stu,l:'students',c:'linear-gradient(90deg,#60a5fa,#2563eb)'},
+    {v:sets,l:'summatives',c:'linear-gradient(90deg,#a78bfa,#7c3aed)'},
+    {v:alv,l:'of teacher comparisons aligned',c:'linear-gradient(90deg,#34d399,#059669)',f:function(v){return Math.round(v*100)+'%'}},
+    {v:exp?Math.min(1,entDue/exp):null,l:'of marks due entered',c:'linear-gradient(90deg,#fbbf24,#d97706)',f:function(v){return Math.round(v*100)+'%'}},
+    {v:Object.keys(uniq).length,l:'to follow up',c:'linear-gradient(90deg,#fb7185,#e11d48)'}
+  ];
+  $('kpis').innerHTML=K.map(function(k,i){return '<div class="kpi" style="--kc:'+k.c+'"><b id="k'+i+'">0</b><span>'+k.l+'</span></div>'}).join('');
+  K.forEach(function(k,i){countUp($('k'+i),k.v,k.f,quiet?1:0)});
+  countUp($('orbitN'),stu,null,quiet?1:0);
+}
+
+function renderOrbit(){
+  var list=allStudents().map(function(x){var L=latest(x.c,x.s);return {x:x,n:L?L.r.norm:null,L:L}});
+  list.sort(function(a,b){if(a.n==null&&b.n==null)return 0;if(a.n==null)return 1;if(b.n==null)return -1;return b.n-a.n});
+  var N=list.length,g=Math.PI*(3-Math.sqrt(5)),inner=72,R=238,html='';
+  var sz=Math.max(3.2,Math.min(7,(R*R-inner*inner)/N*0.0085+1.2));
+  list.forEach(function(o,i){
+    var r=Math.sqrt(inner*inner+(R*R-inner*inner)*(i+.5)/N),th=i*g,x=r*Math.cos(th),y=r*Math.sin(th);
+    var col=o.n==null?'none':ncol(o.n),st=o.n==null?'#64748b':'none';
+    var c=o.x.c,s=o.x.s,t='<b>'+esc(nm(s))+'</b><br>'+esc(c.code)+(s.t?' \u00b7 '+esc(s.t):'')+'<br>'+(o.L?esc(short(o.L.a.name))+': '+(c.type==='AO'?'mean '+f1(o.L.r.mean):(o.L.r.pct!=null?pc(o.L.r.pct)+(o.L.r.grade?' \u00b7 grade '+o.L.r.grade:''):'partly entered')):'No mark yet');
+    html+='<circle class="dot" data-stu="'+stuKey(c,o.x.i)+'" data-tip="'+esc(t)+'" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+sz.toFixed(2)+'" fill="'+col+'" stroke="'+st+'" stroke-width="'+(o.n==null?1.2:0)+'"'+(RM?'':' style="opacity:0;transform-origin:'+x.toFixed(1)+'px '+y.toFixed(1)+'px;animation:pop .6s '+(i*2.2|0)+'ms cubic-bezier(.2,.8,.2,1) forwards"')+'/>';
+  });
+  $('orbit').innerHTML='<defs><radialGradient id="og"><stop offset="0" stop-color="#2563eb" stop-opacity=".35"/><stop offset="1" stop-color="#2563eb" stop-opacity="0"/></radialGradient><style>@keyframes pop{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}</style></defs><circle r="70" fill="url(#og)"/><circle r="'+(inner-10)+'" fill="none" stroke="rgba(255,255,255,.12)" stroke-dasharray="2 5"/>'+html;
+}
+
+function ring(p,size,stroke,col){size=size||46;stroke=stroke||5;var r=(size-stroke)/2,C=2*Math.PI*r,v=p==null?0:Math.max(0,Math.min(1,p));
+  return '<svg class="ring" viewBox="0 0 '+size+' '+size+'"><circle cx="'+size/2+'" cy="'+size/2+'" r="'+r+'" fill="none" stroke="#eef2f6" stroke-width="'+stroke+'"/><circle cx="'+size/2+'" cy="'+size/2+'" r="'+r+'" fill="none" stroke="'+(col||(v>=1?'#15803d':'#2563eb'))+'" stroke-width="'+stroke+'" stroke-linecap="round" stroke-dasharray="'+(C*v).toFixed(1)+' '+C.toFixed(1)+'" transform="rotate(-90 '+size/2+' '+size/2+')"/><text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-size="'+(size*0.24)+'" font-weight="700" fill="#334155">'+(p==null?'-':Math.round(v*100)+'%')+'</text></svg>'}
+
+function courseSummary(c){
+  var a=latestA(c),o={a:a,mean:null,dist:[],ent:0,exp:0};
+  if(!a)return o;
+  var vals=[];c.students.forEach(function(s){var r=res(c,s,a);o.ent+=r.got;o.exp+=r.need;if(c.type==='AO'){r.ao.forEach(function(g){if(g!=null)vals.push(g)})}else if(r.pct!=null)vals.push(r.pct)});
+  o.mean=avg(vals);
+  if(c.type==='AO'){o.dist=[1,2,3,4,5,6,7].map(function(g){return {n:vals.filter(function(v){return v===g}).length,c:GH[g-1]}})}
+  else{o.dist=[0,1,2,3,4,5,6,7,8,9].map(function(b){return {n:vals.filter(function(v){return Math.min(9,Math.floor(v*10))===b}).length,c:ncol(b/9)}})}
+  return o;
+}
+function renderCards(){
+  $('cards').innerHTML=D.courses.map(function(c){
+    var n=c.students.length,sm=courseSummary(c),T=teachers(c),mx=Math.max.apply(null,sm.dist.map(function(d){return d.n}).concat([1]));
+    var big=sm.mean==null?'<b class="muted">-</b><small>'+(n?(act(c).length?'No marks yet':'No summative set up yet'):'No students yet')+'</small>':'<b>'+(c.type==='AO'?f1(sm.mean):pc(sm.mean))+'</b><small>'+(c.type==='AO'?'avg AO grade':'avg %')+' \u00b7 '+esc(short(sm.a.name))+'</small>';
+    return '<button class="ccard'+(n?'':' empty')+(S.course===c.code?' sel':'')+'" data-course="'+c.code+'"><div class="row1"><span class="code'+(c.type==='DP'?' dp':'')+'">'+c.code+'</span><span class="meta">'+n+' students</span></div><h3>'+esc(c.name)+'</h3><div class="big"><div>'+big+'</div>'+(sm.a?ring(sm.exp?sm.ent/sm.exp:null):'')+'</div>'+(sm.mean!=null?'<div class="mini">'+sm.dist.map(function(d,i){return '<i style="height:'+(d.n/mx*100).toFixed(0)+'%;background:'+d.c+';animation-delay:'+(i*40)+'ms" data-tip="'+(c.type==='AO'?'Grade '+(i+1):(i*10)+'-'+(i*10+10)+'%')+': '+d.n+'"></i>'}).join('')+'</div>':'')+(T.length?'<div class="teachers">'+T.map(function(t){return '<span class="tchip">'+esc(t)+'</span>'}).join('')+'</div>':'')+'</button>';
+  }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('[data-course]'),function(b){b.onclick=function(){selectCourse(b.getAttribute('data-course'));goTo('explore')}});
+}
+
+function renderTimeline(){
+  var cs=D.courses.filter(function(c){return c.assessments.length});
+  var t0=Date.parse('2026-08-17'),t1=Date.parse('2027-06-18'),W=1100,L=90,Rr=20,rowH=40,H=cs.length*rowH+46;
+  var X=function(iso){return L+(Date.parse(iso)-t0)/(t1-t0)*(W-L-Rr)};
+  var s='<svg viewBox="0 0 '+W+' '+H+'"><g class="axis">';
+  for(var m=0;m<11;m++){var d=new Date(2026,7+m,1),iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-01';if(Date.parse(iso)<t0)iso='2026-08-17';var x=X(iso);s+='<line x1="'+x+'" x2="'+x+'" y1="18" y2="'+(H-6)+'"/><text x="'+(x+4)+'" y="12">'+MON[d.getMonth()]+'</text>'}
+  s+='</g>';
+  var td=today();if(td>='2026-08-17'&&td<='2027-06-18'){var tx=X(td);s+='<line x1="'+tx+'" x2="'+tx+'" y1="16" y2="'+(H-4)+'" stroke="#e11d48" stroke-width="1.5" stroke-dasharray="3 3"/><text x="'+(tx+4)+'" y="'+(H-8)+'" fill="#e11d48" font-size="11" font-weight="700">Today</text>'}
+  var nod=[];
+  cs.forEach(function(c,ri){
+    var y=36+ri*rowH;
+    s+='<text x="0" y="'+(y+4)+'" class="lbl">'+c.code+'</text><line x1="'+L+'" x2="'+(W-Rr)+'" y1="'+y+'" y2="'+y+'" stroke="#f1f5f9" stroke-width="6" stroke-linecap="round"/>';
+    c.assessments.slice().sort(byDate).forEach(function(a){
+      var set=isSet(c,a),ent=0,exp=0;c.students.forEach(function(st){var r=res(c,st,a);ent+=r.got;exp+=r.need});
+      if(!a.date){nod.push({c:c,a:a,set:set,p:exp?ent/exp:null});return}
+      var x=X(a.date),p=exp?ent/exp:0,r=11,C=2*Math.PI*r;
+      var t='<b>'+esc(a.name)+'</b><br>'+c.code+' \u00b7 '+fdate(a.date,true)+'<br>'+(set?(exp?Math.round(p*100)+'% entered ('+ent+'/'+exp+')':'No students'):'Not set up: tick the AOs or papers on the Assessments tab');
+      s+='<g data-tip="'+esc(t)+'" style="cursor:pointer" data-jump="'+c.code+'|'+a.slot+'"><circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="#fff" stroke="'+(set?'#dbe4f0':'#f5b971')+'" stroke-width="4"'+(set?'':' stroke-dasharray="3 3"')+'/>'+(set?'<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="none" stroke="'+(p>=1?'#15803d':'#2563eb')+'" stroke-width="4" stroke-linecap="round" stroke-dasharray="'+(C*p).toFixed(1)+' '+C.toFixed(1)+'" transform="rotate(-90 '+x+' '+y+')"/>':'')+'<circle cx="'+x+'" cy="'+y+'" r="3.5" fill="'+(set?(p>=1?'#15803d':'#2563eb'):'#f59e0b')+'"/></g>';
+    });
+  });
+  s+='</svg>';
+  $('timeline').innerHTML=s;
+  $('nodate').innerHTML=nod.length?'<span>Date not set:</span>'+nod.map(function(n){return '<span class="pill" data-jump="'+n.c.code+'|'+n.a.slot+'" style="cursor:pointer" data-tip="'+(n.set?(n.p==null?'No students':Math.round(n.p*100)+'% entered'):'Not set up')+'"><b>'+n.c.code+'</b> '+esc(short(n.a.name))+'</span>'}).join(''):'';
+  Array.prototype.forEach.call(document.querySelectorAll('[data-jump]'),function(g){g.onclick=function(){var p=g.getAttribute('data-jump').split('|');selectCourse(p[0],+p[1]);goTo('explore')}});
+}
+
+function selectCourse(code,slot){
+  S.course=code;S.teacher='All';S.sortK=null;S.q='';
+  var c=D.courses.filter(function(x){return x.code===code})[0],A=act(c);
+  if(slot&&A.some(function(a){return a.slot===slot}))S.slot=slot;else{var L=latestA(c);S.slot=L?L.slot:(A.length?A[A.length-1].slot:null)}
+  renderCards();renderExplore();
+}
+function cur(){return D.courses.filter(function(x){return x.code===S.course})[0]}
+
+function renderExplore(){
+  var c=cur();if(!c)return;var A=act(c),T=teachers(c);
+  $('exTitle').textContent=c.name;
+  $('exSub').textContent=c.students.length+' students \u00b7 '+(T.length?T.join(', '):'no teachers yet')+' \u00b7 '+(c.type==='AO'?'AO grades 1 to 7':'raw marks per paper'+(c.bounds?', grades use the Boundaries tab':', no boundaries yet'));
+  $('courseChips').innerHTML=D.courses.map(function(x){return '<button class="chip'+(x.code===c.code?' on':'')+'" data-cc="'+x.code+'">'+x.code+'<small>'+x.students.length+'</small></button>'}).join('');
+  $('sumChips').innerHTML=c.assessments.slice().sort(byDate).map(function(a){var set=isSet(c,a);return '<button class="chip'+(a.slot===S.slot?' on':'')+'" data-sl="'+a.slot+'"'+(set?'':' disabled data-tip="Not set up on the Assessments tab yet"')+'>'+esc(a.name)+'<small>'+(a.date?fdate(a.date):'no date')+'</small></button>'}).join('')||'<span class="muted">No summatives on the Assessments tab</span>';
+  $('teacherChips').innerHTML=['All'].concat(T).map(function(t){return '<button class="chip'+(t===S.teacher?' on':'')+'" data-tt="'+esc(t)+'">'+esc(t==='All'?'All teachers':t)+'</button>'}).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('[data-cc]'),function(b){b.onclick=function(){selectCourse(b.getAttribute('data-cc'))}});
+  Array.prototype.forEach.call(document.querySelectorAll('[data-sl]'),function(b){b.onclick=function(){if(b.disabled)return;S.slot=+b.getAttribute('data-sl');renderExplore()}});
+  Array.prototype.forEach.call(document.querySelectorAll('[data-tt]'),function(b){b.onclick=function(){S.teacher=b.getAttribute('data-tt');renderExplore()}});
+  $('progRow').style.display=c.type==='DP'?'':'none';$('progChips').innerHTML=progChips();bindProg();
+  var a=A.filter(function(x){return x.slot===S.slot})[0];
+  if(!c.students.length){$('exBody').innerHTML='<div class="note">No students on the '+c.code+' tab yet.</div>';return}
+  if(!a){$('exBody').innerHTML='<div class="note">Nothing set up yet. Add the summative on the Assessments tab and tick its '+(c.type==='AO'?'AOs':'papers')+'.</div>';return}
+  var stu=c.students.map(function(s,i){return {s:s,i:i,r:res(c,s,a)}}).filter(function(x){return (S.teacher==='All'||x.s.t===S.teacher)&&inProg(c,x.s)});
+  $('exBody').innerHTML=c.type==='AO'?exploreAO(c,a,stu):exploreDP(c,a,stu);
+  bindTable(c,a,stu);
+}
+
+function statBox(lbl,val,sub,col){return '<div class="stat" style="--sc:'+col+'"><span>'+lbl+'</span><b>'+val+'</b><small>'+(sub||'&nbsp;')+'</small></div>'}
+
+function exploreAO(c,a,stu){
+  var on=[0,1,2,3].filter(function(j){return a.ao[j]}),all=[],ent=0,exp=0;
+  stu.forEach(function(x){ent+=x.r.got;exp+=x.r.need;x.r.ao.forEach(function(g){if(g!=null)all.push(g)})});
+  var means=on.map(function(j){return {j:j,m:avg(stu.map(function(x){return x.r.ao[j]}).filter(function(v){return v!=null}))}}).filter(function(o){return o.m!=null});
+  var best=means.slice().sort(function(p,q){return q.m-p.m})[0],worst=means.slice().sort(function(p,q){return p.m-q.m})[0];
+  var h='<div class="stats">'+statBox('Marks entered',exp?Math.round(ent/exp*100)+'%':'-',ent+' of '+exp,'linear-gradient(90deg,#60a5fa,#2563eb)')+statBox('Average AO grade',f1(avg(all)),all.length+' grades','linear-gradient(90deg,#34d399,#059669)')+statBox('Strongest AO',best?AON[best.j]:'-',best?f1(best.m)+' \u00b7 '+AOL[AON[best.j]]:'','linear-gradient(90deg,#a78bfa,#7c3aed)')+statBox('Weakest AO',worst&&means.length>1?AON[worst.j]:'-',worst&&means.length>1?f1(worst.m)+' \u00b7 '+AOL[AON[worst.j]]:'','linear-gradient(90deg,#fbbf24,#d97706)')+'</div>';
+  h+='<div class="grid2">';
+  h+='<div class="chart"><h3>Grades by AO</h3><div class="sub">Number of students at each grade. The number on the right is the average.</div>'+aoStack(stu,on)+legendG()+'</div>';
+  h+='<div class="chart"><h3>All grades</h3><div class="sub">Every AO grade on this summative.</div>'+histG(all)+'</div>';
+  h+='<div class="chart"><h3>By teacher</h3><div class="sub">Average grade in each AO.</div>'+teacherDotsAO(c,a,on)+'<div class="legend">'+on.map(function(j){return '<span><i style="background:'+AOC[j]+'"></i>'+AON[j]+'</span>'}).join('')+'</div></div>';
+  h+='<div class="chart"><h3>Students</h3><div class="sub">One dot per student (average of their AO grades). Click a dot to see the student.</div>'+swarm(c,stu.filter(function(x){return x.r.mean!=null}).map(function(x){return {x:x,v:x.r.mean}}),1,7,function(v){return f1(v)},[1,2,3,4,5,6,7])+'</div>';
+  h+='</div>';
+  h+=tableHTML(c,a,stu);
+  return h;
+}
+function exploreDP(c,a,stu){
+  var papers=[0,1,2].filter(function(j){return a.max[j]>0}),done=stu.filter(function(x){return x.r.pct!=null}),pv=done.map(function(x){return x.r.pct}),ent=0,exp=0;
+  stu.forEach(function(x){ent+=x.r.got;exp+=x.r.need});
+  var top=done.slice().sort(function(p,q){return q.r.pct-p.r.pct})[0];
+  var h='<div class="stats">'+statBox('Marks entered',exp?Math.round(ent/exp*100)+'%':'-',ent+' of '+exp+' paper marks','linear-gradient(90deg,#60a5fa,#2563eb)')+statBox('Average',pc(avg(pv)),done.length+' students with all papers in','linear-gradient(90deg,#34d399,#059669)')+statBox('Median',pc(med(pv)),'middle score','linear-gradient(90deg,#a78bfa,#7c3aed)')+statBox('Highest',top?pc(top.r.pct):'-',top?esc(nm(top.s)):'','linear-gradient(90deg,#fbbf24,#d97706)')+'</div>';
+  h+='<div class="grid2">';
+  h+='<div class="chart"><h3>Scores</h3><div class="sub">Number of students in each 10% band.</div>'+histP(pv)+'</div>';
+  h+='<div class="chart"><h3>IB grades</h3><div class="sub">'+(c.bounds?'Using the Boundaries tab.':'Shows once the '+c.code+' boundaries are on the Boundaries tab.')+'</div>'+(c.bounds?histG(done.map(function(x){return x.r.grade})):boundNote(c))+'</div>';
+  if(papers.length>1)h+='<div class="chart"><h3>Paper '+(papers[0]+1)+' vs Paper '+(papers[1]+1)+'</h3><div class="sub">Dots above the line did better on Paper '+(papers[1]+1)+'.</div>'+scatter(c,stu,papers[0],papers[1],a)+'</div>';
+  else h+='<div class="chart"><h3>Students</h3><div class="sub">One dot per student. Click a dot to see the student.</div>'+swarm(c,done.map(function(x){return {x:x,v:x.r.pct*100}}),0,100,function(v){return Math.round(v)+'%'},[0,20,40,60,80,100])+'</div>';
+  h+='<div class="chart"><h3>By teacher</h3><div class="sub">Average % (dot) and lowest to highest (bar).</div>'+teacherRangeDP(c,a)+'</div>';
+  h+=predChart(c,a,stu);
+  h+='</div>';
+  h+=tableHTML(c,a,stu);
+  return h;
+}
+function boundNote(c){return '<div class="note" style="margin-top:6px">No boundaries for '+c.code+' yet, so only % is shown.</div>'}
+function legendG(){return '<div class="legend">'+[1,2,3,4,5,6,7].map(function(g){return '<span><i style="background:'+GH[g-1]+'"></i>'+g+'</span>'}).join('')+'</div>'}
+
+function aoStack(stu,on){
+  var W=520,rowH=42,H=on.length*rowH+8,L=44,s='<svg viewBox="0 0 '+W+' '+H+'">';
+  on.forEach(function(j,ri){
+    var v=stu.map(function(x){return x.r.ao[j]}).filter(function(g){return g!=null}),n=v.length,y=ri*rowH+6,x=L,w=W-L-48;
+    s+='<text x="0" y="'+(y+18)+'" class="lbl">'+AON[j]+'</text>';
+    if(!n){s+='<rect x="'+L+'" y="'+(y+4)+'" width="'+w+'" height="22" rx="6" fill="#f1f5f9"/><text x="'+(L+10)+'" y="'+(y+19)+'" font-size="11" fill="#94a3b8">no grades yet</text>';return}
+    [1,2,3,4,5,6,7].forEach(function(g,gi){var k=v.filter(function(q){return q===g}).length;if(!k)return;var ww=k/n*w;s+='<rect class="bar" x="'+x.toFixed(1)+'" y="'+(y+4)+'" width="'+Math.max(0,ww-1.5).toFixed(1)+'" height="22" rx="4" fill="'+GH[g-1]+'" data-tip="'+AON[j]+' \u00b7 grade '+g+': '+k+' student'+(k>1?'s':'')+' ('+Math.round(k/n*100)+'%)"'+(RM?'':' style="transform-origin:'+L+'px 0;animation:growx .9s '+(ri*90)+'ms cubic-bezier(.2,.8,.2,1) both"')+'/>'+(ww>18?'<text x="'+(x+ww/2).toFixed(1)+'" y="'+(y+19)+'" text-anchor="middle" font-size="11" font-weight="700" fill="'+(g>=3&&g<=4?'#334155':'#fff')+'" pointer-events="none">'+k+'</text>':'');x+=ww});
+    s+='<text x="'+(W-2)+'" y="'+(y+19)+'" text-anchor="end" font-size="12.5" font-weight="800" fill="#1e293b">'+f1(avg(v))+'</text>';
+  });
+  return s+'</svg>';
+}
+function histG(vals){
+  var W=520,H=210,L=28,B=28,top=14,cnt=[1,2,3,4,5,6,7].map(function(g){return vals.filter(function(v){return v===g}).length}),mx=Math.max.apply(null,cnt.concat([1])),bw=(W-L)/7;
+  var s='<svg viewBox="0 0 '+W+' '+H+'"><g class="axis">';
+  ticks(mx).forEach(function(t){var y=H-B-(t/mx)*(H-B-top);s+='<line x1="'+L+'" x2="'+W+'" y1="'+y+'" y2="'+y+'"/><text x="'+(L-6)+'" y="'+(y+4)+'" text-anchor="end">'+t+'</text>'});
+  s+='</g>';
+  cnt.forEach(function(k,i){var h=(k/mx)*(H-B-top),x=L+i*bw+bw*.16,w=bw*.68,y=H-B-h;s+='<rect class="bar" x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="6" fill="'+GH[i]+'" data-tip="Grade '+(i+1)+': '+k+'"'+(RM?'':' style="transform-origin:0 '+(H-B)+'px;animation:grow .9s '+(i*60)+'ms cubic-bezier(.2,.8,.2,1) both"')+'/>'+(k?'<text x="'+(x+w/2).toFixed(1)+'" y="'+(y-5).toFixed(1)+'" text-anchor="middle" font-size="11.5" font-weight="700" fill="#334155">'+k+'</text>':'')+'<text x="'+(x+w/2).toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle" font-size="12" font-weight="700" fill="#475569">'+(i+1)+'</text>'});
+  return s+'</svg>';
+}
+function histP(vals){
+  var W=520,H=210,L=28,B=28,top=14,cnt=[0,1,2,3,4,5,6,7,8,9].map(function(b){return vals.filter(function(v){return Math.min(9,Math.floor(v*10+1e-9))===b}).length}),mx=Math.max.apply(null,cnt.concat([1])),bw=(W-L)/10;
+  var s='<svg viewBox="0 0 '+W+' '+H+'"><g class="axis">';
+  ticks(mx).forEach(function(t){var y=H-B-(t/mx)*(H-B-top);s+='<line x1="'+L+'" x2="'+W+'" y1="'+y+'" y2="'+y+'"/><text x="'+(L-6)+'" y="'+(y+4)+'" text-anchor="end">'+t+'</text>'});
+  s+='</g>';
+  cnt.forEach(function(k,i){var h=(k/mx)*(H-B-top),x=L+i*bw+bw*.1,w=bw*.8,y=H-B-h;s+='<rect class="bar" x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+h.toFixed(1)+'" rx="5" fill="'+ncol(i/9)+'" data-tip="'+(i*10)+' to '+(i===9?100:i*10+9)+'%: '+k+'"'+(RM?'':' style="transform-origin:0 '+(H-B)+'px;animation:grow .9s '+(i*45)+'ms cubic-bezier(.2,.8,.2,1) both"')+'/>'+(k?'<text x="'+(x+w/2).toFixed(1)+'" y="'+(y-5).toFixed(1)+'" text-anchor="middle" font-size="11.5" font-weight="700" fill="#334155">'+k+'</text>':'')+'<text x="'+(x+w/2).toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle" font-size="10.5" fill="#64748b">'+(i*10)+'</text>'});
+  return s+'</svg>';
+}
+function ticks(mx){var st=mx<=5?1:mx<=10?2:mx<=25?5:mx<=60?10:20,o=[];for(var t=0;t<=mx;t+=st)o.push(t);return o}
+
+function teacherDotsAO(c,a,on){
+  var T=teachers(c),W=520,rowH=34,H=T.length*rowH+34,L=56,R=16,X=function(v){return L+(v-1)/6*(W-L-R)};
+  var s='<svg viewBox="0 0 '+W+' '+H+'"><g class="axis">';
+  [1,2,3,4,5,6,7].forEach(function(g){var x=X(g);s+='<line x1="'+x+'" x2="'+x+'" y1="4" y2="'+(H-24)+'"/><text x="'+x+'" y="'+(H-8)+'" text-anchor="middle">'+g+'</text>'});
+  s+='</g>';
+  T.forEach(function(t,ri){
+    var y=ri*rowH+20,ms=[];
+    s+='<text x="0" y="'+(y+4)+'" class="lbl">'+esc(t)+'</text>';
+    on.forEach(function(j){var v=c.students.filter(function(st){return st.t===t&&inProg(c,st)}).map(function(st){return res(c,st,a).ao[j]}).filter(function(g){return g!=null});if(v.length)ms.push({j:j,m:avg(v),n:v.length})});
+    if(ms.length>1){var lo=Math.min.apply(null,ms.map(function(o){return o.m})),hi=Math.max.apply(null,ms.map(function(o){return o.m}));s+='<line x1="'+X(lo)+'" x2="'+X(hi)+'" y1="'+y+'" y2="'+y+'" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>'}
+    ms.forEach(function(o){s+='<circle cx="'+X(o.m).toFixed(1)+'" cy="'+y+'" r="7" fill="'+AOC[o.j]+'" stroke="#fff" stroke-width="2" data-tip="'+esc(t)+' \u00b7 '+AON[o.j]+': mean '+f1(o.m)+' ('+o.n+' students)"/>'});
+    if(!ms.length)s+='<text x="'+L+'" y="'+(y+4)+'" font-size="11" fill="#94a3b8">no grades yet</text>';
+  });
+  return s+'</svg>';
+}
+function teacherRangeDP(c,a){
+  var T=teachers(c),W=520,rowH=34,H=T.length*rowH+34,L=56,R=16,X=function(v){return L+v*(W-L-R)};
+  var s='<svg viewBox="0 0 '+W+' '+H+'"><g class="axis">';
+  [0,.2,.4,.6,.8,1].forEach(function(g){var x=X(g);s+='<line x1="'+x+'" x2="'+x+'" y1="4" y2="'+(H-24)+'"/><text x="'+x+'" y="'+(H-8)+'" text-anchor="middle">'+Math.round(g*100)+'%</text>'});
+  s+='</g>';
+  T.forEach(function(t,ri){
+    var y=ri*rowH+20,v=c.students.filter(function(st){return st.t===t&&inProg(c,st)}).map(function(st){return res(c,st,a).pct}).filter(function(p){return p!=null});
+    s+='<text x="0" y="'+(y+4)+'" class="lbl">'+esc(t)+'</text>';
+    if(!v.length){s+='<text x="'+L+'" y="'+(y+4)+'" font-size="11" fill="#94a3b8">no complete results yet</text>';return}
+    var lo=Math.min.apply(null,v),hi=Math.max.apply(null,v),m=avg(v);
+    s+='<line x1="'+X(lo)+'" x2="'+X(hi)+'" y1="'+y+'" y2="'+y+'" stroke="#c7d2fe" stroke-width="8" stroke-linecap="round" data-tip="'+esc(t)+': lowest '+pc(lo)+', highest '+pc(hi)+'"/><circle cx="'+X(m).toFixed(1)+'" cy="'+y+'" r="8" fill="#2563eb" stroke="#fff" stroke-width="2" data-tip="'+esc(t)+': mean '+pc(m)+' ('+v.length+' students)"/>';
+  });
+  return s+'</svg>';
+}
+function swarm(c,pts,lo,hi,fmt,tk){
+  var W=520,H=200,L=14,R=14,mid=88,X=function(v){return L+(v-lo)/(hi-lo)*(W-L-R)},r=6,placed=[];
+  pts.sort(function(p,q){return p.v-q.v});
+  var s='<svg viewBox="0 0 '+W+' '+H+'"><g class="axis">';
+  tk.forEach(function(t){var x=X(t);s+='<line x1="'+x+'" x2="'+x+'" y1="8" y2="'+(H-24)+'"/><text x="'+x+'" y="'+(H-8)+'" text-anchor="middle">'+(lo===1?t:fmt(t))+'</text>'});
+  s+='</g>';
+  pts.forEach(function(p,i){
+    var x=X(p.v),y=mid,k=0;
+    while(placed.some(function(q){return Math.hypot(q.x-x,q.y-y)<r*2+.6})&&k<60){k++;y=mid+(k%2?1:-1)*Math.ceil(k/2)*(r*1.75)}
+    y=Math.max(10,Math.min(H-34,y));placed.push({x:x,y:y});
+    var col=c.type==='AO'?ncol((p.v-1)/6):(p.x.r.grade!=null?gcol(p.x.r.grade):ncol(p.v/100));
+    s+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+r+'" fill="'+col+'" stroke="#fff" stroke-width="1.5" style="cursor:pointer'+(RM?'':';opacity:0;animation:fadein .5s '+(i*12)+'ms forwards')+'" data-stu="'+stuKey(c,p.x.i)+'" data-tip="<b>'+esc(nm(p.x.s))+'</b><br>'+esc(p.x.s.t||'')+' \u00b7 '+fmt(p.v)+'"/>';
+  });
+  if(!pts.length)s+='<text x="'+W/2+'" y="'+mid+'" text-anchor="middle" fill="#94a3b8" font-size="12">No results yet</text>';
+  return s+'<style>@keyframes fadein{to{opacity:1}}</style></svg>';
+}
+function scatter(c,stu,p1,p2,a){
+  var W=520,H=320,L=40,B=34,T=10,R=12,m1=a.max[p1],m2=a.max[p2],X=function(v){return L+v*(W-L-R)},Y=function(v){return H-B-v*(H-B-T)};
+  var s='<svg viewBox="0 0 '+W+' '+H+'"><g class="axis">';
+  [0,.25,.5,.75,1].forEach(function(g){s+='<line x1="'+X(g)+'" x2="'+X(g)+'" y1="'+T+'" y2="'+(H-B)+'"/><line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(g)+'" y2="'+Y(g)+'"/><text x="'+X(g)+'" y="'+(H-B+16)+'" text-anchor="middle">'+Math.round(g*100)+'%</text><text x="'+(L-6)+'" y="'+(Y(g)+4)+'" text-anchor="end">'+Math.round(g*100)+'%</text>'});
+  s+='</g><line x1="'+X(0)+'" y1="'+Y(0)+'" x2="'+X(1)+'" y2="'+Y(1)+'" stroke="#94a3b8" stroke-dasharray="4 4"/><text x="'+(W-R)+'" y="'+(H-4)+'" text-anchor="end" font-size="11" fill="#64748b">Paper '+(p1+1)+' (/'+m1+')</text><text x="'+L+'" y="'+(T-1)+'" font-size="11" fill="#64748b">Paper '+(p2+1)+' (/'+m2+')</text>';
+  stu.forEach(function(x,i){var a1=x.r.p[p1],a2=x.r.p[p2];if(typeof a1!=='number'||typeof a2!=='number')return;var col=x.r.grade!=null?gcol(x.r.grade):ncol(x.r.pct||0);s+='<circle cx="'+X(a1/m1).toFixed(1)+'" cy="'+Y(a2/m2).toFixed(1)+'" r="7" fill="'+col+'" stroke="#fff" stroke-width="1.5" style="cursor:pointer'+(RM?'':';opacity:0;animation:fadein .5s '+(i*20)+'ms forwards')+'" data-stu="'+stuKey(c,x.i)+'" data-tip="<b>'+esc(nm(x.s))+'</b><br>P'+(p1+1)+' '+a1+'/'+m1+' \u00b7 P'+(p2+1)+' '+a2+'/'+m2+'"/>'});
+  return s+'<style>@keyframes fadein{to{opacity:1}}</style></svg>';
+}
+
+function gchip(v,isText){if(v==null)return '<span class="muted">-</span>';if(typeof v==='string'||isText)return '<span class="g t" data-tip="Not a number yet">'+esc(v)+'</span>';return '<span class="g" style="background:'+gcol(v)+(v>=3&&v<=4?';color:#334155':'')+'">'+v+'</span>'}
+function tableHTML(c,a,stu){
+  var cols=[{k:'name',l:'Student'},{k:'t',l:'Teacher'},{k:'c',l:'Class'}];
+  if(c.type==='AO'){[0,1,2,3].forEach(function(j){if(a.ao[j])cols.push({k:'ao'+j,l:AON[j],n:1})});cols.push({k:'mean',l:'Mean',n:1})}
+  else{[0,1,2].forEach(function(j){if(a.max[j]>0)cols.push({k:'p'+j,l:'P'+(j+1)+' /'+a.max[j],n:1})});cols.push({k:'total',l:'Total /'+a.max.reduce(function(x,y){return x+(y>0?y:0)},0),n:1},{k:'pct',l:'%',n:1},{k:'grade',l:'Grade',n:1})}
+  return '<div class="tablewrap"><div class="tablebar"><b>'+esc(a.name)+'</b><input id="tq" placeholder="Search name, code or class" value="'+esc(S.q)+'"></div><div class="tscroll"><table><thead><tr>'+cols.map(function(cl){return '<th class="'+(cl.n?'num':'')+'" data-k="'+cl.k+'">'+cl.l+(S.sortK===cl.k?(S.sortD>0?' \u25b2':' \u25bc'):'')+'</th>'}).join('')+'</tr></thead><tbody id="tb"></tbody></table></div></div>';
+}
+function bindTable(c,a,stu){
+  var val=function(x,k){var r=x.r;if(k==='name')return (x.s.l+' '+(x.s.p||x.s.f)).toLowerCase();if(k==='t')return x.s.t;if(k==='c')return x.s.c;if(k.indexOf('ao')===0)return r.ao[+k.slice(2)];if(k==='mean')return r.mean;if(k.indexOf('p')===0&&k.length===2){var v=r.p[+k.slice(1)];return typeof v==='number'?v:null}if(k==='total')return r.total;if(k==='pct')return r.pct;if(k==='grade')return r.grade};
+  function draw(){
+    var q=S.q.toLowerCase(),rows=stu.filter(function(x){return !q||(full(x.s)+' '+x.s.id+' '+x.s.c+' '+x.s.t).toLowerCase().indexOf(q)>=0});
+    if(S.sortK){rows=rows.slice().sort(function(p,qq){var A=val(p,S.sortK),B=val(qq,S.sortK);if(A==null&&B==null)return 0;if(A==null)return 1;if(B==null)return -1;return (A<B?-1:A>B?1:0)*S.sortD})}
+    $('tb').innerHTML=rows.map(function(x){
+      var cells='<td><div class="who"><span class="av" style="background:'+avc(x.s)+'">'+esc(ini(x.s))+'</span><span>'+esc(nm(x.s))+progTag(c,x.s)+'</span></div></td><td>'+esc(x.s.t)+'</td><td>'+esc(x.s.c)+'</td>';
+      if(c.type==='AO'){[0,1,2,3].forEach(function(j){if(a.ao[j]){var raw=(x.s.r[a.slot]||[])[j];cells+='<td class="num">'+(typeof raw==='string'?gchip(raw,1):gchip(x.r.ao[j]))+'</td>'}});cells+='<td class="num"><b>'+f1(x.r.mean)+'</b></td>'}
+      else{[0,1,2].forEach(function(j){if(a.max[j]>0){var v=x.r.p[j];cells+='<td class="num">'+(v==null?'<span class="muted">-</span>':typeof v==='string'?gchip(v,1):v)+'</td>'}});cells+='<td class="num"><b>'+(x.r.total==null?'<span class="muted">-</span>':x.r.total)+'</b></td><td class="num">'+pc(x.r.pct)+'</td><td class="num">'+(x.r.grade!=null?gchip(x.r.grade):(x.r.pct!=null?'<span class="muted" data-tip="Boundaries not set yet">pending</span>':'<span class="muted">-</span>'))+'</td>'}
+      return '<tr data-stu="'+stuKey(c,x.i)+'">'+cells+'</tr>';
+    }).join('')||'<tr><td colspan="12" class="muted" style="text-align:center;padding:20px">No students match</td></tr>';
+  }
+  draw();
+  $('tq').oninput=function(e){S.q=e.target.value;draw()};
+  Array.prototype.forEach.call(document.querySelectorAll('th[data-k]'),function(th){th.onclick=function(){var k=th.getAttribute('data-k');if(S.sortK===k)S.sortD=-S.sortD;else{S.sortK=k;S.sortD=(k==='name'||k==='t'||k==='c')?1:-1}renderExplore()}});
+}
+
+function renderAttention(){
+  var at=attention();
+  $('attSub').textContent=(at.length?at.length+' students. ':'')+'Flagged when an AO grade is '+D.rules.aoLow+' or below, a grade drops by '+D.rules.aoDrop+' or more, a DP score is under '+D.rules.dpLow+'% (grade '+D.rules.aoLow+' or below once boundaries are set), or a mark is not a number. You can change these on the Boundaries tab.';
+  if(!at.length){$('attBody').innerHTML='<div class="note">No one flagged at the moment.</div>';return}
+  var by={};at.forEach(function(x){(by[x.c.code]=by[x.c.code]||[]).push(x)});
+  $('attBody').innerHTML=Object.keys(by).map(function(code){var L=by[code];return '<div class="groupt">'+code+' \u00b7 '+esc(L[0].c.name)+' <span class="count">'+L.length+'</span></div><div class="att">'+L.map(function(x){return '<button class="aitem" data-stu="'+stuKey(x.c,x.c.students.indexOf(x.s))+'"><span class="av" style="background:'+avc(x.s)+'">'+esc(ini(x.s))+'</span><div class="who" style="display:block;min-width:0"><b>'+esc(nm(x.s))+'</b><span>'+esc(x.s.t)+(x.s.c?' \u00b7 '+esc(x.s.c):'')+'</span><div class="reasons">'+x.rs.map(function(r){return '<span class="rs '+(r.k==='low'?'':r.k)+'">'+esc(r.t)+'</span>'}).join('')+'</div></div></button>'}).join('')+'</div>'}).join('');
+}
+
+
+var AL={tab:'gaps'};
+function alGroups(c,a){
+  var T=teachers(c),rows=[],R=D.rules;
+  var items=c.type==='AO'?[0,1,2,3].filter(function(j){return a.ao[j]}).map(function(j){return {lbl:AON[j],get:function(r){return r.ao[j]}}}):[{lbl:'Overall %',get:function(r){return r.pct==null?null:r.pct*100}}];
+  items.forEach(function(it){
+    var all=[],per=T.map(function(t){var v=c.students.filter(function(s){return s.t===t&&inProg(c,s)}).map(function(s){return it.get(res(c,s,a))}).filter(function(x){return x!=null});all=all.concat(v);return {t:t,v:v}});
+    if(!all.length)return;
+    var cm=avg(all),lim=c.type==='AO'?R.alAO:R.alDP,withData=per.filter(function(p){return p.v.length}).length;
+    var cells=per.map(function(p){if(!p.v.length)return {t:p.t,n:0,st:'none'};var m=avg(p.v),d=m-cm;return {t:p.t,n:p.v.length,m:m,d:d,st:p.v.length<R.alMin?'few':(Math.abs(d)>lim?'gap':'ok')}});
+    var st=withData<2?'single':(cells.some(function(x){return x.st==='gap'})?'gap':'ok');
+    rows.push({c:c,a:a,lbl:it.lbl,cm:cm,cells:cells,st:st,lim:lim});
+  });
+  return rows;
+}
+
+function predChart(c,a,stu){
+  var any=hasPred(c),pts=stu.map(function(x){return {x:x,p:predOf(c,x.s)}}).filter(function(o){return o.p&&o.x.r.pct!=null});
+  var head='<div class="chart" style="grid-column:1/-1"><h3>Predicted grade vs this summative</h3>';
+  if(!any)return head+'<div class="sub">From the Predicted tab in the gradebook.</div><div class="note">No predicted grades for '+c.code+' yet. They show here once they are on the Predicted tab.</div></div>';
+  if(!pts.length)return head+'<div class="sub">From the Predicted tab in the gradebook.</div><div class="note">No results yet for students with a predicted grade.</div></div>';
+  var W=1040,H=300,L=60,B=40,T=14,R=20,X=function(g){return L+(g-.5)/7*(W-L-R)};
+  var s='<svg viewBox="0 0 '+W+' '+H+'"><g class="axis">',sum='';
+  [1,2,3,4,5,6,7].forEach(function(g){s+='<line x1="'+X(g)+'" x2="'+X(g)+'" y1="'+T+'" y2="'+(H-B)+'"/><text x="'+X(g)+'" y="'+(H-B+18)+'" text-anchor="middle" font-weight="700">'+g+'</text>'});
+  s+='</g><text x="'+(W-R)+'" y="'+(H-4)+'" text-anchor="end" font-size="11" fill="#64748b">Predicted grade</text>';
+  if(c.bounds){
+    var Y=function(g){return H-B-(g-.5)/7*(H-B-T)},cells={},up=0,on=0,dn=0,dn2=0;
+    [1,2,3,4,5,6,7].forEach(function(g){s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(g)+'" y2="'+Y(g)+'" stroke="#eef2f6"/><text x="'+(L-10)+'" y="'+(Y(g)+4)+'" text-anchor="end" font-size="11" font-weight="700" fill="#64748b">'+g+'</text>'});
+    s+='<line x1="'+X(.5)+'" y1="'+Y(.5)+'" x2="'+X(7.5)+'" y2="'+Y(7.5)+'" stroke="#94a3b8" stroke-dasharray="4 4"/><text x="'+L+'" y="'+(T-2)+'" font-size="11" fill="#64748b">Summative grade</text>';
+    pts.forEach(function(o){var k=o.p.g+'|'+o.x.r.grade;(cells[k]=cells[k]||[]).push(o);var d=o.x.r.grade-o.p.g;if(d>0)up++;else if(d===0)on++;else{dn++;if(d<=-2)dn2++}});
+    Object.keys(cells).forEach(function(k){var L2=cells[k],pg=+k.split('|')[0],gg=+k.split('|')[1],r=Math.min(22,7+L2.length*3);var col=gg-pg>=0?'#1baf7a':(gg-pg===-1?'#f2c94c':'#eb6834');
+      s+='<circle cx="'+X(pg)+'" cy="'+Y(gg)+'" r="'+r+'" fill="'+col+'" fill-opacity=".85" stroke="#fff" stroke-width="2" data-tip="'+esc('<b>Predicted '+pg+', got '+gg+'</b><br>'+L2.map(function(o){return esc(nm(o.x.s))}).join(', '))+'" style="cursor:pointer" data-stu="'+stuKey(c,L2[0].x.i)+'"/>'+(L2.length>1?'<text x="'+X(pg)+'" y="'+(Y(gg)+4)+'" text-anchor="middle" font-size="11" font-weight="800" fill="#fff" pointer-events="none">'+L2.length+'</text>':'')});
+    sum='<div class="legend"><span><i style="background:#1baf7a"></i>At or above predicted: '+(up+on)+'</span><span><i style="background:#f2c94c"></i>1 below: '+(dn-dn2)+'</span><span><i style="background:#eb6834"></i>2 or more below: '+dn2+'</span></div>';
+  }else{
+    var Y2=function(v){return H-B-v*(H-B-T)};
+    [0,.25,.5,.75,1].forEach(function(v){s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y2(v)+'" y2="'+Y2(v)+'" stroke="#eef2f6"/><text x="'+(L-10)+'" y="'+(Y2(v)+4)+'" text-anchor="end" font-size="11" fill="#64748b">'+Math.round(v*100)+'%</text>'});
+    s+='<text x="'+L+'" y="'+(T-2)+'" font-size="11" fill="#64748b">Summative %</text>';
+    var by={};pts.forEach(function(o){(by[o.p.g]=by[o.p.g]||[]).push(o)});
+    Object.keys(by).forEach(function(g){var L2=by[g].sort(function(p,q){return p.x.r.pct-q.x.r.pct});
+      var m=avg(L2.map(function(o){return o.x.r.pct})),span=Math.min(7,L2.length);s+='<line x1="'+(X(+g)-30)+'" x2="'+(X(+g)+30)+'" y1="'+Y2(m)+'" y2="'+Y2(m)+'" stroke="#0f172a" stroke-opacity=".75" stroke-width="3" stroke-linecap="round" data-tip="Predicted '+g+': average '+pc(m)+' ('+L2.length+' students)"/>';
+      L2.forEach(function(o,i){var jx=X(+g)+((i%7)-(span-1)/2)*10;s+='<circle cx="'+jx.toFixed(1)+'" cy="'+Y2(o.x.r.pct).toFixed(1)+'" r="6.5" fill="'+ncol(o.x.r.pct)+'" stroke="#fff" stroke-width="1.5" style="cursor:pointer" data-stu="'+stuKey(c,o.x.i)+'" data-tip="<b>'+esc(nm(o.x.s))+'</b><br>Predicted '+o.p.g+' \u00b7 '+pc(o.x.r.pct)+'"/>'})});
+    sum='<div class="legend"><span>Black line = average % for that predicted grade. Add '+c.code+' boundaries to compare grade with grade.</span></div>';
+  }
+  return head+'<div class="sub">Each student\'s predicted grade (Predicted tab) against their result on this summative. Click a dot to see the student.</div>'+s+'</svg>'+sum+'</div>';
+}
+function alPredHTML(){
+  var h='<p class="alnote">How this year\'s summative results compare with the predicted grades, by teacher. Uses the latest summative for each DP course.</p>',any=false;
+  D.courses.filter(function(c){return hasPred(c)}).forEach(function(c){
+    var a=latestA(c);if(!a)return;var T=teachers(c),rows='';
+    T.forEach(function(t){
+      var L2=c.students.filter(function(s){return s.t===t&&inProg(c,s)}).map(function(s){return {p:predOf(c,s),r:res(c,s,a)}}).filter(function(o){return o.p&&o.r.pct!=null});
+      if(!L2.length){rows+='<tr><td><b>'+esc(t)+'</b></td><td colspan="5" class="muted">no results yet for students with a predicted grade</td></tr>';return}
+      var ap=avg(L2.map(function(o){return o.p.g}));
+      if(c.bounds){var ag=avg(L2.map(function(o){return o.r.grade})),near=L2.filter(function(o){return Math.abs(o.r.grade-o.p.g)<=1}).length,dn2=L2.filter(function(o){return o.p.g-o.r.grade>=2}).length;
+        rows+='<tr><td><b>'+esc(t)+'</b></td><td class="num">'+L2.length+'</td><td class="num">'+f1(ap)+'</td><td class="num">'+f1(ag)+'</td><td class="num">'+Math.round(near/L2.length*100)+'%</td><td class="num">'+(dn2?'<span class="chk x">'+dn2+'</span>':'<span class="chk y">0</span>')+'</td></tr>'}
+      else rows+='<tr><td><b>'+esc(t)+'</b></td><td class="num">'+L2.length+'</td><td class="num">'+f1(ap)+'</td><td class="num">'+pc(avg(L2.map(function(o){return o.r.pct})))+'</td><td class="num muted">needs boundaries</td><td class="num muted">needs boundaries</td></tr>';
+    });
+    any=true;
+    h+='<div class="groupt">'+c.code+' \u00b7 '+esc(short(a.name))+'</div><div class="tablewrap" style="margin-top:0"><div class="tscroll" style="max-height:none"><table class="es"><thead><tr><th>Teacher</th><th class="num">Students</th><th class="num">Avg predicted</th><th class="num">'+(c.bounds?'Avg summative grade':'Avg summative %')+'</th><th class="num">Within 1 grade</th><th class="num">2+ below predicted</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+  });
+  return any?h:'<div class="note">No predicted grades yet. Once the Predicted tab in the gradebook is connected, this shows how results compare with predictions.</div>';
+}
+
+function alAllGaps(){var o=[];D.courses.forEach(function(c){act(c).forEach(function(a){o=o.concat(alGroups(c,a))})});return o}
+function alCommon(){
+  var o=[],due=today();
+  D.courses.forEach(function(c){
+    if(!c.students.length)return;
+    var T=teachers(c);
+    c.assessments.slice().sort(byDate).forEach(function(a){
+      var set=isSet(c,a),info=T.map(function(t){var e=0,x=0;c.students.forEach(function(s){if(s.t!==t)return;var r=res(c,s,a);e+=r.got;x+=r.need});return {t:t,e:e,x:x}});
+      var started=info.filter(function(i){return i.e>0}),missing=info.filter(function(i){return i.e===0}),complete=info.filter(function(i){return i.x>0&&i.e>=i.x});
+      o.push({c:c,a:a,set:set,dated:!!a.date,past:!!a.date&&a.date<=due,T:T,started:started,missing:missing,complete:complete,info:info});
+    });
+  });
+  return o;
+}
+function renderAlignment(){
+  var R=D.rules,gaps=alAllGaps(),common=alCommon();
+  var flagged=gaps.filter(function(g){return g.st==='gap'}).length,comparable=gaps.filter(function(g){return g.st!=='single'}).length;
+  var aoUnassessed=0;D.courses.filter(function(c){return c.type==='AO'&&c.students.length}).forEach(function(c){var A=act(c);[0,1,2,3].forEach(function(j){if(!A.some(function(a){return a.ao[j]}))aoUnassessed++})});
+  var dueC=common.filter(function(x){return x.set&&x.past}),dueOk=dueC.filter(function(x){return x.missing.length===0}).length;
+  $('alSub').textContent='Are classes in the same course being assessed and graded the same way? A teacher is flagged when their average is more than '+R.alAO+' of a grade (G9 and G10) or '+R.alDP+'% (DP) away from the course average, with at least '+R.alMin+' results. These limits are on the Boundaries tab.';
+  $('alStats').innerHTML=statBox('Teacher gaps flagged',flagged,comparable?'out of '+comparable+' comparisons':'no comparisons yet','linear-gradient(90deg,#fb7185,#e11d48)')+statBox('Comparisons possible',comparable,'need 2+ teachers with marks','linear-gradient(90deg,#60a5fa,#2563eb)')+statBox('AOs not assessed yet',aoUnassessed,'across G9 and G10 courses','linear-gradient(90deg,#fbbf24,#d97706)')+statBox('Past summatives, all classes in',dueC.length?dueOk+' of '+dueC.length:'-','every teacher has entered marks','linear-gradient(90deg,#34d399,#059669)');
+  $('alProg').innerHTML='<span class="slab" style="align-self:center;margin-right:4px">DP students:</span>'+progChips();bindProg();
+  Array.prototype.forEach.call(document.querySelectorAll('[data-al]'),function(b){b.classList.toggle('on',b.getAttribute('data-al')===AL.tab);b.onclick=function(){AL.tab=b.getAttribute('data-al');renderAlignment()}});
+  var h='';
+  if(AL.tab==='gaps')h=alGapsHTML(gaps);
+  else if(AL.tab==='spread')h=alSpreadHTML();
+  else if(AL.tab==='cover')h=alCoverHTML();
+  else if(AL.tab==='pred')h=alPredHTML();
+  else h=alCommonHTML(common);
+  $('alBody').innerHTML=h;
+}
+function fmtM(c,v){return v==null?'-':(c.type==='AO'?f1(v):Math.round(v)+'%')}
+function fmtD(c,d){var a=Math.abs(d),txt=c.type==='AO'?f1(a):Math.round(a)+'%';if(txt==='0.0'||txt==='0%')return '0';return (d>0?'+':'-')+txt}
+function alGapsHTML(gaps){
+  if(!gaps.length)return '<div class="note">No marks entered yet, so there is nothing to compare.</div>';
+  var by={},h='<p class="alnote">Each teacher\'s average against the course average for the same summative. Red = outside the limit, grey = fewer than '+D.rules.alMin+' results so not judged.</p>';
+  gaps.forEach(function(g){(by[g.c.code]=by[g.c.code]||[]).push(g)});
+  Object.keys(by).forEach(function(code){
+    var L=by[code],c=L[0].c,T=teachers(c);
+    h+='<div class="groupt">'+code+' \u00b7 '+esc(c.name)+'</div><div class="tablewrap" style="margin-top:0"><div class="tscroll" style="max-height:none"><table class="es"><thead><tr><th>Summative</th><th>'+(c.type==='AO'?'AO':'Measure')+'</th><th class="num">Course avg</th>'+T.map(function(t){return '<th>'+esc(t)+'</th>'}).join('')+'<th>Status</th></tr></thead><tbody>';
+    L.forEach(function(g){
+      h+='<tr><td>'+esc(short(g.a.name))+'</td><td><b>'+g.lbl+'</b></td><td class="num"><b>'+fmtM(c,g.cm)+'</b></td>'+g.cells.map(function(x){if(x.st==='none')return '<td class="muted">no marks</td>';return '<td class="tcell">'+fmtM(c,x.m)+'<small>n='+x.n+'</small>'+(g.st==='single'?'':'<span class="diff '+x.st+'" data-tip="'+(x.st==='few'?'Too few results to judge':(x.st==='gap'?'More than '+(c.type==='AO'?g.lim:g.lim+'%')+' from the course average':'Within the limit'))+'">'+fmtD(c,x.d)+'</span>')+'</td>'}).join('')+'<td>'+(g.st==='gap'?'<span class="tag late">Gap</span>':g.st==='ok'?'<span class="tag ok">Aligned</span>':'<span class="tag up">One teacher so far</span>')+'</td></tr>';
+    });
+    h+='</tbody></table></div></div>';
+  });
+  return h;
+}
+function alSpreadHTML(){
+  var h='<p class="alnote">How grades are spread for each teacher on the latest summative. Two teachers can have the same average but give very different numbers of top or low grades.</p>',any=false;
+  D.courses.forEach(function(c){
+    var a=latestA(c);if(!a)return;
+    var T=teachers(c),rows='';
+    T.forEach(function(t){
+      var st=c.students.filter(function(s){return s.t===t&&inProg(c,s)}).map(function(s){return res(c,s,a)}),v=[];
+      if(c.type==='AO')st.forEach(function(r){r.ao.forEach(function(g){if(g!=null)v.push(g)})});
+      else st.forEach(function(r){if(r.pct!=null)v.push(c.bounds?r.grade:r.pct)});
+      if(!v.length){rows+='<div class="srow"><b>'+esc(t)+'</b><div class="sbar"></div><span class="slab">no marks yet</span></div>';return}
+      var segs,top,low;
+      if(c.type==='AO'||c.bounds){segs=[1,2,3,4,5,6,7].map(function(g){return {n:v.filter(function(x){return x===g}).length,col:GH[g-1],l:'Grade '+g}});top=v.filter(function(x){return x>=6}).length;low=v.filter(function(x){return x<=3}).length}
+      else{segs=[0,1,2,3,4,5,6,7,8,9].map(function(b){return {n:v.filter(function(x){return Math.min(9,Math.floor(x*10+1e-9))===b}).length,col:ncol(b/9),l:(b*10)+' to '+(b===9?100:b*10+9)+'%'}});top=v.filter(function(x){return x>=.7}).length;low=v.filter(function(x){return x<.4}).length}
+      rows+='<div class="srow"><b>'+esc(t)+'</b><div class="sbar">'+segs.map(function(s){return s.n?'<i style="width:'+(s.n/v.length*100).toFixed(2)+'%;background:'+s.col+'" data-tip="'+esc(t)+' \u00b7 '+s.l+': '+s.n+'"></i>':''}).join('')+'</div><span class="slab"><b>'+Math.round(top/v.length*100)+'%</b> '+(c.type==='AO'||c.bounds?'at 6-7':'at 70%+')+' \u00b7 <b>'+Math.round(low/v.length*100)+'%</b> '+(c.type==='AO'||c.bounds?'at 3 or below':'under 40%')+'</span></div>';
+    });
+    any=true;
+    h+='<div class="groupt">'+c.code+' \u00b7 '+esc(short(a.name))+'</div><div class="spread">'+rows+'</div>';
+  });
+  if(!any)return '<div class="note">No marks entered yet.</div>';
+  return h+'<div style="margin-top:14px">'+legendG()+'</div>';
+}
+function alCoverHTML(){
+  var h='<p class="alnote">Which AOs each summative assesses, from the ticks on the Assessments tab. Every AO should be covered more than once over the year.</p>',any=false;
+  D.courses.filter(function(c){return c.type==='AO'}).forEach(function(c){
+    var A=c.assessments.slice().sort(byDate);if(!A.length)return;any=true;
+    h+='<div class="groupt">'+c.code+' \u00b7 '+esc(c.name)+'</div><div class="tablewrap" style="margin-top:0"><div class="tscroll" style="max-height:none"><table class="es cov"><thead><tr><th>AO</th>'+A.map(function(a){return '<th class="num" style="white-space:normal;min-width:110px;line-height:1.25" data-tip="'+esc(a.name)+' \u00b7 '+fdate(a.date,true)+'">'+esc(a.name)+'</th>'}).join('')+'<th class="num">Times assessed</th></tr></thead><tbody>';
+    [0,1,2,3].forEach(function(j){
+      var n=A.filter(function(a){return a.ao[j]}).length;
+      h+='<tr><td><b>'+AON[j]+'</b> <span class="muted" style="font-size:12px">'+AOL[AON[j]]+'</span></td>'+A.map(function(a){return '<td class="num">'+(a.ao[j]?'<span class="tick y">\u2713</span>':'<span class="tick n">\u00b7</span>')+'</td>'}).join('')+'<td class="num"><span class="cnt'+(n?'':' zero')+'">'+n+'</span></td></tr>';
+    });
+    h+='</tbody></table></div></div>';
+    var unset=A.filter(function(a){return !isSet(c,a)});
+    if(unset.length)h+='<p class="alnote" style="margin-top:6px">No AOs ticked yet for: '+unset.map(function(a){return esc(a.name)}).join(', ')+'.</p>';
+  });
+  var dp=D.courses.filter(function(c){return c.type==='DP'&&c.assessments.length});
+  if(dp.length){any=true;h+='<div class="groupt">DP papers</div><div class="tablewrap" style="margin-top:0"><div class="tscroll" style="max-height:none"><table class="es"><thead><tr><th>Course</th><th>Summative</th><th class="num">P1</th><th class="num">P2</th><th class="num">P3</th><th class="num">Total marks</th></tr></thead><tbody>'+dp.map(function(c){return c.assessments.slice().sort(byDate).map(function(a){return '<tr><td><b>'+c.code+'</b></td><td>'+esc(a.name)+'</td>'+[0,1,2].map(function(j){return '<td class="num">'+(a.max[j]>0?'<span class="tick y">'+a.max[j]+'</span>':'<span class="tick n">\u00b7</span>')+'</td>'}).join('')+'<td class="num"><b>'+a.max.reduce(function(x,y){return x+(y>0?y:0)},0)+'</b></td></tr>'}).join('')}).join('')+'</tbody></table></div></div>'}
+  return any?h:'<div class="note">No summatives on the Assessments tab yet.</div>';
+}
+function alCommonHTML(common){
+  if(!common.length)return '<div class="note">No summatives yet.</div>';
+  var h='<p class="alnote">Every class in a course should sit the same summative, with a date and the same AOs or papers, and every teacher should have entered marks once the date has passed. Hover over a status to see each teacher\'s count.</p>',by={};
+  common.forEach(function(x){(by[x.c.code]=by[x.c.code]||[]).push(x)});
+  Object.keys(by).forEach(function(code){
+    var L=by[code],c=L[0].c;
+    h+='<div class="groupt">'+code+' \u00b7 '+esc(c.name)+'</div><div class="tablewrap" style="margin-top:0"><div class="tscroll" style="max-height:none"><table class="es"><thead><tr><th>Summative</th><th>Set up</th><th>Date</th><th>Teachers with marks</th><th>All marks in</th></tr></thead><tbody>';
+    L.forEach(function(x){
+      var setup=x.set?'<span class="chk y">\u2713 '+(c.type==='AO'?[0,1,2,3].filter(function(j){return x.a.ao[j]}).map(function(j){return AON[j]}).join(' '):[0,1,2].filter(function(j){return x.a.max[j]>0}).map(function(j){return 'P'+(j+1)}).join(' '))+'</span>':'<span class="chk n">Tick '+(c.type==='AO'?'AOs':'papers')+'</span>';
+      var date=x.dated?'<span class="chk y">\u2713 '+fdate(x.a.date)+'</span>':'<span class="chk n">No date</span>';
+      var tw=!x.set?'<span class="muted">-</span>':(x.missing.length===0?'<span class="chk y">\u2713 '+x.started.length+' of '+x.T.length+'</span>':'<span class="chk '+(x.past?'x':'n')+'" data-tip="No marks yet: '+esc(x.missing.map(function(i){return i.t}).join(', '))+'">'+x.started.length+' of '+x.T.length+'</span>');
+      var det=x.info.map(function(i){return esc(i.t)+' '+i.e+'/'+i.x}).join(' \u00b7 ');var done=!x.set?'<span class="muted">-</span>':(x.complete.length===x.T.length?'<span class="chk y" data-tip="'+det+'">\u2713 Complete</span>':'<span class="chk '+(x.past?'x':'n')+'" data-tip="'+det+'">'+x.complete.length+' of '+x.T.length+' teachers</span>');
+      h+='<tr><td><b>'+esc(x.a.name)+'</b></td><td>'+setup+'</td><td>'+date+'</td><td>'+tw+'</td><td>'+done+'</td></tr>';
+    });
+    h+='</tbody></table></div></div>';
+  });
+  return h;
+}
+
+
+var PF={code:null,i:null};
+function pScale(c){return c.type==='AO'?{lo:1,hi:7,fmt:function(v){return f1(v)},unit:'level'}:{lo:0,hi:100,fmt:function(v){return Math.round(v)+'%'},unit:'%'}}
+function groups(c){var out=[],by={};act(c).forEach(function(a){var u=a.unit||'';if(u&&by[u]){by[u].as.push(a);return}var g={unit:u,date:a.date,as:[a]};if(u)by[u]=g;out.push(g)});out.forEach(function(g){g.name=g.unit||g.as[0].name;g.slot=g.as[0].slot});return out}
+function gPart(g,a){return a.name}
+function gAO(c,s,g,j){var v=[];g.as.forEach(function(a){var x=res(c,s,a).ao;if(x&&x[j]!=null)v.push(x[j])});return v.length?avg(v):null}
+function pVal(c,s,x){var L=x.as||[x];if(c.type==='AO'){var v=[];L.forEach(function(a){var r=res(c,s,a);r.ao.forEach(function(g){if(g!=null)v.push(g)})});return v.length?avg(v):null}var t=0,m=0,ok=true;L.forEach(function(a){var r=res(c,s,a);if(!r.complete)ok=false;else{t+=r.total;m+=r.max}});return ok&&m?t/m*100:null}
+function pGrade(c,v){if(v==null)return null;if(c.type==='AO')return Math.max(1,Math.min(7,Math.round(v)));return c.bounds?dpGrade(c.bounds,v/100):null}
+function pNorm(c,v){if(v==null)return null;if(c.type==='AO')return (v-1)/6;var g=pGrade(c,v);return g!=null?(g-1)/6:v/100}
+function pctl(arr,q){if(!arr.length)return null;var b=arr.slice().sort(function(x,y){return x-y}),p=(b.length-1)*q,i=Math.floor(p),t=p-i;return b[i]+(b[Math.min(b.length-1,i+1)]-b[i])*t}
+function pShort(n,k){k=k||18;return n.length>k?n.slice(0,k-1).replace(/\s+\S*$/,'')+'\u2026':n}
+function pSeries(c,s){
+  var out=[];
+  groups(c).forEach(function(a){
+    var all=[],cls=[],mine=pVal(c,s,a);
+    c.students.forEach(function(o){var v=pVal(c,o,a);if(v==null)return;all.push(v);if(s.t&&o.t===s.t)cls.push(v)});
+    if(!all.length&&mine==null)return;
+    var above=0,ties=0,rank=null;
+    if(mine!=null){all.forEach(function(v){if(v<mine)above++;else if(v===mine)ties++});ties=Math.max(0,ties-1);rank=1+all.filter(function(v){return v>mine}).length}
+    out.push({a:a,v:mine,g:pGrade(c,mine),all:all,n:all.length,med:med(all),lo:all.length?Math.min.apply(null,all):null,hi:all.length?Math.max.apply(null,all):null,q1:pctl(all,.25),q3:pctl(all,.75),cls:cls.length?avg(cls):null,ncls:cls.length,
+      beat:mine!=null&&all.length>1?(above+ties*.5)/(all.length-1):null,rank:rank});
+  });
+  return out;
+}
+function pMulti(c){return teachers(c).length>1}
+function pArrow(d){var up=d>0;return '<svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path d="'+(up?'M6 2 L11 9 L1 9 Z':'M6 10 L11 3 L1 3 Z')+'" fill="currentColor"/></svg>'}
+function pDelta(c,a,b){if(a==null||b==null)return null;if(c.type==='AO')return b.v-a.v;var ga=a.g,gb=b.g;return ga!=null&&gb!=null?gb-ga:b.v-a.v}
+function pDeltaTxt(c,d,useGrade){if(d==null)return '';var ad=Math.abs(d);if(c.type==='AO')return f1(ad)+(ad>=0.95&&ad<1.05?' level':' levels');if(useGrade)return ad+(ad===1?' grade':' grades');return Math.round(ad)+' points'}
+
+function trendSVG(c,s,ser,W,pg){
+  PF.x0=null;
+  var H=W<480?230:270,L=36,R=W<480?30:66,T=16,B=46,sc=pScale(c),n=ser.length;
+  var pw=W-L-R,ph=H-T-B,padx=n>1?Math.min(34,pw/(n*2)):0;
+  var X=function(i){return n<2?(PF.x0!=null?PF.x0:L+pw/2):L+padx+i/(n-1)*(pw-2*padx)},Y=function(v){return T+(1-(v-sc.lo)/(sc.hi-sc.lo))*ph};
+  var h='<svg class="ptrend" viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" role="img" aria-label="Results over the year"><defs>'+
+    '<linearGradient id="pfLine" x1="0" x2="1"><stop offset="0" stop-color="#60a5fa"/><stop offset=".55" stop-color="#2563eb"/><stop offset="1" stop-color="#1baf7a"/></linearGradient>'+
+    '<linearGradient id="pfArea" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#2563eb" stop-opacity=".22"/><stop offset="1" stop-color="#2563eb" stop-opacity="0"/></linearGradient>'+
+    '<filter id="pfGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
+  var zones=[];
+  if(c.type==='AO'){for(var g=1;g<=7;g++)zones.push({g:g,lo:Math.max(1,g-.5),hi:Math.min(7,g+.5)})}
+  else if(c.bounds){var b=c.bounds;for(var k=0;k<7;k++){var hi=k===0?100:b[k-1],lo=k===6?0:b[k];zones.push({g:7-k,lo:Math.max(0,lo),hi:Math.min(100,hi)})}}
+  zones.forEach(function(z){var y1=Y(z.hi),y2=Y(z.lo),hh=Math.max(0,y2-y1);h+='<rect x="'+L+'" y="'+y1.toFixed(1)+'" width="'+pw+'" height="'+hh.toFixed(1)+'" fill="'+GH[z.g-1]+'" opacity=".07"/><rect x="'+(L+pw+6)+'" y="'+(y1+1).toFixed(1)+'" width="5" height="'+Math.max(0,hh-2).toFixed(1)+'" rx="2.5" fill="'+GH[z.g-1]+'"/>';if(hh>=12)h+='<text x="'+(L+pw+16)+'" y="'+((y1+y2)/2+4).toFixed(1)+'" class="pzl" fill="'+mix(GH[z.g-1],'#0f172a',.35)+'">'+(R>50&&c.type==='DP'?'Grade '+z.g:z.g)+'</text>'});
+  var ticks=c.type==='AO'?[1,2,3,4,5,6,7]:[0,20,40,60,80,100];
+  ticks.forEach(function(t){var y=Y(t);h+='<line x1="'+L+'" x2="'+(L+pw)+'" y1="'+y+'" y2="'+y+'" stroke="#e5e9f0" stroke-width="1"/><text x="'+(L-8)+'" y="'+(y+4)+'" text-anchor="end" class="ptk">'+(c.type==='AO'?t:t+'%')+'</text>'});
+  var line=function(key,attrs){var d='',on=false;ser.forEach(function(p,i){if(p[key]==null){on=false;return}d+=(on?'L':'M')+X(i).toFixed(1)+' '+Y(p[key]).toFixed(1);on=true});return d?'<path d="'+d+'" '+attrs+'/>':''};
+  if(n>=2){
+    var up='',dn='';ser.forEach(function(p,i){up+=(i?'L':'M')+X(i).toFixed(1)+' '+Y(p.q3).toFixed(1)});for(var i=n-1;i>=0;i--)dn+='L'+X(i).toFixed(1)+' '+Y(ser[i].q1).toFixed(1);h+='<path d="'+up+dn+'Z" fill="#94a3b8" opacity=".2" class="pfade"/>';
+    h+=line('med','fill="none" stroke="#64748b" stroke-width="1.6" stroke-dasharray="5 5" class="pfade"');
+    if(pMulti(c))h+=line('cls','fill="none" stroke="#8b5cf6" stroke-width="1.8" stroke-dasharray="1.5 4.5" stroke-linecap="round" class="pfade"');
+  } else if(n===1&&ser[0].lo!=null){
+    var p0=ser[0],x0=X(0),bw=48,yq3=Y(p0.q3),yq1=Y(p0.q1),labs=[{y:Y(p0.med),t:'Course median '+sc.fmt(p0.med),f:'#475569'}];
+    if(pMulti(c)&&p0.cls!=null)labs.push({y:Y(p0.cls),t:esc(s.t||'Class')+' average '+sc.fmt(p0.cls),f:'#7c3aed'});
+    var lw2=function(){return Math.max.apply(null,labs.map(function(l){return l.t.length*6.1}))},lx,anc='start';
+    if(x0+bw/2+14+lw2()<=L+pw-4)lx=x0+bw/2+14;else if(x0-bw/2-14-lw2()>=L+2){lx=x0-bw/2-14;anc='end'}else{labs.forEach(function(l){l.t=l.t.replace('Course median','Median').replace(' average ',' avg ')});x0=Math.max(L+bw/2+10,Math.min(x0,L+pw-4-lw2()-14-bw/2));lx=x0+bw/2+14}
+    PF.x0=x0;var tipB=esc('<b>'+c.code+' on this summative</b><br>Highest '+sc.fmt(p0.hi)+'<br>Middle half '+sc.fmt(p0.q1)+' to '+sc.fmt(p0.q3)+'<br>Median '+sc.fmt(p0.med)+'<br>Lowest '+sc.fmt(p0.lo));
+    h+='<g class="pfade" data-tip="'+tipB+'"><line x1="'+x0+'" x2="'+x0+'" y1="'+Y(p0.hi)+'" y2="'+Y(p0.lo)+'" stroke="#94a3b8" stroke-width="1.5"/><line x1="'+(x0-9)+'" x2="'+(x0+9)+'" y1="'+Y(p0.hi)+'" y2="'+Y(p0.hi)+'" stroke="#94a3b8" stroke-width="1.5"/><line x1="'+(x0-9)+'" x2="'+(x0+9)+'" y1="'+Y(p0.lo)+'" y2="'+Y(p0.lo)+'" stroke="#94a3b8" stroke-width="1.5"/>'+
+      '<rect x="'+(x0-bw/2)+'" y="'+yq3+'" width="'+bw+'" height="'+Math.max(3,yq1-yq3)+'" rx="8" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.2"/>'+
+      '<line x1="'+(x0-bw/2)+'" x2="'+(x0+bw/2)+'" y1="'+Y(p0.med)+'" y2="'+Y(p0.med)+'" stroke="#475569" stroke-width="2.2" stroke-dasharray="4 3"/>'+
+      (pMulti(c)&&p0.cls!=null?'<line x1="'+(x0-bw/2-7)+'" x2="'+(x0+bw/2+7)+'" y1="'+Y(p0.cls)+'" y2="'+Y(p0.cls)+'" stroke="#8b5cf6" stroke-width="2.2" stroke-dasharray="1.5 3.5" stroke-linecap="round"/>':'')+'</g>';
+    labs.sort(function(a,b){return a.y-b.y});for(var q=1;q<labs.length;q++)if(labs[q].y-labs[q-1].y<15)labs[q].y=labs[q-1].y+15;
+    labs.forEach(function(l){h+='<text x="'+lx+'" y="'+(l.y+4).toFixed(1)+'" text-anchor="'+anc+'" class="pmk pfade" style="fill:'+l.f+'">'+l.t+'</text>'});
+  }
+  var pts=ser.map(function(p,i){return p.v==null?null:{x:X(i),y:Y(p.v),p:p,i:i}}).filter(Boolean);
+  if(pts.length>=2){
+    var d=pts.map(function(q,i){return (i?'L':'M')+q.x.toFixed(1)+' '+q.y.toFixed(1)}).join(' '),len=0;
+    for(var j=1;j<pts.length;j++)len+=Math.hypot(pts[j].x-pts[j-1].x,pts[j].y-pts[j-1].y);
+    h+='<path d="'+d+' L'+pts[pts.length-1].x.toFixed(1)+' '+(T+ph)+' L'+pts[0].x.toFixed(1)+' '+(T+ph)+' Z" fill="url(#pfArea)" class="pfade"/>';
+    h+='<path d="'+d+'" fill="none" stroke="url(#pfLine)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" class="pdraw" style="stroke-dasharray:'+Math.ceil(len)+';stroke-dashoffset:'+Math.ceil(len)+';--len:'+Math.ceil(len)+'"/>';
+  }
+  if(pg&&c.type==='DP'&&c.bounds){var z=zones.filter(function(z){return z.g===pg.g})[0];if(z){var yp=Y((z.lo+z.hi)/2);h+='<g class="pfade"><line x1="'+L+'" x2="'+(L+pw)+'" y1="'+yp+'" y2="'+yp+'" stroke="#0f172a" stroke-width="1.2" stroke-dasharray="2 4" opacity=".5"/><text x="'+(L+6)+'" y="'+(yp-5)+'" class="pmk" style="fill:#0f172a">Predicted '+pg.g+'</text></g>'}}
+  pts.forEach(function(q,k){
+    var last=k===pts.length-1,p=q.p,nm2=esc(p.a.name),col=ncol(pNorm(c,p.v));
+    var tipH='<b>'+nm2+'</b><br>'+fdate(p.a.date,true)+'<br>'+(c.type==='AO'?'Average level '+f1(p.v):(p.g!=null?'Grade '+p.g+' \u00b7 ':'')+Math.round(p.v)+'%')+'<br>Course median '+sc.fmt(p.med)+(p.beat!=null?'<br>Higher than '+Math.round(p.beat*100)+'% of the course':'');
+    if(last)h+='<circle cx="'+q.x+'" cy="'+q.y+'" r="9" fill="'+col+'" class="ppulse" style="transform-origin:'+q.x+'px '+q.y+'px"/>';
+    h+='<circle cx="'+q.x+'" cy="'+q.y+'" r="'+(last?7.5:6)+'" fill="'+col+'" stroke="#fff" stroke-width="2.5" filter="url(#pfGlow)" class="ppt" style="animation-delay:'+(RM?0:(0.25+k*0.18)).toFixed(2)+'s" data-tip="'+esc(tipH)+'"/>';
+    var lab=c.type==='AO'?f1(p.v):(p.g!=null?String(p.g):Math.round(p.v)+'%'),lw=lab.length*7.5+14,ly=q.y-16>T+4?q.y-26:q.y+12;
+    if(last||pts.length<=6)h+='<g class="ppt" style="animation-delay:'+(RM?0:(0.35+k*0.18)).toFixed(2)+'s"><rect x="'+(q.x-lw/2)+'" y="'+ly+'" width="'+lw+'" height="18" rx="9" fill="'+(last?'#0f172a':'#fff')+'" stroke="'+(last?'#0f172a':'#cbd5e1')+'"/><text x="'+q.x+'" y="'+(ly+13)+'" text-anchor="middle" class="plab" fill="'+(last?'#fff':'#0f172a')+'">'+lab+'</text></g>';
+  });
+  var room=n>1?(pw-2*padx)/(n-1):pw,shortK=room<64,names=ser.map(function(p){return p.a.name}),cut=0;
+  if(n>1){var w0=names[0].split(' '),k2=0;while(k2<w0.length-1&&names.every(function(x){var w=x.split(' ');return w.length>k2+1&&w[k2]===w0[k2]}))k2++;cut=k2>=2?w0.slice(0,k2).join(' ').length+1:0}
+  ser.forEach(function(p,i){var t=shortK?'S'+(i+1):(cut?'\u2026'+pShort(p.a.name.slice(cut),Math.max(8,Math.floor(room/7))-1):pShort(p.a.name,Math.max(8,Math.floor(room/7)))),tw=t.length*6.2,x=Math.max(tw/2+2,Math.min(W-tw/2-2,X(i)));h+='<g data-tip="'+esc('<b>'+esc(p.a.name)+'</b><br>'+fdate(p.a.date,true)+(p.v==null?'<br>No mark yet':''))+'"><text x="'+x+'" y="'+(T+ph+18)+'" text-anchor="middle" class="pxl">'+esc(t)+'</text>'+(shortK&&room<44?'':'<text x="'+x+'" y="'+(T+ph+33)+'" text-anchor="middle" class="pxd">'+(p.a.date?fdate(p.a.date):'')+'</text>')+'</g>'});
+  return h+'</svg>';
+}
+
+function standSVG(c,s,p,W){
+  var sc=pScale(c),H=128,L=14,R=14,base=78,pw=W-L-R,X=function(v){return L+(v-sc.lo)/(sc.hi-sc.lo)*pw};
+  var h='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" class="pstand" role="img" aria-label="Where this result sits in the course">';
+  if(c.type==='AO'){for(var g=1;g<=7;g++){var x1=X(Math.max(1,g-.5)),x2=X(Math.min(7,g+.5));h+='<rect x="'+x1+'" y="'+(base+8)+'" width="'+(x2-x1)+'" height="6" fill="'+GH[g-1]+'"/>'}}
+  else if(c.bounds){var b=c.bounds;for(var k=0;k<7;k++){var hi=k===0?100:b[k-1],lo=k===6?0:b[k];h+='<rect x="'+X(lo)+'" y="'+(base+8)+'" width="'+Math.max(0,X(hi)-X(lo))+'" height="6" fill="'+GH[6-k]+'"/>'}}
+  else h+='<rect x="'+L+'" y="'+(base+8)+'" width="'+pw+'" height="6" fill="#e2e8f0"/>';
+  (c.type==='AO'?[1,2,3,4,5,6,7]:[0,25,50,75,100]).forEach(function(t){h+='<text x="'+X(t)+'" y="'+(base+30)+'" text-anchor="middle" class="ptk">'+(c.type==='AO'?t:t+'%')+'</text>'});
+  var r=4.2,cols={},others=[];
+  c.students.forEach(function(o){if(o===s)return;var v=pVal(c,o,p.a);if(v!=null)others.push(v)});
+  others.sort(function(a,b){return a-b}).forEach(function(v,idx){var x=X(v),bin=Math.round(x/(r*2.1)),k=cols[bin]=(cols[bin]||0)+1;var y=base-r-(k-1)*(r*2+1.2);if(y<10)y=10;h+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+r+'" fill="'+ncol(pNorm(c,v))+'" opacity=".55" class="pdot" style="animation-delay:'+(RM?0:Math.min(0.6,idx*0.012)).toFixed(3)+'s"/>'});
+  if(p.med!=null){var xm=X(p.med);h+='<line x1="'+xm+'" x2="'+xm+'" y1="8" y2="'+(base+4)+'" stroke="#64748b" stroke-dasharray="3 3"/><text x="'+xm+'" y="'+(base+44)+'" text-anchor="middle" class="pmk">Median '+sc.fmt(p.med)+'</text>'}
+  if(p.v!=null){var xs=X(p.v),col=ncol(pNorm(c,p.v)),ty=24,lab=esc(nm(s).split(' ')[0]);
+    h+='<line x1="'+xs+'" x2="'+xs+'" y1="'+(ty+10)+'" y2="'+(base+4)+'" stroke="#0f172a" stroke-width="1.5"/><circle cx="'+xs+'" cy="'+(base-9)+'" r="9" fill="'+col+'" stroke="#0f172a" stroke-width="2.5" class="ppulse2"/>';
+    var tw=lab.length*7+22,tx=Math.max(L+tw/2,Math.min(W-R-tw/2,xs));h+='<rect x="'+(tx-tw/2)+'" y="'+(ty-12)+'" width="'+tw+'" height="22" rx="11" fill="#0f172a"/><text x="'+tx+'" y="'+(ty+3)+'" text-anchor="middle" class="ppill">'+lab+'</text>'}
+  return h+'</svg>';
+}
+
+function radarSVG(c,ao,size){
+  var on=ao.filter(function(x){return x.me!=null||x.all!=null});if(on.length<3)return '';
+  var S2=size,cx=S2/2,cy=S2/2+4,R0=S2/2-38,ang=function(i){return -Math.PI/2+i*2*Math.PI/on.length},P=function(i,v){var r=R0*(v/7);return [cx+r*Math.cos(ang(i)),cy+r*Math.sin(ang(i))]};
+  var h='<svg viewBox="0 0 '+S2+' '+(S2+8)+'" width="'+S2+'" height="'+(S2+8)+'" class="pradar" role="img" aria-label="Assessment objective profile">';
+  [1,3,5,7].forEach(function(l){h+='<polygon points="'+on.map(function(x,i){return P(i,l).join(',')}).join(' ')+'" fill="none" stroke="#e5e9f0"/>'});
+  on.forEach(function(x,i){var e=P(i,7),t=P(i,8.15);h+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e[0]+'" y2="'+e[1]+'" stroke="#e5e9f0"/><text x="'+t[0]+'" y="'+(t[1]+4)+'" text-anchor="middle" class="pax" fill="'+AOC[x.j]+'">'+AON[x.j]+'</text>'});
+  var poly=function(key){return on.map(function(x,i){return P(i,x[key]==null?0:x[key]).join(',')}).join(' ')};
+  h+='<polygon points="'+poly('all')+'" fill="#94a3b8" fill-opacity=".14" stroke="#64748b" stroke-dasharray="4 4" stroke-width="1.5"/>';
+  h+='<g class="pgrow" style="transform-origin:'+cx+'px '+cy+'px"><polygon points="'+poly('me')+'" fill="#2563eb" fill-opacity=".22" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/>'+on.map(function(x,i){if(x.me==null)return '';var q=P(i,x.me);return '<circle cx="'+q[0]+'" cy="'+q[1]+'" r="4.5" fill="'+AOC[x.j]+'" stroke="#fff" stroke-width="2"/>'}).join('')+'</g>';
+  return h+'</svg>';
+}
+function aoProfile(c,s){
+  var out=[];[0,1,2,3].forEach(function(j){var me=[],all=[];act(c).forEach(function(a){if(!a.ao[j])return;c.students.forEach(function(o){var v=(o.r[a.slot]||[])[j];if(typeof v==='number'&&v>=1&&v<=7){all.push(v);if(o===s)me.push(v)}})});if(all.length)out.push({j:j,me:avg(me),all:avg(all),n:me.length})});return out;
+}
+function paperProfile(c,s){
+  var out=[];[0,1,2].forEach(function(j){var me=[],all=[];act(c).forEach(function(a){var m=a.max[j];if(!(m>0))return;c.students.forEach(function(o){var v=(o.r[a.slot]||[])[j];if(typeof v==='number'){all.push(v/m*100);if(o===s)me.push(v/m*100)}})});if(all.length)out.push({j:j,me:avg(me),all:avg(all)})});return out;
+}
+function pBars(rows,lo,hi,fmt,colf){
+  return '<div class="pbars">'+rows.map(function(x,k){var w=function(v){return v==null?0:Math.max(2,(v-lo)/(hi-lo)*100)},d=x.me!=null&&x.all!=null?x.me-x.all:null;
+    return '<div class="pbar"><div class="pbl"><b style="color:'+colf(x)+'">'+x.k+'</b><span>'+esc(x.lab||'')+'</span></div><div class="pbt"><i class="pbme" style="--w:'+w(x.me)+'%;background:'+colf(x)+';animation-delay:'+(RM?0:k*0.08)+'s"></i><i class="pball" style="left:'+w(x.all)+'%" data-tip="Course average '+fmt(x.all)+'"></i></div><div class="pbv"><b>'+(x.me==null?'-':fmt(x.me))+'</b>'+(d==null?'':'<span class="'+(d>=0?'up':'dn')+'">'+(d>=0?'+':'-')+fmt(Math.abs(d)).replace('%','')+'</span>')+'</div></div>'}).join('')+'</div>';
+}
+function pInsights(c,s,ser,ao,pp,pg){
+  var o=[],have=ser.filter(function(p){return p.v!=null}),sc=pScale(c),I=function(k,t){o.push('<li><span class="pic '+k+'">'+PICON[k]+'</span><span>'+t+'</span></li>')};
+  if(have.length>=2){var f=have[0],l=have[have.length-1],d=pDelta(c,f,l),useG=c.type==='DP'&&f.g!=null&&l.g!=null;
+    if(d!=null&&Math.abs(d)>=(c.type==='AO'?0.25:(useG?1:3)))I(d>0?'up':'down',(d>0?'Up ':'Down ')+pDeltaTxt(c,d,useG)+' since '+esc(pShort(f.a.name,44))+(/\u2026$/.test(pShort(f.a.name,44))?'':'.'));else I('flat','Latest result is level with the first, across '+have.length+' summatives.')}
+  else if(have.length===1)I('star','First result in: '+esc(have[0].a.name)+'. The trend line grows with each summative.');
+  var ab=have.filter(function(p){return p.med!=null&&p.v>p.med}).length,be=have.filter(function(p){return p.med!=null&&p.v<p.med}).length;
+  if(have.length){if(ab&&!be)I('up',have.length===1?'Above the course median.':'Above the course median on every summative.');else if(be&&!ab)I('down',have.length===1?'Below the course median.':'Below the course median on every summative.');else I('flat','Above the course median on '+ab+' of '+have.length+' summatives.')}
+  var lp=have[have.length-1];if(lp&&lp.beat!=null&&lp.n>=5){if(lp.beat>=.75)I('star','In the top quarter of '+c.code+' on the latest summative.');else if(lp.beat<=.25)I('down','In the bottom quarter of '+c.code+' on the latest summative.')}
+  var aoMe=ao.filter(function(x){return x.me!=null});if(aoMe.length>=2){var hi=aoMe.slice().sort(function(a,b){return b.me-a.me})[0],lo=aoMe.slice().sort(function(a,b){return a.me-b.me})[0];if(hi.me-lo.me>=0.5){I('star','Strongest in '+AON[hi.j]+' '+AOL[AON[hi.j]].toLowerCase()+' ('+f1(hi.me)+').');I('target','Next step: '+AON[lo.j]+' '+AOL[AON[lo.j]].toLowerCase()+' ('+f1(lo.me)+').')}else I('flat','Even across the assessment objectives.')}
+  var ppMe=pp.filter(function(x){return x.me!=null});if(ppMe.length>=2){var a1=ppMe[0],a2=ppMe[1],gp=a1.me-a2.me;if(Math.abs(gp)>=8)I('target','Paper '+(gp>0?a1.j+1:a2.j+1)+' is stronger than Paper '+(gp>0?a2.j+1:a1.j+1)+' by '+Math.round(Math.abs(gp))+' points.');}
+  if(pg&&lp&&lp.g!=null){var gap=lp.g-pg.g;I(gap>=0?'up':(gap<=-2?'down':'flat'),gap===0?'Latest grade matches the predicted grade.':(gap>0?'Latest grade is '+gap+' above the predicted grade.':'Latest grade is '+(-gap)+' below the predicted grade.'))}
+  var tdy=today(),miss=ser.filter(function(p){return p.v==null&&p.a.date&&p.a.date<=tdy});if(miss.length)I('data','No marks yet for '+miss.map(function(p){return esc(p.a.name)}).join(', ')+'.');
+  return o.length?'<ul class="pins">'+o.join('')+'</ul>':'';
+}
+var PICON={up:'<svg viewBox="0 0 16 16"><path d="M3 11 L7 7 L9.5 9.5 L13 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 5 H13 V8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  down:'<svg viewBox="0 0 16 16"><path d="M3 5 L7 9 L9.5 6.5 L13 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 11 H13 V8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  flat:'<svg viewBox="0 0 16 16"><path d="M3 8 H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10 5 L13 8 L10 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  star:'<svg viewBox="0 0 16 16"><path d="M8 1.8 L9.9 5.7 L14.2 6.3 L11.1 9.3 L11.8 13.6 L8 11.6 L4.2 13.6 L4.9 9.3 L1.8 6.3 L6.1 5.7 Z" fill="currentColor"/></svg>',
+  target:'<svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="8" cy="8" r="2.4" fill="currentColor"/></svg>',
+  data:'<svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 4.6 V8.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="8" cy="11.2" r="1.1" fill="currentColor"/></svg>'};
+
+function predTrack(c,pg,lg){
+  var cell=function(g){var cls=(g===pg.g?' pp':'')+(lg!=null&&g===lg?' pl':'');return '<div class="ptg'+cls+'" style="--gc:'+GH[g-1]+'"><span>'+g+'</span>'+(g===pg.g?'<em>Predicted</em>':'')+(lg!=null&&g===lg?'<em class="b">Latest</em>':'')+'</div>'};
+  var gap=lg==null?null:lg-pg.g,txt=gap==null?'No graded result yet to compare with.':(gap===0?'On track: latest grade matches the prediction.':(gap>0?'Ahead: '+gap+' above the prediction.':'Behind: '+(-gap)+' below the prediction.'));
+  return '<div class="ptrack">'+[1,2,3,4,5,6,7].map(cell).join('')+'</div><div class="pnote">'+txt+(pg.conf?'':' The prediction shown is the calculated grade.')+'</div>';
+}
+
+function pChips(c,s,a){
+  var r=res(c,s,a);
+  if(c.type==='AO')return '<div class="aorow">'+[0,1,2,3].filter(function(j){return a.ao[j]}).map(function(j){var raw=(s.r[a.slot]||[])[j];return '<div class="aob">'+(typeof raw==='string'?gchip(raw,1):gchip(r.ao[j]))+AON[j]+'</div>'}).join('')+(r.mean!=null?'<div class="aob"><span class="g" style="background:#0f172a">'+f1(r.mean)+'</span>Mean</div>':'')+'</div>';
+  return '<div class="aorow">'+[0,1,2].filter(function(j){return a.max[j]>0}).map(function(j){var v=r.p[j];return '<div class="aob"><span class="g" style="background:'+(typeof v==='number'?'#334155':'#cbd5e1')+'">'+(v==null?'-':esc(v))+'</span>P'+(j+1)+' /'+a.max[j]+'</div>'}).join('')+'<div class="aob"><span class="g" style="background:#0f172a">'+(r.pct!=null?pc(r.pct):'-')+'</span>Overall</div>'+(r.grade!=null?'<div class="aob">'+gchip(r.grade)+'Grade</div>':'')+'</div>';
+}
+function pRow(c,s,p,prev,k){
+  var g=p.a,multi=g.as.length>1,sc=pScale(c),any=false,body='';
+  g.as.forEach(function(a){var r=res(c,s,a);if(r.got||r.text)any=true;body+=multi?'<div class="ppart"><span>'+esc(gPart(g,a))+'</span>'+pChips(c,s,a)+'</div>':pChips(c,s,a)});
+  if(multi&&p.v!=null)body+='<div class="ppart"><span>Both papers together</span><div class="aorow"><div class="aob"><span class="g" style="background:#2563eb">'+(c.type==='AO'?f1(p.v):Math.round(p.v)+'%')+'</span>'+(c.type==='AO'?'Average':'Overall')+'</div>'+(p.g!=null&&c.type==='DP'?'<div class="aob">'+gchip(p.g)+'Grade</div>':'')+'</div></div>';
+  var d=prev&&prev.v!=null&&p.v!=null?pDelta(c,prev,p):null,useG=c.type==='DP'&&prev&&prev.g!=null&&p.g!=null,dz=d!=null&&Math.abs(d)<(c.type==='AO'?0.05:0.5);
+  var badge=d==null?'':(dz?'<span class="pdelta fl">Same as before</span>':'<span class="pdelta '+(d>0?'up':'dn')+'">'+pArrow(d)+pDeltaTxt(c,d,useG)+'</span>');
+  var pos=function(v){return ((v-sc.lo)/(sc.hi-sc.lo)*100).toFixed(1)+'%'};
+  var cmp=p.v!=null&&p.med!=null?'<div class="pcmp"><div class="pct"><i class="pq" style="left:'+pos(p.q1)+';width:calc('+pos(p.q3)+' - '+pos(p.q1)+')"></i><i class="pmd" style="left:'+pos(p.med)+'" data-tip="Course median '+sc.fmt(p.med)+'"></i><i class="pme" style="left:'+pos(p.v)+';background:'+ncol(pNorm(c,p.v))+'" data-tip="'+esc(nm(s))+' '+sc.fmt(p.v)+'"></i></div><span>'+(p.beat!=null?(Math.round(p.beat*100)>0?'Higher than '+Math.round(p.beat*100)+'% \u00b7 ':'')+ordinal(p.rank)+' of '+p.n:'')+'</span></div>':'';
+  return '<div class="prow rise" style="animation-delay:'+(RM?0:(0.05*k)).toFixed(2)+'s"><div class="h"><b>'+esc(g.name)+'</b><span>'+fdate(g.date,true)+'</span></div>'+(multi?'<div class="pnote2">'+g.as.length+' papers in this unit, counted as one summative</div>':'')+(any?body+cmp:'<div class="muted" style="margin-top:6px;font-size:12.5px">No marks entered yet</div>')+(badge?'<div class="pbadge">'+badge+'</div>':'')+'</div>';
+}
+function ordinal(n){if(n==null)return '';var v=n%100;return n+((v>=11&&v<=13)?'th':({1:'st',2:'nd',3:'rd'}[n%10]||'th'))}
+
+function openStudent(code,i){
+  var c=D.courses.filter(function(x){return x.code===code})[0];if(!c)return;var s=c.students[i];if(!s)return;
+  hideTip();PF={code:code,i:i};
+  var ser=pSeries(c,s),have=ser.filter(function(p){return p.v!=null}),lp=have[have.length-1]||null,first=have[0]||null,sc=pScale(c),pg=predOf(c,s);
+  var ring=lp?pNorm(c,lp.v):0,rc=lp?ncol(pNorm(c,lp.v)):'#334155',R=36,C=2*Math.PI*R;
+  var latestBig=lp?(c.type==='AO'?f1(lp.v):(lp.g!=null?String(lp.g):Math.round(lp.v)+'%')):'-';
+  var latestSub=lp?(c.type==='AO'?'average level':(lp.g!=null?'grade \u00b7 '+Math.round(lp.v)+'%':'overall')):'no marks yet';
+  var meanV=have.length?avg(have.map(function(p){return p.v})):null;
+  var dlt=have.length>=2?pDelta(c,first,lp):null,useG=c.type==='DP'&&first&&lp&&first.g!=null&&lp.g!=null;
+  var tiles=[
+    {k:'Latest',v:latestBig,s:latestSub,col:rc},
+    {k:'Average',v:meanV==null?'-':sc.fmt(meanV),s:have.length+' of '+ser.length+' summative'+(ser.length===1?'':'s'),col:'#60a5fa'},
+    {k:'Trend',v:dlt==null?(have.length===1?'New':'-'):(Math.abs(dlt)<(c.type==='AO'?0.05:0.5)?'Steady':(dlt>0?'+':'-')+(c.type==='AO'?f1(Math.abs(dlt)):(useG?Math.abs(dlt):Math.round(Math.abs(dlt))))),s:dlt==null?(have.length===1?'first result':'not enough data'):(Math.abs(dlt)<(c.type==='AO'?0.05:0.5)?'since first':(useG?'grades since first':(c.type==='AO'?'levels since first':'points since first'))),col:dlt==null?'#94a3b8':(dlt>0?'#34d399':(dlt<0?'#f87171':'#94a3b8')),arrow:dlt!=null&&Math.abs(dlt)>=(c.type==='AO'?0.05:0.5)?dlt:null},
+    {k:'Standing',v:lp&&lp.rank&&lp.n>1?(lp.rank/lp.n<=0.5?'Top '+Math.max(1,Math.ceil(lp.rank/lp.n*100))+'%':ordinal(lp.rank)):'-',s:lp&&lp.rank&&lp.n>1?(lp.rank/lp.n<=0.5?ordinal(lp.rank)+' of '+lp.n+' in '+c.code:'of '+lp.n+' in '+c.code):'latest summative',col:'#a78bfa'}
+  ];
+  if(pg)tiles.push({k:'Predicted',v:String(pg.g),s:pg.conf?'IB predicted grade':'calculated grade',col:'#fbbf24'});
+  var at=attention().filter(function(x){return x.s===s})[0];
+  $('dhead').innerHTML='<div class="pglow"></div><button class="dclose" id="dclose" aria-label="Close">\u00d7</button>'+
+    '<div class="phero"><div class="pav"><svg viewBox="0 0 84 84" width="84" height="84"><circle cx="42" cy="42" r="'+R+'" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="5"/><circle cx="42" cy="42" r="'+R+'" fill="none" stroke="'+rc+'" stroke-width="5" stroke-linecap="round" transform="rotate(-90 42 42)" class="pring" style="stroke-dasharray:'+C.toFixed(1)+';stroke-dashoffset:'+C.toFixed(1)+';--to:'+(C*(1-ring)).toFixed(1)+'"/></svg><div class="dav" style="background:linear-gradient(135deg,'+avc(s)+',#0f172a)">'+esc(ini(s))+'</div></div>'+
+    '<div class="pwho"><div class="peye">Student profile</div><h3>'+esc(full(s))+'</h3><div class="sub">'+esc(c.code+' \u00b7 '+c.name)+'</div><div class="pchips">'+[s.t?'<span>Teacher '+esc(s.t)+'</span>':'',s.c?'<span>Class '+esc(s.c)+'</span>':'',s.id&&!S.hide?'<span>Code '+esc(s.id)+'</span>':'',c.type==='DP'?'<span class="pp">'+esc(prog(s))+'</span>':''].join('')+'</div></div></div>'+
+    '<div class="ptiles">'+tiles.map(function(t,k){return '<div class="ptile rise" style="--tc:'+t.col+';animation-delay:'+(RM?0:(0.08+k*0.06)).toFixed(2)+'s"><span>'+t.k+'</span><b>'+(t.arrow!=null?'<i class="'+(t.arrow>0?'up':'dn')+'">'+pArrow(t.arrow)+'</i>':'')+esc(t.v)+'</b><small>'+esc(t.s)+'</small></div>'}).join('')+'</div>';
+  var h='',W=Math.max(260,($('dbody').clientWidth||600)-44-28);
+  if(at)h+='<div class="dsum rise" style="border-color:#f8c9c4;background:#fff8f7"><div class="h"><b>Flagged for attention</b></div><div class="reasons">'+at.rs.map(function(r){return '<span class="rs '+(r.k==='low'?'':r.k)+'">'+esc(r.t)+'</span>'}).join('')+'</div></div>';
+  if(ser.length){
+    h+='<section class="pcard rise"><div class="pch"><div><h4>Progress over the year</h4><p>'+(c.type==='AO'?'Average AO level on each summative':'Overall % on each summative'+(c.bounds?', with grade zones':''))+'</p></div></div><div class="pchart">'+trendSVG(c,s,ser,W,pg)+'</div><div class="plg"><span><i class="lk me"></i>'+esc(nm(s).split(' ')[0])+'</span><span><i class="lk bnd"></i>'+(ser.length===1?'Middle half and range of ':'Middle half of ')+c.code+'</span><span><i class="lk med"></i>Course median</span>'+(pMulti(c)?'<span><i class="lk cls"></i>'+esc(s.t||'Class')+' class average</span>':'')+(pg&&c.bounds?'<span><i class="lk pred"></i>Predicted grade</span>':'')+'</div></section>';
+    var ins=pInsights(c,s,ser,c.type==='AO'?aoProfile(c,s):[],c.type==='DP'?paperProfile(c,s):[],pg);
+    if(ins)h+='<section class="pcard rise"><div class="pch"><div><h4>At a glance</h4><p>Read from the marks in the gradebook</p></div></div>'+ins+'</section>';
+    if(lp)h+='<section class="pcard rise"><div class="pch"><div><h4>Where they stand</h4><p>'+esc(lp.a.name)+': every '+c.code+' student as a dot</p></div>'+(lp.beat!=null?'<div class="pbig"><b>'+Math.round(lp.beat*100)+'%</b><span>of the course scored lower</span></div>':'')+'</div><div class="pchart">'+standSVG(c,s,lp,W)+'</div></section>';
+    if(c.type==='AO'){var ao=aoProfile(c,s);if(ao.length){var rad=radarSVG(c,ao,Math.min(260,W));h+='<section class="pcard rise"><div class="pch"><div><h4>Assessment objectives</h4><p>Average level per AO across all summatives, against the course average</p></div></div><div class="pao'+(rad?'':' one')+'">'+(rad?'<div class="prad">'+rad+'<div class="plg sm"><span><i class="lk me"></i>Student</span><span><i class="lk med"></i>Course</span></div></div>':'')+pBars(ao.map(function(x){return {k:AON[x.j],lab:AOL[AON[x.j]],me:x.me,all:x.all,j:x.j}}),0,7,f1,function(x){return AOC[x.j]})+'</div></section>'}}
+    else{var pp=paperProfile(c,s);if(pp.length>1)h+='<section class="pcard rise"><div class="pch"><div><h4>Papers</h4><p>Average % per paper across all summatives, against the course average</p></div></div>'+pBars(pp.map(function(x){return {k:'Paper '+(x.j+1),lab:'',me:x.me,all:x.all,j:x.j}}),0,100,function(v){return Math.round(v)+'%'},function(x){return AOC[x.j]})+'</section>'}
+    if(pg)h+='<section class="pcard rise"><div class="pch"><div><h4>Predicted grade and results</h4><p>IB predicted grade against the latest graded summative</p></div></div>'+predTrack(c,pg,lp?lp.g:null)+'</section>';
+    h+='<section class="pcard rise"><div class="pch"><div><h4>Summative by summative</h4><p>Marks as entered, with the course spread behind each result</p></div></div>'+ser.map(function(p,k){var prev=null;for(var q=k-1;q>=0;q--)if(ser[q].v!=null){prev=ser[q];break}return pRow(c,s,p,prev,k)}).join('')+'</section>';
+  } else h+='<div class="note">No summatives set up for this course yet.</div>';
+  $('dbody').innerHTML=h;$('dbody').scrollTop=0;
+  $('drawer').classList.add('on');$('drawer').setAttribute('aria-hidden','false');$('scrim').classList.add('on');
+  $('dclose').onclick=closeDrawer;
+  var rg=document.querySelector('#dhead .pring');if(rg){var to=rg.style.getPropertyValue('--to');if(RM)rg.style.strokeDashoffset=to;else requestAnimationFrame(function(){requestAnimationFrame(function(){rg.style.transition='stroke-dashoffset 1.2s cubic-bezier(.2,.8,.2,1) .2s';rg.style.strokeDashoffset=to})})}
+}
+function closeDrawer(){$('drawer').classList.remove('on');$('drawer').setAttribute('aria-hidden','true');$('scrim').classList.remove('on');PF={code:null,i:null}}
+var pfRz=null,pfW=window.innerWidth;window.addEventListener('resize',function(){clearTimeout(pfRz);pfRz=setTimeout(function(){if(window.innerWidth===pfW)return;pfW=window.innerWidth;if(PF.code&&$('drawer').classList.contains('on')){var st=$('dbody').scrollTop;openStudent(PF.code,PF.i);$('dbody').scrollTop=st}},200)});
+
+$('scrim').onclick=closeDrawer;
+
+var pIdx=0,pRes=[];
+function openPal(){$('pal').classList.add('on');$('pin').value='';$('pin').focus();pSearch()}
+function closePal(){$('pal').classList.remove('on')}
+function pSearch(){
+  var q=$('pin').value.trim().toLowerCase(),all=allStudents();
+  pRes=(q?all.filter(function(x){return (full(x.s)+' '+x.s.id+' '+x.c.code+' '+x.s.c).toLowerCase().indexOf(q)>=0}):all).slice(0,40);pIdx=0;drawPal();
+}
+function drawPal(){$('plist').innerHTML=pRes.map(function(x,i){return '<div class="pitem'+(i===pIdx?' on':'')+'" data-pi="'+i+'"><span class="av" style="background:'+avc(x.s)+'">'+esc(ini(x.s))+'</span><span>'+esc(full(x.s))+'</span><small>'+x.c.code+(x.s.t?' \u00b7 '+esc(x.s.t):'')+'</small></div>'}).join('')||'<div class="pitem muted">No match</div>';
+  Array.prototype.forEach.call(document.querySelectorAll('[data-pi]'),function(el){el.onclick=function(){var x=pRes[+el.getAttribute('data-pi')];closePal();openStudent(x.c.code,x.i)}})}
+$('pin').oninput=pSearch;
+$('pin').onkeydown=function(e){if(e.key==='ArrowDown'){pIdx=Math.min(pRes.length-1,pIdx+1);drawPal();e.preventDefault()}else if(e.key==='ArrowUp'){pIdx=Math.max(0,pIdx-1);drawPal();e.preventDefault()}else if(e.key==='Enter'&&pRes[pIdx]){var x=pRes[pIdx];closePal();openStudent(x.c.code,x.i)}else if(e.key==='Escape')closePal()};
+$('pal').onclick=function(e){if(e.target===$('pal'))closePal()};
+$('searchBtn').onclick=openPal;
+document.addEventListener('keydown',function(e){var tag=(e.target.tagName||'').toLowerCase();if(e.key==='/'&&tag!=='input'){e.preventDefault();openPal()}if(e.key==='Escape'){closeDrawer();closePal()}});
+$('hideBtn').onclick=function(){S.hide=!S.hide;this.classList.toggle('on',S.hide);this.querySelector('.lbl2').textContent=S.hide?'Show names':'Hide names';renderAll(true)};
+$('refreshBtn').onclick=function(){load(true)};
+
+var SECS=['overview','courses','explore','alignment','attention'],navBtns=document.querySelectorAll('#nav button[data-go]'),navLock=0;
+function setNav(id){Array.prototype.forEach.call(navBtns,function(b){b.classList.toggle('on',b.getAttribute('data-go')===id)})}
+function goTo(id){var el=$(id);if(!el)return;navLock=Date.now();setNav(id);var y=el.getBoundingClientRect().top+window.pageYOffset-(id==='overview'?70:66);window.scrollTo({top:id==='overview'?0:Math.max(0,y),behavior:RM?'auto':'smooth'})}
+Array.prototype.forEach.call(navBtns,function(b){b.addEventListener('click',function(e){e.preventDefault();goTo(b.getAttribute('data-go'))})});
+var navTick=false;
+function syncNav(){navTick=false;if(Date.now()-navLock<900)return;var cur='overview',line=window.innerHeight*0.35;SECS.forEach(function(id){var el=$(id);if(el&&el.getBoundingClientRect().top<=line)cur=id});if(window.innerHeight+window.pageYOffset>=document.documentElement.scrollHeight-4)cur='attention';setNav(cur)}
+window.addEventListener('scroll',function(){if(!navTick){navTick=true;requestAnimationFrame(syncNav)}},{passive:true});
+if('IntersectionObserver' in window){
+  var rv=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');rv.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+  Array.prototype.forEach.call(document.querySelectorAll('.reveal'),function(el){rv.observe(el)});
+}else Array.prototype.forEach.call(document.querySelectorAll('.reveal'),function(el){el.classList.add('in')});
+
+function renderAll(keepCourse){
+  renderKPIs(keepCourse);renderOrbit();
+  if(!keepCourse||!S.course){var best=null;D.courses.forEach(function(c){var a=latestA(c);if(a&&(!best||(a.date||'')>=(best.a.date||'')))best={c:c,a:a}});S.course=best?best.c.code:D.courses[0].code;var c=cur(),L=latestA(c);S.slot=L?L.slot:null}
+  renderCards();renderTimeline();renderExplore();renderAlignment();renderAttention();
+  var u=D.updated?D.updated.replace('T',' '):'';
+  $('updated').textContent='HS Maths \u00b7 fictional demo data';
+  $('foot').innerHTML='<div class="demo-note"><b>Interactive prototype</b> built by Harish Kumar. Every student, teacher and mark shown here is fictional, and this page is not connected to any real gradebook. In the working version, the data comes from the department gradebook spreadsheet, where teachers enter marks.</div>';
+}
+function boot(json){
+  try{D=typeof json==='string'?JSON.parse(json):json}catch(e){return fail(e)}
+  renderAll(!!S.course);
+  $('loading').classList.add('off');
+}
+function fail(e){$('loading').classList.remove('off');$('loading').innerHTML='<div class="err"><h3 style="color:#fff">Couldn&#39;t load the demo data</h3><p>'+esc(String(e&&e.message?e.message:e))+'</p></div>'}
+function load(){if(window.__DATA__)boot(window.__DATA__);else fail('No data')}
+load(false);
+})();
+</script>
+<script data-goatcounter="https://harishkumar-portfolio.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
