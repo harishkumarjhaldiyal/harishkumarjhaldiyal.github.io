@@ -7,7 +7,7 @@ title: Digital Innovation Projects
   <span class="section-eyebrow">Digital Innovation Projects</span>
   <h1>Tools I have built</h1>
   <p>
-    Six working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, two real tools I built and run for my own IB coordination work, a department dashboard for assessment results, one for automatic substitute-cover matching, and one for leadership systems.
+    Six working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, two real tools I built and run for my own IB coordination work, a gradebook and dashboard used by my mathematics department, one for automatic substitute-cover matching, and one for leadership systems.
   </p>
 </div>
 
@@ -44,9 +44,9 @@ title: Digital Innovation Projects
 <div class="feature-card has-shot">
   <a class="fc-shot" href="{{ '/maths-dashboard/' | relative_url }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="{{ '/assets/img/projects/maths-dashboard.jpg' | relative_url }}" alt="Maths Department Dashboard overview with every student shown as a dot and headline figures (fictional data)" width="1440" height="900" loading="lazy"></a>
   <div class="fc-body">
-    <span class="fc-eyebrow">Assessment System · For Departments</span>
+    <span class="fc-eyebrow">Production Tool · For Departments</span>
     <h3>Maths Department Dashboard</h3>
-    <p>A dashboard I built for my department on top of a shared gradebook for Grades 9–12 mathematics. Teachers enter summative marks in one spreadsheet: grades against assessment objectives (AO1–AO4) in Grades 9–10, and paper marks converted through IB grade boundaries in the Diploma Programme. The dashboard turns those marks into course overviews, a summative calendar, cross-teacher alignment for moderation, predicted grades compared with results, supportive needs-attention flags and individual student profiles. This is an interactive prototype seeded entirely with fictional students, teachers and marks so the design can be explored safely.</p>
+    <p>A gradebook and dashboard I built for Grades 9–12 mathematics, adopted by the Head of Mathematics and now used by the whole high school mathematics department. Teachers enter summative marks in one shared gradebook: grades against assessment objectives (AO1–AO4) in Grades 9–10, and paper marks converted through IB grade boundaries in the Diploma Programme. The dashboard turns those marks into course overviews, a summative calendar, cross-teacher alignment for moderation, predicted grades compared with results, supportive needs-attention flags and individual student profiles. This is an interactive prototype seeded entirely with fictional students, teachers and marks so the design can be explored safely.</p>
     <a href="{{ '/maths-dashboard/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Open Maths Dashboard →</a>
   </div>
 </div>
