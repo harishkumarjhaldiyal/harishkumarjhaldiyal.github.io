@@ -669,12 +669,12 @@ function renderCards(){
 
 function renderTimeline(){
   var cs=D.courses.filter(function(c){return c.assessments.length});
-  var t0=Date.parse('2026-08-17'),t1=Date.parse('2027-06-18'),W=1100,L=90,Rr=20,rowH=40,H=cs.length*rowH+46;
+  var T0=new Date();T0.setDate(T0.getDate()-80);var ISO0=T0.getFullYear()+'-'+String(T0.getMonth()+1).padStart(2,'0')+'-'+String(T0.getDate()).padStart(2,'0');var t0=Date.parse(ISO0),t1=t0+305*86400000,W=1100,L=90,Rr=20,rowH=40,H=cs.length*rowH+46;
   var X=function(iso){return L+(Date.parse(iso)-t0)/(t1-t0)*(W-L-Rr)};
   var s='<svg viewBox="0 0 '+W+' '+H+'"><g class="axis">';
-  for(var m=0;m<11;m++){var d=new Date(2026,7+m,1),iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-01';if(Date.parse(iso)<t0)iso='2026-08-17';var x=X(iso);s+='<line x1="'+x+'" x2="'+x+'" y1="18" y2="'+(H-6)+'"/><text x="'+(x+4)+'" y="12">'+MON[d.getMonth()]+'</text>'}
+  for(var m=0;m<11;m++){var d=new Date(T0.getFullYear(),T0.getMonth()+m,1),iso=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-01';if(Date.parse(iso)<t0)iso=ISO0;var x=X(iso);s+='<line x1="'+x+'" x2="'+x+'" y1="18" y2="'+(H-6)+'"/><text x="'+(x+4)+'" y="12">'+MON[d.getMonth()]+'</text>'}
   s+='</g>';
-  var td=today();if(td>='2026-08-17'&&td<='2027-06-18'){var tx=X(td);s+='<line x1="'+tx+'" x2="'+tx+'" y1="16" y2="'+(H-4)+'" stroke="#e11d48" stroke-width="1.5" stroke-dasharray="3 3"/><text x="'+(tx+4)+'" y="'+(H-8)+'" fill="#e11d48" font-size="11" font-weight="700">Today</text>'}
+  var td=today();if(true){var tx=X(td);s+='<line x1="'+tx+'" x2="'+tx+'" y1="16" y2="'+(H-4)+'" stroke="#e11d48" stroke-width="1.5" stroke-dasharray="3 3"/><text x="'+(tx+4)+'" y="'+(H-8)+'" fill="#e11d48" font-size="11" font-weight="700">Today</text>'}
   var nod=[];
   cs.forEach(function(c,ri){
     var y=36+ri*rowH;
