@@ -43,7 +43,7 @@ title: Resume / CV
         <li>Design inquiry-led units and assessments that use formative and summative evidence to diagnose misconceptions, differentiate support and extend advanced learners while developing reasoning, modelling, problem-solving and communication.</li>
         <li>Served for three academic years as a middle- and high-school homeroom teacher, providing pastoral care through advisory and social-emotional learning, monitoring students' academic progress and wellbeing, and coordinating support with families, counsellors and grade-level colleagues.</li>
         <li>Developed a high-school-wide academic-integrity system that automates daily review of document revision histories and access signals, flags potential process-integrity concerns for contextual teacher verification, and reduces repetitive checking while protecting teachers' time for feedback and student support.</li>
-        <li>Previous responsibilities at Stamford American School Hong Kong included teaching middle-school mathematics and interdisciplinary STEM through the Cornerstones programme, alongside weekend classes, mathematics and STEM camps, and co-curricular programmes.</li>
+        <li>Previous responsibilities at Stamford American School Hong Kong included teaching middle-school mathematics and interdisciplinary STEM, including coding, as well as the Cornerstones programme, alongside weekend classes, mathematics and STEM camps, and co-curricular programmes.</li>
       </ul>
     </div>
     <div class="timeline-item">
@@ -60,7 +60,7 @@ title: Resume / CV
       <h4 class="ti-role">Mathematics, Physics and Computer Science Instructor (IB DP / MYP / IGCSE / A Level)</h4>
       <div class="ti-place">HKExcel Education · Hong Kong</div>
       <ul>
-        <li>Taught mathematics, physics and computer science to international-school learners across IB, MYP, IGCSE and A Level pathways.</li>
+        <li>Taught mathematics, physics and computer science, including IB DP Computer Science at SL and HL, to international-school learners across IB, MYP, IGCSE and A Level pathways.</li>
         <li>Adapted technology-enhanced instruction using guided practice, differentiated tasks, targeted reinforcement and focused academic support.</li>
       </ul>
     </div>
