@@ -40,7 +40,7 @@ title: Harish Kumar — IBDP Extended Essay Coordinator & Mathematics Teacher
 <p class="credentials-line"><span>Master's in International Education</span><span>PGCE</span><span>Registered Teacher, Hong Kong</span><span>IB-trained: DP Extended Essay &amp; Maths AI</span></p>
 
 <div class="intro-card">
-  <span class="section-eyebrow">Welcome to my portfolio</span>
+  <span class="section-eyebrow">Welcome</span>
   <p class="welcome-lead">Supported enough to take risks. <span>Challenged enough to think deeply.</span></p>
   <p>
     That is the mathematics classroom I aim to create: one where students feel safe to ask questions and learn from mistakes, and are stretched to reason, communicate clearly, and develop true independence. I bring the same principles to Extended Essay coordination, where clear milestones, honest feedback, and structured reflection help students move from an initial idea to a piece of writing they can be proud of.
