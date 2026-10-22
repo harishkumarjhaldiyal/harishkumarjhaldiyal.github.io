@@ -1,0 +1,10 @@
+# Local instructions and source backups contain private working context.
+/AGENTS.md
+/CLAUDE.md
+/backups/
+
+# Credentials and macOS metadata must never be published.
+credentials.json
+token.json
+token_scripts.json
+.DS_Store

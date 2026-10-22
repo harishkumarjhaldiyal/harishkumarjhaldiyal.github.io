@@ -12,3 +12,13 @@ defaults:
       path: ""
     values:
       image: /assets/img/og-card.jpg
+
+# Keep local maintenance records and credentials out of the generated site.
+exclude:
+  - AGENTS.md
+  - CLAUDE.md
+  - backups
+  - credentials.json
+  - token.json
+  - token_scripts.json
+  - .DS_Store
