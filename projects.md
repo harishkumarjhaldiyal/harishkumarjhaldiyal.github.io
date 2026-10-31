@@ -7,8 +7,19 @@ title: Digital Innovation Projects
   <span class="section-eyebrow">Digital Innovation Projects</span>
   <h1>Tools I have built</h1>
   <p>
-    Six working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, two real tools I built and run for my own IB coordination work, a gradebook and dashboard used by my mathematics department, one for automatic substitute-cover matching, and one for leadership systems.
+    Seven projects that put my thinking about teaching, coordination, and school leadership into practice — including an interactive mathematics workbook with a live tracker, student guidance, departmental assessment tools, and systems for coordination and leadership.
   </p>
+</div>
+
+<div class="feature-card feature-ia has-shot">
+  <a class="fc-shot" href="{{ '/binomial-workbook/' | relative_url }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="{{ '/assets/img/projects/binomial-workbook.jpg' | relative_url }}" alt="Interactive Binomial Theorem Workbook with a fictional demo learner" width="1440" height="900" loading="lazy"></a>
+  <div class="fc-body">
+    <span class="fc-eyebrow">Classroom Tool · For Students and Teachers</span>
+    <h3>Binomial Theorem Live Workbook</h3>
+    <p>The interactive workbook I built for Grade 11 AA SL, with visual explorations, practice questions, staged hints and worked solutions. Students can record their working and check answers as they go. The live tracker brings together attempts, common errors and progress so I can decide where to give support or revisit an explanation. This public demo keeps the teaching content and uses fictional students; your sample answers update the tracker in your browser.</p>
+    <a href="{{ '/binomial-workbook/' | relative_url }}" target="_blank" rel="noopener" class="fc-cta">Try the workbook →</a>
+    <a href="{{ '/binomial-workbook/tracker.html' | relative_url }}" target="_blank" rel="noopener" class="fc-cta" style="margin-left:1rem">Explore the live tracker →</a>
+  </div>
 </div>
 
 <div class="feature-card feature-ia has-shot">

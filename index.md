@@ -26,7 +26,7 @@ title: Harish Kumar — IBDP Extended Essay Coordinator & Mathematics Teacher
     <div class="ev-src">two DP cohorts · 23 supervisors</div>
   </div>
   <div class="evidence">
-    <div class="ev-num"><span data-count="6">6</span></div>
+    <div class="ev-num"><span data-count="7">7</span></div>
     <div class="ev-lbl">working school tools designed &amp; built</div>
     <div class="ev-src">see Digital Innovation Projects below</div>
   </div>
@@ -69,13 +69,14 @@ title: Harish Kumar — IBDP Extended Essay Coordinator & Mathematics Teacher
 <div class="intro-card" style="margin-bottom: 1rem;">
   <span class="section-eyebrow">Interactive Tools</span>
   <h2 style="margin-top: 0.4rem;">Digital Innovation Projects</h2>
-  <p style="margin-bottom: 1.2rem;">Six working applications that put my thinking about teaching, coordination, and school leadership into practice — one for students, two real tools I built and run for my own IB coordination work, a gradebook and dashboard used by my mathematics department, one for automatic substitute-cover matching, and one for leadership systems.</p>
+  <p style="margin-bottom: 1.2rem;">Seven projects that put my thinking about teaching, coordination, and school leadership into practice — including an interactive mathematics workbook with a live tracker, student guidance, departmental assessment tools, and systems for coordination and leadership.</p>
+  <p><a href="{{ '/binomial-workbook/' | relative_url }}" class="more-link">Try the Binomial Theorem Live Workbook →</a></p>
   <div class="shot-row">
     <a href="{{ '/maths-dashboard/' | relative_url }}" target="_blank" rel="noopener" title="Maths Department Dashboard"><img src="{{ '/assets/img/projects/maths-dashboard.jpg' | relative_url }}" alt="Maths Department Dashboard overview (fictional data)" width="1440" height="900" loading="lazy"></a>
     <a href="{{ '/ee-platform/' | relative_url }}" target="_blank" rel="noopener" title="IBDP Extended Essay Coordination Platform"><img src="{{ '/assets/img/projects/ee-platform.jpg' | relative_url }}" alt="Extended Essay Coordination Platform deadline calendar (fictional data)" width="1440" height="900" loading="lazy"></a>
     <a href="{{ '/ia-compass/' | relative_url }}" target="_blank" rel="noopener" title="IB Math IA Compass"><img src="{{ '/assets/img/projects/ia-compass.jpg' | relative_url }}" alt="IB Math IA Compass landing screen" width="1440" height="900" loading="lazy"></a>
   </div>
-  <a href="{{ '/projects.html' | relative_url }}" class="btn-primary">See all six projects →</a>
+  <a href="{{ '/projects.html' | relative_url }}" class="btn-primary">See all seven projects →</a>
 </div>
 
 <div class="intro-card">

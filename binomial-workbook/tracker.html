@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Binomial Theorem Live Tracker | Harish Kumar</title>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{--navy:#0f172a;--blue:#2563eb;--blue-soft:#eff6ff;--bg:#f6f8fb;--card:#fff;--border:#e5e9f0;--text:#1e293b;--muted:#64748b;--faint:#94a3b8;--g1:#15803d;--g2:#86efac;--am:#f59e0b;--rd:#ef4444;--vi:#8b5cf6;--none:#eef2f7;--r:16px;--shadow:0 1px 2px rgba(15,23,42,.06),0 10px 28px rgba(15,23,42,.07)}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--text);background:var(--bg);font-size:14px;overflow-x:hidden}
+h1,h2,h3{font-family:"Plus Jakarta Sans",Inter,sans-serif;margin:0}
+button,select{font:inherit}
+.band{background:radial-gradient(900px 300px at 10% -20%,rgba(37,99,235,.5),transparent 60%),radial-gradient(700px 300px at 95% 0%,rgba(124,58,237,.35),transparent 60%),var(--navy);color:#fff;padding:26px 24px 76px;position:relative;overflow:hidden}
+.band:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(ellipse at 50% 0%,#000 30%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 0%,#000 30%,transparent 75%)}
+.band .in{max-width:1440px;margin:0 auto;position:relative;display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end}
+.band .in>div:first-child{min-width:0}
+.band h1{font-size:clamp(22px,3vw,30px);line-height:1.15}
+.band .sub{color:#94a3b8;margin-top:4px}
+.live{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:6px 12px;border-radius:99px;font-size:13px;color:#e2e8f0}
+.dot{width:9px;height:9px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:pulse 2s infinite}
+.dot.off{background:#f59e0b;animation:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.55)}70%{box-shadow:0 0 0 9px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+.tools{margin-left:auto;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tools select,.tools .lnk,.tools button{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:8px 12px;text-decoration:none;cursor:pointer;max-width:100%}
+.tools button[aria-pressed=true]{background:#fbbf24;color:#422006;border-color:#fbbf24}
+.tools select option{color:#111}
+.wrap{max-width:1440px;margin:-52px auto 0;padding:0 24px 40px;position:relative}
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);padding:14px 16px;position:relative;overflow:hidden;min-width:0}
+.kpi:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#2a78d6,#8b5cf6)}
+.kpi.warn:before{background:linear-gradient(90deg,#f59e0b,#ef4444)}
+.kpi b{display:block;font-family:"Plus Jakarta Sans";font-size:28px;font-variant-numeric:tabular-nums}
+.kpi span{color:var(--muted);font-size:13px}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);margin-top:16px;min-width:0}
+.panel-h{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border)}
+.panel-h h2{font-size:17px}
+.panel-h .note{color:var(--muted);font-size:12.5px}
+.legend{display:flex;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:12.5px;margin-left:auto}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-3px;margin-right:5px}
+.help{display:flex;flex-wrap:wrap;gap:10px;padding:12px 16px}
+.hchip{display:flex;align-items:center;gap:10px;border:1px solid #fecaca;background:#fff7f7;border-radius:12px;padding:8px 12px;cursor:pointer;min-width:0;max-width:100%;animation:slin .4s both}
+.hchip b{white-space:nowrap;display:block}
+.hchip span{display:block}
+.hchip span{color:var(--muted);font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hchip .av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;display:grid;place-items:center;font-weight:700;font-size:12px;flex:none}
+@keyframes slin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.scroll{overflow:auto;max-height:70vh}
+table{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%}
+th,td{padding:0;text-align:center}
+thead th{position:sticky;top:0;background:#f8fafc;z-index:2;font-size:12px;color:var(--muted);font-weight:600;border-bottom:1px solid var(--border)}
+thead tr.srow th{top:0;height:26px;font-size:11.5px;color:#6d28d9;border-left:2px solid #fff;background:#f5f3ff}
+thead tr.qrow th{top:26px;height:28px;color:var(--text);font-weight:700;border-left:2px solid #fff}
+thead tr.prow th{top:54px;height:22px}
+th.sticky,td.sticky{position:sticky;left:0;background:#fff;z-index:3;text-align:left;border-right:1px solid var(--border)}
+thead th.sticky{background:#f8fafc;z-index:4}
+td.name{padding:6px 12px;min-width:220px;max-width:260px}
+td.name .n{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+td.name .n:hover{color:var(--blue)}
+td.name .m{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;margin-top:3px}
+.mini{flex:1;height:6px;border-radius:99px;background:#eef2f7;overflow:hidden;max-width:90px}
+.mini i{display:block;height:100%;background:linear-gradient(90deg,#1baf7a,#2a78d6)}
+.act{width:8px;height:8px;border-radius:50%;background:#cbd5e1;display:inline-block;flex:none}
+.act.on{background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.2)}
+tbody tr:nth-child(even) td{background:#fbfcfe}
+tbody tr:nth-child(even) td.sticky{background:#fbfcfe}
+td.c{width:34px;min-width:34px;height:42px;border-bottom:1px solid #f1f5f9}
+td.c.qs{border-left:2px solid #fff}
+.cell{width:26px;height:26px;border-radius:7px;margin:auto;display:grid;place-items:center;font-size:11px;font-weight:700;color:#fff;cursor:pointer;transition:transform .1s}
+.cell:hover{transform:scale(1.15)}
+.cell.none{background:var(--none);cursor:default}
+.cell.none:hover{transform:none}
+.cell.c1{background:var(--g1)}
+.cell.c2{background:var(--g2);color:#14532d}
+.cell.tr{background:var(--am);color:#422006}
+.cell.tr3{background:var(--rd)}
+.cell.vi{background:var(--vi)}
+.cell.pop{animation:pop 1.4s ease-out}
+@keyframes pop{0%{transform:scale(1.5);box-shadow:0 0 0 0 rgba(251,191,36,.9)}40%{transform:scale(1);box-shadow:0 0 0 8px rgba(251,191,36,0)}100%{box-shadow:0 0 0 0 rgba(251,191,36,0)}}
+tfoot td{position:sticky;bottom:0;background:#f8fafc;border-top:1px solid var(--border);font-size:11.5px;font-weight:600;color:var(--muted);height:34px}
+tfoot td.sticky{background:#f8fafc;padding:0 12px}
+.grid3{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px}
+.grid3>*{min-width:0}
+.list{padding:8px 16px 14px}
+.row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid #f1f5f9;min-width:0}
+.row:last-child{border-bottom:0}
+.row .l{flex:1;min-width:0}
+.row .l b{display:block}
+.row .l span{color:var(--muted);font-size:12.5px;display:block;overflow:hidden;text-overflow:ellipsis}
+.row .l .wa{margin-top:4px;display:flex;flex-wrap:wrap;gap:4px}
+.wa em{font-style:normal;font-size:11.5px;background:#fee2e2;color:#991b1b;border-radius:6px;padding:1px 7px;font-variant-numeric:tabular-nums}
+.wa em.ans{background:#dcfce7;color:#166534}
+.bar{height:8px;border-radius:99px;background:#eef2f7;overflow:hidden;width:110px;flex:none}
+.bar i{display:block;height:100%;background:#eb6834;border-radius:99px}
+.bar.sec i{background:linear-gradient(90deg,#2a78d6,#8b5cf6)}
+.pct{width:48px;text-align:right;font-variant-numeric:tabular-nums;font-weight:600;flex:none}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 14px}
+.split div{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:10px 12px}
+.split b{display:block;font-family:"Plus Jakarta Sans";font-size:20px}
+.split span{color:var(--muted);font-size:12px}
+.feed .row{animation:slin .4s both}
+.empty{padding:30px;text-align:center;color:var(--muted)}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(480px,100%);background:#fff;box-shadow:-20px 0 60px rgba(15,23,42,.18);transform:translateX(105%);transition:transform .25s;z-index:40;display:flex;flex-direction:column}
+.drawer.show{transform:none}
+.drawer-h{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:flex-start}
+.drawer-h>div{min-width:0}
+.drawer-h h3{font-size:18px}
+.drawer-h span{color:var(--muted);font-size:13px;word-break:break-word}
+.drawer-h button{margin-left:auto;border:1px solid var(--border);background:#fff;border-radius:8px;padding:6px 10px;cursor:pointer;flex:none}
+.drawer-b{padding:16px 20px;overflow:auto;flex:1}
+.drawer-b h4{margin:16px 0 8px;font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--blue)}
+.qtext{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:14.5px;line-height:1.6;overflow-x:auto}
+.att{display:flex;gap:10px;padding:8px 10px;border:1px solid var(--border);border-radius:10px;margin-bottom:6px;align-items:center;flex-wrap:wrap}
+.att .r{font-weight:700;font-size:12px;border-radius:99px;padding:2px 9px}
+.att .r.ok{background:#dcfce7;color:#15803d}
+.att .r.no{background:#fee2e2;color:#b91c1c}
+.att .r.vi{background:#ede9fe;color:#6d28d9}
+.att .t{color:var(--muted);font-size:12px;margin-left:auto;white-space:nowrap}
+.workbox{white-space:pre-wrap;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:14px;line-height:1.5;word-break:break-word}
+.shade{position:fixed;inset:0;background:rgba(15,23,42,.25);z-index:39;display:none}
+.shade.show{display:block}
+footer{text-align:center;color:var(--faint);font-size:12.5px;padding:14px 0 30px}
+@media (max-width:1100px){.grid3{grid-template-columns:1fr 1fr}.grid3>:first-child{grid-column:1/-1}}
+@media (max-width:980px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpis .kpi:last-child{grid-column:1/-1}}
+@media (max-width:700px){.grid3{grid-template-columns:1fr}}
+@media (max-width:520px){.band,.wrap{padding-left:12px;padding-right:12px}.tools{margin-left:0}td.name{min-width:150px;max-width:170px}.bar{width:70px}.kpi b{font-size:23px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" type="image/png" href="/assets/img/icon-192.png" sizes="192x192"><link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png"><script src="demo.js"></script><style>.demo-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding:12px 24px;background:#eff6ff;color:#1e3a5f;font:13px/1.5 Inter,sans-serif;border-bottom:1px solid #cbd5e1}.demo-bar a{color:#1d4ed8;font-weight:600}.demo-bar button{background:white;color:#1e3a5f;border:1px solid #cbd5e1;border-radius:6px;padding:5px 10px;cursor:pointer}.demo-bar span{flex-basis:100%} @media(max-width:480px){.demo-bar{padding:10px 12px;gap:8px 12px}.demo-bar strong{flex-basis:100%;order:-1}} </style></head>
+<body><nav class="demo-bar" aria-label="Portfolio demo"><a href="/projects.html">← Portfolio</a><strong>Interactive demo · Fictional students</strong><a href="./">Workbook</a><a href="tracker.html">Live tracker</a><button type="button" id="demoReset">Reset demo</button><span>Your practice stays in this browser. Try a question, then open the tracker.</span></nav>
+<div class="band"><div class="in">
+  <div>
+    <div class="live"><span class="dot" id="dot"></span><span id="liveTxt">Connecting</span></div>
+    <h1 style="margin-top:10px" id="ttl">Live Tracker</h1>
+    <div class="sub" id="sub"></div>
+  </div>
+  <div class="tools">
+    <select id="fClass" aria-label="Class"></select>
+    <select id="fSec" aria-label="Section"></select>
+    <select id="fSort" aria-label="Sort students"><option value="name">Sort: name</option><option value="progress">Sort: progress</option><option value="recent">Sort: most recent</option><option value="help">Sort: most help needed</option></select>
+    <button id="btnHide" aria-pressed="false">Hide names</button>
+    <button id="btnRefresh">Refresh now</button>
+    <a class="lnk" id="sheetLink" href="./">Try the workbook</a>
+  </div>
+</div></div>
+<div class="wrap">
+  <div class="kpis">
+    <div class="kpi"><b id="k1">0</b><span>Started a question</span></div>
+    <div class="kpi"><b id="k2">0</b><span>Active in the last <span id="actMin">10</span> min</span></div>
+    <div class="kpi"><b id="k3">0%</b><span>Average parts correct</span></div>
+    <div class="kpi"><b id="k4">0%</b><span>Correct on the first try</span></div>
+    <div class="kpi warn"><b id="k5">0</b><span>Struggling right now</span></div>
+  </div>
+  <div class="panel" id="helpPanel" hidden>
+    <div class="panel-h"><h2>Struggling right now</h2><span class="note">2 or more wrong on a part in the last <span id="actMin2">10</span> min and not yet correct</span></div>
+    <div class="help" id="help"></div>
+  </div>
+  <div class="panel">
+    <div class="panel-h"><h2>Class progress</h2>
+      <div class="legend"><span><i style="background:var(--g1)"></i>Correct first try</span><span><i style="background:var(--g2)"></i>Correct after retries</span><span><i style="background:var(--am)"></i>Trying</span><span><i style="background:var(--rd)"></i>3 or more wrong</span><span><i style="background:var(--vi)"></i>Viewed solution</span><span><i style="background:var(--none)"></i>Not started</span><span>Number in a cell = attempts, <b style="color:#2563eb">c</b> = calculator part</span></div>
+    </div>
+    <div class="scroll" id="matrix"><div class="empty">Loading</div></div>
+  </div>
+  <div class="grid3">
+    <div class="panel"><div class="panel-h"><h2>Hardest parts</h2><span class="note">lowest first-try success, with the most common wrong answers</span></div><div class="list" id="hard"></div></div>
+    <div class="panel"><div class="panel-h"><h2>By section</h2><span class="note">share of parts correct</span></div><div class="list" id="secs"></div><div class="split"><div><b id="ncRate">0%</b><span>Non-calculator first-try success</span></div><div><b id="caRate">0%</b><span>Calculator first-try success</span></div></div></div>
+    <div class="panel"><div class="panel-h"><h2>Latest activity</h2></div><div class="list feed" id="recent"></div></div>
+  </div>
+  <footer>Author: Mr. Harish Kumar</footer>
+</div>
+<div class="shade" id="shade"></div>
+<aside class="drawer" id="drawer" aria-hidden="true"><div class="drawer-h"><div><h3 id="dTitle"></h3><span id="dSub"></span></div><button id="dClose">Close</button></div><div class="drawer-b" id="dBody"></div></aside>
+<script>
+const T = { data: null, timer: null, refreshMs: 15000, busy: false, prev: null, hide: false, first: true };
+
+function api(fn) {
+  const args = Array.prototype.slice.call(arguments, 1);
+  return Promise.resolve().then(function () { return window.BinomialDemo.call(fn, args); });
+} 
+
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
+}
+
+function typeset(node) {
+  if (window.renderMathInElement) renderMathInElement(node, { delimiters: [{ left: '$$', right: '$$', display: true }, { left: '$', right: '$', display: false }], throwOnError: false });
+}
+
+function ago(iso, now) {
+  if (!iso) return 'never';
+  const s = Math.max(0, (now - new Date(iso).getTime()) / 1000);
+  if (s < 60) return 'just now';
+  if (s < 3600) return Math.floor(s / 60) + ' min ago';
+  if (s < 86400) return Math.floor(s / 3600) + ' h ago';
+  return new Date(iso).toLocaleDateString([], { day: 'numeric', month: 'short' });
+}
+
+function when(iso) {
+  return iso ? new Date(iso).toLocaleString([], { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
+}
+
+function initials(n) { return String(n).split(/\s+/).filter(Boolean).map(function (w) { return w[0]; }).join('').slice(0, 2).toUpperCase() || '?'; }
+
+let ALIAS = {};
+function nameOf(s) { return T.hide ? ALIAS[s.email] || 'Student' : s.name; }
+
+function countUp(id, target, suffix) {
+  const node = document.getElementById(id);
+  const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!T.first || reduced) { node.textContent = target + (suffix || ''); return; }
+  const start = performance.now();
+  (function f(t) {
+    const k = Math.min(1, (t - start) / 700);
+    node.textContent = Math.round(target * (1 - Math.pow(1 - k, 3))) + (suffix || '');
+    if (k < 1) requestAnimationFrame(f);
+  })(start);
+}
+
+function load() {
+  if (T.busy) return;
+  T.busy = true;
+  api('getTrackerData').then(function (d) {
+    T.prev = T.data;
+    T.data = d;
+    T.busy = false;
+    document.getElementById('dot').classList.remove('off');
+    document.getElementById('liveTxt').textContent = 'Live · updated ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    setup();
+    draw();
+    T.first = false;
+  }).catch(function (e) {
+    T.busy = false;
+    document.getElementById('dot').classList.add('off');
+    document.getElementById('liveTxt').textContent = 'Connection problem, retrying';
+    if (!T.data) document.getElementById('matrix').innerHTML = '<div class="empty">' + esc(e.message) + '</div>';
+  });
+}
+
+let didSetup = false;
+function setup() {
+  if (didSetup) return;
+  didSetup = true;
+  const d = T.data;
+  document.getElementById('ttl').textContent = d.title + ' · Live Tracker';
+  document.getElementById('sub').textContent = d.course;
+  document.getElementById('actMin').textContent = d.activeMinutes;
+  document.getElementById('actMin2').textContent = d.activeMinutes;
+  document.getElementById('sheetLink').href = './';
+  const fc = document.getElementById('fClass');
+  fc.innerHTML = '<option value="">All classes</option>' + d.classes.map(function (c) { return '<option>' + esc(c) + '</option>'; }).join('');
+  const fs = document.getElementById('fSec');
+  fs.innerHTML = '<option value="">All sections</option>' + d.sections.map(function (s) { return '<option value="' + s.id + '">' + esc(s.short) + '</option>'; }).join('');
+  [fc, fs, document.getElementById('fSort')].forEach(function (x) { x.addEventListener('change', draw); });
+  document.getElementById('btnRefresh').addEventListener('click', load);
+  document.getElementById('btnHide').addEventListener('click', function () { T.hide = !T.hide; this.setAttribute('aria-pressed', T.hide); draw(); });
+  document.getElementById('dClose').addEventListener('click', closeDrawer);
+  document.getElementById('shade').addEventListener('click', closeDrawer);
+}
+
+function cellClass(p) {
+  if (!p) return 'none';
+  if (p.status === 'correct') return p.attempts <= 1 ? 'c1' : 'c2';
+  if (p.status === 'viewed') return 'vi';
+  return p.wrong >= 3 ? 'tr3' : 'tr';
+}
+
+function partLabel(p) { return p.q + p.p; }
+
+function draw() {
+  const d = T.data;
+  const now = new Date(d.serverTime).getTime();
+  const cls = document.getElementById('fClass').value;
+  const sec = document.getElementById('fSec').value;
+  const sort = document.getElementById('fSort').value;
+  const parts = d.parts.filter(function (p) { return !sec || p.section === sec; });
+  const allParts = d.parts.length;
+  const idx = {};
+  d.progress.forEach(function (p) { idx[p.email + '|' + p.q + '|' + p.p] = p; });
+  const prevIdx = {};
+  if (T.prev) T.prev.progress.forEach(function (p) { prevIdx[p.email + '|' + p.q + '|' + p.p] = p.status + p.attempts; });
+  ALIAS = {};
+  d.students.slice().sort(function (a, b) { return a.email.localeCompare(b.email); }).forEach(function (s, i) { ALIAS[s.email] = 'Student ' + (i + 1); });
+  let students = d.students.filter(function (s) { return !cls || s.cls === cls; });
+  students.forEach(function (s) {
+    let done = 0, first = 0, tried = 0, stuck = 0;
+    d.parts.forEach(function (p) {
+      const pr = idx[s.email + '|' + p.q + '|' + p.p];
+      if (!pr) return;
+      tried++;
+      if (pr.status === 'correct') { done++; if (pr.attempts <= 1) first++; }
+      else if (pr.wrong >= 3 || pr.status === 'viewed') stuck++;
+    });
+    s._done = done; s._first = first; s._tried = tried; s._stuck = stuck;
+    s._active = s.lastActive && (now - new Date(s.lastActive).getTime()) <= d.activeMinutes * 60000;
+  });
+  students.sort(function (a, b) {
+    if (sort === 'progress') return b._done - a._done || nameOf(a).localeCompare(nameOf(b));
+    if (sort === 'recent') return String(b.lastActive).localeCompare(String(a.lastActive));
+    if (sort === 'help') return b._stuck - a._stuck || a._done - b._done;
+    return nameOf(a).localeCompare(nameOf(b), undefined, { numeric: true });
+  });
+  const emails = {};
+  students.forEach(function (s) { emails[s.email] = s; });
+
+  const stuckNow = d.progress.filter(function (p) {
+    return emails[p.email] && p.status !== 'correct' && p.wrong >= 2 && p.updated && (now - new Date(p.updated).getTime()) <= d.activeMinutes * 60000;
+  }).sort(function (a, b) { return b.wrong - a.wrong; });
+
+  const started = students.filter(function (s) { return s._tried > 0; });
+  document.getElementById('k1').textContent = started.length + (students.length ? ' / ' + students.length : '');
+  countUp('k2', students.filter(function (s) { return s._active; }).length);
+  const avg = students.length ? students.reduce(function (a, s) { return a + s._done / allParts; }, 0) / students.length : 0;
+  countUp('k3', Math.round(avg * 100), '%');
+  const solved = students.reduce(function (a, s) { return a + s._done; }, 0);
+  const firsts = students.reduce(function (a, s) { return a + s._first; }, 0);
+  countUp('k4', solved ? Math.round(100 * firsts / solved) : 0, '%');
+  const stuckPeople = {};
+  stuckNow.forEach(function (p) { stuckPeople[p.email] = 1; });
+  countUp('k5', Object.keys(stuckPeople).length);
+
+  const hp = document.getElementById('helpPanel');
+  hp.hidden = !stuckNow.length;
+  document.getElementById('help').innerHTML = stuckNow.slice(0, 12).map(function (p) {
+    const s = emails[p.email];
+    return '<div class="hchip" data-cell="' + esc(p.email) + '|' + p.q + '|' + p.p + '"><span class="av">' + esc(initials(nameOf(s))) + '</span><div style="min-width:0"><b>' + esc(nameOf(s)) + '</b><span>' + p.q + p.p + ' · ' + p.wrong + ' wrong' + (T.hide ? '' : ' · last: ' + esc(p.last)) + '</span></div></div>';
+  }).join('');
+
+  const m = document.getElementById('matrix');
+  if (!students.length) { m.innerHTML = '<div class="empty">No students yet. Share the workbook link with your class.</div>'; }
+  else {
+    const secName = {};
+    d.sections.forEach(function (s) { secName[s.id] = s.short; });
+    const sgroups = [], groups = [];
+    parts.forEach(function (p) {
+      const sg = sgroups[sgroups.length - 1];
+      if (sg && sg.s === p.section) sg.n++; else sgroups.push({ s: p.section, n: 1 });
+      const g = groups[groups.length - 1];
+      if (g && g.q === p.q) g.n++; else groups.push({ q: p.q, n: 1 });
+    });
+    let h = '<table><thead><tr class="srow"><th class="sticky" rowspan="3" style="padding:0 12px">Student</th>';
+    sgroups.forEach(function (g) { h += '<th colspan="' + g.n + '">' + esc(secName[g.s]) + '</th>'; });
+    h += '</tr><tr class="qrow">';
+    groups.forEach(function (g) { h += '<th colspan="' + g.n + '">' + g.q + '</th>'; });
+    h += '</tr><tr class="prow">';
+    parts.forEach(function (p, i) { h += '<th' + (i === 0 || parts[i - 1].q !== p.q ? ' style="border-left:2px solid #fff"' : '') + '>' + p.p + (p.tag === 'CA' ? '<sup style="color:#2563eb">c</sup>' : '') + '</th>'; });
+    h += '</tr></thead><tbody>';
+    students.forEach(function (s) {
+      const pct = Math.round(100 * s._done / allParts);
+      h += '<tr><td class="sticky name"><div class="n" data-student="' + esc(s.email) + '">' + esc(nameOf(s)) + '</div><div class="m"><span class="act' + (s._active ? ' on' : '') + '"></span><div class="mini"><i style="width:' + pct + '%"></i></div>' + s._done + '/' + allParts + ' · ' + ago(s.lastActive, now) + '</div></td>';
+      parts.forEach(function (p, i) {
+        const k = s.email + '|' + p.q + '|' + p.p;
+        const pr = idx[k];
+        const c = cellClass(pr);
+        const changed = T.prev && pr && prevIdx[k] !== pr.status + pr.attempts;
+        const label = pr ? (pr.status === 'correct' && pr.attempts <= 1 ? '' : pr.attempts) : '';
+        const tip = pr ? (partLabel(p) + ': ' + (pr.status === 'correct' ? 'correct' : pr.status === 'viewed' ? 'viewed solution' : 'trying') + ', ' + pr.attempts + ' attempt' + (pr.attempts === 1 ? '' : 's') + (pr.last ? ', last answer ' + pr.last : '')) : partLabel(p) + ': not started';
+        h += '<td class="c' + (i === 0 || parts[i - 1].q !== p.q ? ' qs' : '') + '"><div class="cell ' + c + (changed ? ' pop' : '') + '" title="' + esc(tip) + '"' + (pr ? ' data-cell="' + esc(k) + '"' : '') + '>' + label + '</div></td>';
+      });
+      h += '</tr>';
+    });
+    h += '</tbody><tfoot><tr><td class="sticky">Class correct</td>';
+    parts.forEach(function (p, i) {
+      const n = students.filter(function (s) { const pr = idx[s.email + '|' + p.q + '|' + p.p]; return pr && pr.status === 'correct'; }).length;
+      h += '<td' + (i === 0 || parts[i - 1].q !== p.q ? ' style="border-left:2px solid #fff"' : '') + '>' + Math.round(100 * n / students.length) + '%</td>';
+    });
+    h += '</tr></tfoot></table>';
+    const st = m.scrollTop, sl = m.scrollLeft;
+    m.innerHTML = h;
+    m.scrollTop = st; m.scrollLeft = sl;
+  }
+
+  const stat = function (p) {
+    let tried = 0, first = 0, correct = 0;
+    students.forEach(function (s) { const pr = idx[s.email + '|' + p.q + '|' + p.p]; if (pr) { tried++; if (pr.status === 'correct') { correct++; if (pr.attempts <= 1) first++; } } });
+    return { tried: tried, first: first, correct: correct };
+  };
+  const hard = d.parts.map(function (p) { const x = stat(p); return { p: p, tried: x.tried, rate: x.tried ? x.first / x.tried : 1 }; })
+    .filter(function (x) { return x.tried > 0 && x.rate < 1; }).sort(function (a, b) { return a.rate - b.rate || b.tried - a.tried; }).slice(0, 6);
+  document.getElementById('hard').innerHTML = hard.length ? hard.map(function (x) {
+    const wa = (d.wrongTop[x.p.q + '|' + x.p.p] || []).map(function (w) { return '<em>' + esc(w[0]) + (w[1] > 1 ? ' ×' + w[1] : '') + '</em>'; }).join('');
+    return '<div class="row" data-part="' + x.p.q + '|' + x.p.p + '" style="cursor:pointer"><div class="l"><b>' + partLabel(x.p) + ' <span style="display:inline;font-weight:500">' + (x.p.tag === 'NC' ? 'non-calculator' : 'calculator') + ' · ' + x.tried + ' tried</span></b>' + (T.hide ? '' : '<div class="wa"><em class="ans">Answer: ' + esc(x.p.answer) + '</em>' + wa + '</div>') + '</div><div class="bar"><i style="width:' + Math.round(100 * (1 - x.rate)) + '%"></i></div><div class="pct">' + Math.round(100 * x.rate) + '%</div></div>';
+  }).join('') : '<div class="empty">No trouble spots yet.</div>';
+
+  document.getElementById('secs').innerHTML = d.sections.map(function (s) {
+    const ps = d.parts.filter(function (p) { return p.section === s.id; });
+    let c = 0;
+    ps.forEach(function (p) { c += stat(p).correct; });
+    const tot = ps.length * Math.max(1, students.length);
+    const r = students.length ? c / tot : 0;
+    return '<div class="row"><div class="l"><b>' + esc(s.short) + '</b></div><div class="bar sec"><i style="width:' + Math.round(100 * r) + '%"></i></div><div class="pct">' + Math.round(100 * r) + '%</div></div>';
+  }).join('');
+  const tagRate = function (tag) {
+    let t = 0, f = 0;
+    d.parts.filter(function (p) { return p.tag === tag; }).forEach(function (p) { const x = stat(p); t += x.tried; f += x.first; });
+    return t ? Math.round(100 * f / t) + '%' : 'none yet';
+  };
+  document.getElementById('ncRate').textContent = tagRate('NC');
+  document.getElementById('caRate').textContent = tagRate('CA');
+
+  const recent = d.progress.filter(function (p) { return emails[p.email]; }).sort(function (a, b) { return String(b.updated).localeCompare(String(a.updated)); }).slice(0, 9);
+  document.getElementById('recent').innerHTML = recent.length ? recent.map(function (p) {
+    const txt = p.status === 'correct' ? (p.attempts <= 1 ? 'correct first try' : 'correct after ' + p.attempts + ' attempts') : p.status === 'viewed' ? 'viewed the solution' : 'working on it (' + p.wrong + ' wrong)';
+    return '<div class="row" data-cell="' + esc(p.email) + '|' + p.q + '|' + p.p + '" style="cursor:pointer"><div class="l"><b>' + esc(nameOf(emails[p.email])) + '</b><span>' + p.q + p.p + ' ' + txt + '</span></div><div class="pct" style="width:auto;color:var(--muted);font-weight:500">' + ago(p.updated, now) + '</div></div>';
+  }).join('') : '<div class="empty">No activity yet.</div>';
+}
+
+function openDrawer(title, sub, html) {
+  document.getElementById('dTitle').textContent = title;
+  document.getElementById('dSub').textContent = sub;
+  const b = document.getElementById('dBody');
+  b.innerHTML = html;
+  typeset(b);
+  document.getElementById('drawer').classList.add('show');
+  document.getElementById('drawer').setAttribute('aria-hidden', 'false');
+  document.getElementById('shade').classList.add('show');
+}
+
+function closeDrawer() {
+  document.getElementById('drawer').classList.remove('show');
+  document.getElementById('drawer').setAttribute('aria-hidden', 'true');
+  document.getElementById('shade').classList.remove('show');
+}
+
+function workingFor(email, q) {
+  const w = T.data.working.filter(function (x) { return x.email === email && x.q === q; })[0];
+  return w && w.text.trim() ? '<div class="workbox">' + esc(w.text) + '</div><div style="color:var(--muted);font-size:12px;margin-top:4px">Saved ' + when(w.updated) + '</div>' : '<div style="color:var(--muted)">No working written yet.</div>';
+}
+
+function partInfo(q, p) {
+  const part = T.data.parts.filter(function (x) { return x.q === q && x.p === p; })[0];
+  if (!part) return '';
+  return '<h4>Question</h4><div class="qtext">' + part.stem + '<div style="margin-top:6px"><b>(' + p + ')</b> ' + part.prompt + '</div>' + (T.hide ? '' : '<div style="margin-top:8px;font-size:13px;color:#166534"><b>Answer:</b> ' + esc(part.answer) + '</div>') + '</div>';
+}
+
+document.addEventListener('click', function (e) {
+  const c = e.target.closest('[data-cell]');
+  if (c) {
+    const bits = c.getAttribute('data-cell').split('|');
+    const email = bits[0], q = bits[1], p = bits[2];
+    const s = T.data.students.filter(function (x) { return x.email === email; })[0];
+    openDrawer(s ? nameOf(s) : email, q + ' part ' + p, partInfo(q, p) + '<h4>Attempts</h4><div id="hist">Loading</div><h4>Working for ' + q + '</h4>' + workingFor(email, q));
+    api('getAttemptHistory', email, q, p).then(function (rows) {
+      const h = document.getElementById('hist');
+      if (!h) return;
+      h.innerHTML = rows.length ? rows.map(function (r) {
+        const k = r.result === 'Correct' ? 'ok' : r.result === 'Solution viewed' ? 'vi' : 'no';
+        return '<div class="att"><span class="r ' + k + '">' + esc(r.result) + '</span><span>' + (r.response ? esc(r.response) : '') + '</span><span class="t">' + when(r.at) + '</span></div>';
+      }).join('') : 'No attempts recorded.';
+    }).catch(function (err) { const h = document.getElementById('hist'); if (h) h.textContent = err.message; });
+    return;
+  }
+  const pt = e.target.closest('[data-part]');
+  if (pt) {
+    const bits = pt.getAttribute('data-part').split('|');
+    const wa = (T.data.wrongTop[bits[0] + '|' + bits[1]] || []).map(function (w) { return '<div class="att"><span class="r no">×' + w[1] + '</span><span>' + esc(w[0]) + '</span></div>'; }).join('');
+    openDrawer(bits[0] + bits[1], 'Whole class', partInfo(bits[0], bits[1]) + (T.hide ? '' : '<h4>Most common wrong answers</h4>' + (wa || '<div style="color:var(--muted)">None yet.</div>')));
+    return;
+  }
+  const n = e.target.closest('[data-student]');
+  if (n) {
+    const email = n.getAttribute('data-student');
+    const s = T.data.students.filter(function (x) { return x.email === email; })[0];
+    const qs = [];
+    T.data.parts.forEach(function (p) { if (qs.indexOf(p.q) === -1) qs.push(p.q); });
+    const html = qs.map(function (q) {
+      const w = T.data.working.filter(function (x) { return x.email === email && x.q === q && x.text.trim(); })[0];
+      return w ? '<h4>' + q + '</h4><div class="workbox">' + esc(w.text) + '</div>' : '';
+    }).join('');
+    openDrawer(nameOf(s), T.hide ? s.cls : s.cls + ' · ' + email + ' · first seen ' + when(s.firstSeen), html || '<div style="color:var(--muted)">No working written yet.</div>');
+  }
+});
+
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeDrawer(); });
+document.addEventListener('visibilitychange', function () { if (!document.hidden) load(); });
+window.addEventListener('storage',function(e){if(e.key===BinomialDemo.key)load();});
+load();
+T.timer = setInterval(function () { if (!document.hidden) load(); }, T.refreshMs);
+</script>
+<script>document.getElementById('demoReset').onclick=function(){if(confirm('Reset your demo answers and working?')){BinomialDemo.call('resetMyAnswers',[]);location.reload();}};</script><script data-goatcounter="https://harishkumar-portfolio.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script></body>
+</html>

@@ -68,7 +68,7 @@ title: Teaching Resources
       <span class="tc-text">Milestone calendars, supervisor briefs, and reflection-session structures for around 165 students and 23 supervisors.</span>
     </a>
   </div>
-  <p class="more-link"><a href="{{ '/projects.html' | relative_url }}">See all six Digital Innovation Projects →</a></p>
+  <p class="more-link"><a href="{{ '/projects.html' | relative_url }}">See all seven Digital Innovation Projects →</a></p>
 </div>
 
 <div class="cta-card">
